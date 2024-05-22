@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RecipeCard from './RecipeCard';
 
 function Family({ user }) {
   const [isInFamily, setIsInFamily] = useState(false);
@@ -6,18 +7,26 @@ function Family({ user }) {
   const [families, setFamilies] = useState([]);
   const [creatingFamily, setCreatingFamily] = useState(false);
   const [newFamilyName, setNewFamilyName] = useState('');
-  const [familyRecipes, setFamilyRecipes] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+
 
   useEffect(() => {
     if (user) {
       console.log('Fetching data for user:', user);
       fetchFamilyStatus();
-      fetchFamilyRecipes();
+      // fetchFamilyRecipes();
       fetchAllFamilies();
     } else {
       console.log('No user data available');
     }
   }, [user]);
+
+  useEffect(() => {
+    fetch("/api/recipes")
+      .then((response) => response.json())
+      .then((data) => setRecipes(data))
+      .catch((error) => console.error("Error fetching recipes:", error));
+  }, []);
 
   const fetchFamilyStatus = async () => {
     console.log('Fetching family status');
@@ -35,21 +44,6 @@ function Family({ user }) {
     } catch (error) {
       console.error('Error fetching family status:', error);
       setIsInFamily(false);
-    }
-  };
-
-  const fetchFamilyRecipes = async () => {
-    console.log('Fetching family recipes');
-    try {
-      const response = await fetch(`/api/family/recipes?clerk_id=${user.clerk_id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log('Family recipes response:', data);
-      setFamilyRecipes(data.recipes);
-    } catch (error) {
-      console.error('Error fetching family recipes:', error);
     }
   };
 
@@ -117,6 +111,8 @@ function Family({ user }) {
     }
   };
 
+  const familyRecipes = recipes.filter(recipe => recipe.visibility === 'family');
+
  return (
     <div className="p-6 max-w-4xl mx-auto">
       {isInFamily ? (
@@ -128,13 +124,11 @@ function Family({ user }) {
             As a member of the {familyData ? familyData.name : '...'} family, you can access shared recipes uploaded by other members.
           </p>
           <h3 className="text-2xl font-medium text-gray-700 mb-2">Family Recipes:</h3>
-          <ul className="space-y-2 mb-6">
-            {familyRecipes.map((recipe) => (
-              <li key={recipe.id} className="text-gray-800">
-                {recipe.title} by {recipe.author_name}
-              </li>
-            ))}
-          </ul>
+          <div id="family-recipe-list" className="flex flex-row space-x-12">
+        {familyRecipes.map((recipe) => (
+        <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+          ))}
+        </div>
         </>
       ) : (
         <>
@@ -145,7 +139,32 @@ function Family({ user }) {
         </>
       )}
 
-      <div className="mb-6">
+     <div>
+      <h3 className="text-2xl font-medium text-gray-700 mb-2">Browse list of all Families:</h3>
+      <p className="text-gray-600 mb-4">
+        Below is a list of all available family groups. You can join a family to start sharing recipes.
+      </p>
+      <ul className="space-y-4">
+        {families.map((family) => (
+          <li key={family.id} className="bg-white p-4 rounded shadow-sm flex justify-between items-center">
+            <span className="text-gray-800">{family.name}</span>
+            <button
+              className={`ml-4 px-4 py-2 rounded shadow-sm transition-colors ${
+                family.members.some((member) => member.clerk_id === user.clerk_id)
+                  ? 'bg-red-400 text-white hover:bg-red-500'
+                  : 'bg-blue-400 text-white hover:bg-blue-500'
+              }`}
+              onClick={() => toggleFamilyMembership(family.id)}
+            >
+              {family.members.some((member) => member.clerk_id === user.clerk_id) ? 'Leave Family' : 'Join Family'}
+            </button>
+          </li>
+        ))}
+       </ul>
+     </div>
+     
+
+    <div className="mb-6">
         <button
           className="bg-blue-400 text-white px-4 py-2 rounded shadow-sm hover:bg-blue-500 transition-colors"
           onClick={() => setCreatingFamily(true)}
@@ -178,28 +197,6 @@ function Family({ user }) {
           </div>
         )}
       </div>
-
-      <h3 className="text-2xl font-medium text-gray-700 mb-2">Browse list of all Families:</h3>
-      <p className="text-gray-600 mb-4">
-        Below is a list of all available family groups. You can join a family to start sharing recipes.
-      </p>
-      <ul className="space-y-4">
-        {families.map((family) => (
-          <li key={family.id} className="bg-white p-4 rounded shadow-sm flex justify-between items-center">
-            <span className="text-gray-800">{family.name}</span>
-            <button
-              className={`ml-4 px-4 py-2 rounded shadow-sm transition-colors ${
-                family.members.some((member) => member.clerk_id === user.clerk_id)
-                  ? 'bg-red-400 text-white hover:bg-red-500'
-                  : 'bg-blue-400 text-white hover:bg-blue-500'
-              }`}
-              onClick={() => toggleFamilyMembership(family.id)}
-            >
-              {family.members.some((member) => member.clerk_id === user.clerk_id) ? 'Leave Family' : 'Join Family'}
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

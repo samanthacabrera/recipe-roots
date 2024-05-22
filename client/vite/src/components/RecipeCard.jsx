@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import RecipeDetails from './RecipeDetails';
+import RecipeDetails from "./RecipeDetails";
 
 function RecipeCard({ recipe, user }) {
   const [showDetails, setShowDetails] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
+  const [visibility, setVisibility] = useState(recipe.visibility || "");
+
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -13,10 +16,8 @@ function RecipeCard({ recipe, user }) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        // console.log('Favorite status response:', data);
         setIsFavorited(data.isFavorited);
       } catch (error) {
-        // console.error("Error fetching favorite status", error);
         setIsFavorited(false);
       }
     };
@@ -26,7 +27,6 @@ function RecipeCard({ recipe, user }) {
 
   const handleToggleFavorite = async () => {
     try {
-      console.log(`Toggling favorite for clerk_id: ${user.clerk_id}, recipe_id: ${recipe.id}`);
       const response = await fetch('/api/favorites/toggle', {
         method: 'POST',
         headers: {
@@ -37,7 +37,6 @@ function RecipeCard({ recipe, user }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Toggle favorite response:', data);
         setIsFavorited(data.isFavorited);
       } else {
         console.error("Failed to toggle favorite status");
@@ -50,6 +49,36 @@ function RecipeCard({ recipe, user }) {
   const handleToggleDetails = () => {
     setShowDetails(!showDetails);
   };
+
+const handleVisibilityChange = async (event) => {
+  setIsUpdatingVisibility(true);
+  try {
+    const newVisibility = event.target.value;
+    const data = {
+      visibility: newVisibility,
+      clerk_id: user.clerk_id 
+    };
+
+    const response = await fetch(`/api/recipes/${recipe.id}/visibility`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), 
+    });
+
+    if (response.ok) {
+      setVisibility(newVisibility);
+    } else {
+      console.error("Failed to update visibility");
+    }
+  } catch (error) {
+    console.error("Error updating visibility:", error);
+  } finally {
+    setIsUpdatingVisibility(false);
+  }
+};
+
 
   return (
     <div className="recipe-card w-fit pr-24 border border-gray-200 rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg">
@@ -66,17 +95,33 @@ function RecipeCard({ recipe, user }) {
           <RecipeDetails recipe={recipe} />
         </div>
       )}
-      <button
-        onClick={handleToggleFavorite}
-        className={`px-3 py-1 rounded transition duration-300 focus:outline-none ${isFavorited
-            ? 'bg-red-100 text-red-600 hover:bg-red-200'
-            : 'bg-green-100 text-green-600 hover:bg-green-200'
+      <div className="flex items-center">
+        {recipe.user_clerk_id === user.clerk_id && !isUpdatingVisibility ? (
+          <select
+            value={visibility || ""}
+            onChange={handleVisibilityChange}
+            className="mr-2 px-3 py-1 rounded focus:outline-none"
+          >
+            <option value="">Select Visibility</option>
+            <option value="global">Global</option>
+            <option value="family">Family</option>
+          </select>
+        ) : (
+          <span className="mr-2">{`Visibility: ${recipe.visibility}`}</span>
+        )}
+        <button
+          onClick={handleToggleFavorite}
+          className={`px-3 py-1 rounded transition duration-300 focus:outline-none ${
+            isFavorited
+              ? "bg-red-100 text-red-600 hover:bg-red-200"
+              : "bg-green-100 text-green-600 hover:bg-green-200"
           }`}
-      >
-        {isFavorited ? "Unfavorite" : "Favorite"}
-      </button>
+        >
+          {isFavorited ? "Unfavorite" : "Favorite"}
+        </button>
+      </div>
     </div>
   );
 }
 
-export default RecipeCard
+export default RecipeCard;

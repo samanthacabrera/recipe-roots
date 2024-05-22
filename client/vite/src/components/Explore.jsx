@@ -8,6 +8,7 @@ const countries = [
   { name: "Cambodia", description: "Cambodian cuisine features a mix of flavors and textures, often incorporating rice, fish, and fresh herbs. It reflects the country's history and cultural exchanges with neighboring countries." }
 ];
 
+
 function Global({user}) {
 
   const [recipes, setRecipes] = useState([]);
@@ -21,7 +22,7 @@ function Global({user}) {
       .catch((error) => console.error("Error fetching recipes:", error));
   }, []);
     
-      useEffect(() => {
+  useEffect(() => {
     const randomIndex = Math.floor(Math.random() * countries.length);
     setFeaturedCountry(countries[randomIndex]);
       }, []);
@@ -29,7 +30,9 @@ function Global({user}) {
     const generateRandomRecipe = () => {
         const randomIndex = Math.floor(Math.random() * recipes.length);
         setRandomRecipe(recipes[randomIndex]);
-  };
+    };
+  
+  const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
   //  console.log('User in Explore component:', user);
 
 return (
@@ -57,15 +60,15 @@ return (
           {randomRecipe && <RecipeCard user={user} recipe={randomRecipe} />}
         </div>
         
-        <p className="text-center font-semibold text-4xl m-8">List of all recipes</p>
-        <div id="recipe-list"  className="flex flex-row space-x-12">
-            {recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-            ))}
-        </div>
+      <p className="text-center font-semibold text-4xl m-8">List of all recipes</p>
+      <div id="global-recipe-list" className="flex flex-row space-x-12">
+        {globalRecipes.map((recipe) => (
+          <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+        ))}
+      </div>
         
-        <AddRecipe/>
-        </>
+      <AddRecipe/>
+      </>
     )
 }
 

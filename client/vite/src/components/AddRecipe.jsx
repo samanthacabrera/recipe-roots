@@ -1,7 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function AddRecipe() {
   const [step, setStep] = useState(1);
+  const [isInFamily, setIsInFamily] = useState(false);
+
+ useEffect(() => {
+    const fetchFamilyStatus = async () => {
+      try {
+        const response = await fetch(`/api/family/status?clerk_id=${window.Clerk.user.id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const data = await response.json();
+        setIsInFamily(data.isInFamily);
+      } catch (error) {
+        console.error("Failed to fetch family status:", error.message);
+      }
+    };
+
+    fetchFamilyStatus();
+  }, []);
+
 
   const [formData, setFormData] = useState({
     creator_name: "",
@@ -108,7 +129,7 @@ return (
                 id="creator_name"
                 placeholder="i.e. Martha Cabrera"
                 value={formData.creator_name}
-                onChange={(e) => handleInputChange(0, "creator_name", e.target.name, e.target.value)}
+                onChange={(e) => handleInputChange(null, "creator_name", e.target.name, e.target.value)} // Pass null for index
                 required
                 className="w-full p-2 border rounded"
               />
@@ -121,7 +142,7 @@ return (
                 id="creator_nickname"
                 placeholder="i.e. Ama"
                 value={formData.creator_nickname}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, creator_nickname: e.target.value }))}
+                onChange={(e) => handleInputChange(null, "creator_nickname", e.target.name, e.target.value)} // Pass null for index
                 className="w-full p-2 border rounded"
               />
             </div>
@@ -144,7 +165,7 @@ return (
                 id="creator_memory"
                 placeholder="Share a memory you have about a time you ate this recipe."
                 value={formData.creator_memory}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, creator_memory: e.target.value }))}
+                onChange={(e) => handleInputChange(null, "creator_memory", e.target.name, e.target.value)} // Pass null for index
                 className="w-full p-2 border rounded"
               ></textarea>
             </div>
@@ -192,17 +213,23 @@ return (
                 className="w-full p-2 border rounded"
               ></textarea>
             </div>
-             <div className="mb-2">
+            <div className="mb-2">
               <label htmlFor="visibility" className="block text-sm font-medium">Visibility</label>
               <select
                 name="visibility"
                 id="visibility"
                 value={formData.visibility}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, visibility: e.target.value }))}
+                onChange={(e) => {
+                  if (e.target.value === "family" && !isInFamily) {
+                    alert("You must be in a family to set visibility to 'family'.");
+                  } else {
+                    setFormData(prevState => ({ ...prevState, visibility: e.target.value }));
+                  }
+                }}
                 className="w-full p-2 border rounded"
               >
                 <option value="global">Global</option>
-                <option value="family">Family</option>
+                <option value="family" disabled={!isInFamily}>Family</option>
               </select>
             </div>
             <div className="flex justify-between">
