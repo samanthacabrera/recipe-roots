@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {countries, imperialUnits, metricUnits} from "/Users/samanthacabrera/FlatIron/phase-5/recipeRoots/client/vite/constants"
 
 function AddRecipe() {
   const [step, setStep] = useState(1);
@@ -27,8 +28,8 @@ function AddRecipe() {
   const [formData, setFormData] = useState({
     creator_name: "",
     creator_nickname: "",
-    creator_photo: "",
-    creator_memory: "",
+    // creator_photo: "",
+    memory: "",
     title: "",
     country: "",
     desc: "",
@@ -90,8 +91,8 @@ const handleInputChange = (index, type, name, value) => {
         setFormData({
           creator_name: "",
           creator_nickname: "",
-          creator_photo: "",
-          creator_memory: "",
+          // creator_photo: data.url,
+          memory: "",
           title: "",
           country: "",
           desc: "",
@@ -149,23 +150,22 @@ return (
             {/* <div className="mb-2">
               <label htmlFor="creator_photo" className="block text-sm font-medium">Creator's Photo (Optional)</label>
               <input
-                type=""
+                type="file"
                 name="creator_photo"
                 id="creator_photo"
-                placeholder=""
-                value={formData.creator_photo}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, creator_photo: e.target.value }))}
+                accept="image/*"
+                onChange={(e) => setFormData(prevState => ({ ...prevState, creator_photo: e.target.files[0] }))}
                 className="w-full p-2 border rounded"
               />
             </div> */}
             <div className="mb-2">
-              <label htmlFor="creator_memory" className="block text-sm font-medium">Memory of the Creator</label>
+              <label htmlFor="memory" className="block text-sm font-medium">Memory of the Creator</label>
               <textarea
-                name="creator_memory"
-                id="creator_memory"
+                name="memory"
+                id="memory"
                 placeholder="Share a memory you have about a time you ate this recipe."
-                value={formData.creator_memory}
-                onChange={(e) => handleInputChange(null, "creator_memory", e.target.name, e.target.value)} // Pass null for index
+                value={formData.memory}
+                onChange={(e) => handleInputChange(null, "memory", e.target.name, e.target.value)} 
                 className="w-full p-2 border rounded"
               ></textarea>
             </div>
@@ -192,15 +192,17 @@ return (
             </div>
             <div className="mb-2">
               <label htmlFor="country" className="block text-sm font-medium">Country of Origin</label>
-              <input
-                type="text"
-                name="country"
-                id="country"
-                placeholder="i.e. El Salvador"
-                value={formData.country}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, country: e.target.value }))}
-                className="w-full p-2 border rounded"
-              />
+            <select
+              name="country"
+              value={formData.country}
+              onChange={(e) => setFormData(prevState => ({ ...prevState, country: e.target.value }))}
+              className="w-full p-2 border rounded"
+            >
+              <option value="">Select Country</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country}>{country}</option>
+              ))}
+            </select>
             </div>
             <div className="mb-2">
               <label htmlFor="desc" className="block text-sm font-medium">Description</label>
@@ -262,15 +264,21 @@ return (
                     required
                     className="w-24 p-2 border rounded"
                   />
-                  <input
-                    type="text"
-                    name="unit"
-                    placeholder="Unit"
-                    value={ingredient.unit}
-                    onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
-                    required
-                    className="w-24 p-2 border rounded"
-                  />
+                <select
+                  name="unit"
+                  value={ingredient.unit}
+                  onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
+                  required
+                  className="w-24 p-2 border rounded"
+                >
+                  <option value="">Select Unit</option>
+                  {imperialUnits.map((unit, index) => (
+                    <option key={index} value={unit}>{unit}</option>
+                  ))}
+                  {metricUnits.map((unit, index) => (
+                    <option key={index} value={unit}>{unit}</option>
+                  ))}
+                </select>
                 </div>
                 <div className="flex justify-between">
                   {index === formData.ingredients.length - 1 && (

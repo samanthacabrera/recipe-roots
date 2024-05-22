@@ -39,7 +39,11 @@ def add_recipe():
         data = request.get_json()
         clerk_id = data.get('clerk_id') 
         title = data.get('title')
-        creator = data.get('creator')
+        creator_name = data.get('creator_name')
+        creator_nickname = data.get('creator_nickname')
+        creator_bio=data.get('creator_bio')
+        creator_photo=data.get('creator_photo')
+        memory=data.get('memory')
         country = data.get('country')
         desc = data.get('desc')
         visibility = data.get('visibility', 'global')
@@ -52,7 +56,9 @@ def add_recipe():
 
         new_recipe = Recipe(
             title=title,
-            creator_name=creator,  
+            creator_name=creator_name,  
+            creator_nickname=creator_nickname,
+            creator_bio=creator_bio,
             country=country,
             desc=desc,
             visibility=visibility,
@@ -83,6 +89,7 @@ def add_recipe():
     except Exception as e:
         print(e)
         return jsonify({"error": "Could not create recipe"}), 422
+
 
 
 @app.route('/recipes/<int:recipe_id>/visibility', methods=['PATCH'])

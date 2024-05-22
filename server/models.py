@@ -51,8 +51,9 @@ class Recipe(db.Model, SerializerMixin):
     title = db.Column(db.String, nullable=False)
     creator_name = db.Column(db.String)  
     creator_nickname = db.Column(db.String)
+    creator_bio=db.Column(db.String)
     creator_photo = db.Column(db.String) 
-    creator_memory = db.Column(db.Text)  
+    memory = db.Column(db.Text)  
     country = db.Column(db.String)
     desc = db.Column(db.String)
     visibility = db.Column(db.String, default='global')
@@ -68,8 +69,9 @@ class Recipe(db.Model, SerializerMixin):
             'title': self.title,
             'creator_name': self.creator_name,
             'creator_nickname': self.creator_nickname,
+            'creator_bio':self.creator_bio,
             'creator_photo': self.creator_photo,
-            'creator_memory': self.creator_memory,
+            'memory': self.memory,
             'country': self.country,
             'desc': self.desc,
             'visibility': self.visibility,

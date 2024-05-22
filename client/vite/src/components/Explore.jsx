@@ -42,7 +42,7 @@ return (
         </div>
 
         {featuredCountry && (
-          <div id='featured' className="w-screen h-screen flex flex-col justify-center items-center bg-white">
+          <div id='featured' className="w-screen h-screen flex flex-col justify-center items-center">
             <h2 className="text-3xl font-semibold">Featured recipes from {featuredCountry.name}</h2>
             <p className="text-center m-12">{featuredCountry.description}</p>
             <div className="carousel flex overflow-x-scroll space-x-4">

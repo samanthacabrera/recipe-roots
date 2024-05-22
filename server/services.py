@@ -5,6 +5,7 @@ from sqlalchemy import MetaData
 from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -24,6 +25,3 @@ db = SQLAlchemy(metadata=metadata)
 
 migrate = Migrate(app, db)
 db.init_app(app)
-
-
-
