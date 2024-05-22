@@ -3,14 +3,10 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
-# import os
-# from dotenv import load_dotenv
-# from flask_bcrypt import Bcrypt
-
+from sqlalchemy_serializer import SerializerMixin
 
 app = Flask(__name__)
 CORS(app)
-
 
 metadata = MetaData(naming_convention={
     "ix": "ix_%(column_0_label)s",
@@ -29,9 +25,5 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
-# load_dotenv()
-# app.json.compact = False
-# app.secret_key = os.getenv('secret_key')
-# bcrypt = Bcrypt(app)
-# os.getenv('secret_key')
+
 
