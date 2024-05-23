@@ -27,13 +27,15 @@ function Global({user}) {
     setFeaturedCountry(countries[randomIndex]);
       }, []);
   
-    const generateRandomRecipe = () => {
-        const randomIndex = Math.floor(Math.random() * recipes.length);
-        setRandomRecipe(recipes[randomIndex]);
-    };
+  const generateRandomRecipe = () => {
+      const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
+      const randomIndex = Math.floor(Math.random() * globalRecipes.length);
+      setRandomRecipe(globalRecipes[randomIndex]);
+  };
+
   
   const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
-  //  console.log('User in Explore component:', user);
+
 
 return (
         <>

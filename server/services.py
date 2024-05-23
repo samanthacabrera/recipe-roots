@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, inspect
 from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
 

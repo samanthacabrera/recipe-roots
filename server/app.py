@@ -108,23 +108,16 @@ def edit_recipe(recipe_id):
 
         if not clerk_id:
             return jsonify({"error": "clerk_id is required"}), 400
-
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
             return jsonify({"error": "Recipe not found"}), 404
-
         if recipe.user_clerk_id != clerk_id:
             return jsonify({"error": "Unauthorized"}), 403
-
-        # Validate visibility field
         if visibility not in ['global', 'family']:
             return jsonify({"error": "Invalid visibility value"}), 400
-
-        # Check if the user is in a family
         user = User.query.filter_by(clerk_id=clerk_id).first()
         if not user:
             return jsonify({"error": "User not found"}), 404
-
         if user.family_id:
             if visibility == "family":
                 recipe.visibility = visibility
@@ -140,10 +133,9 @@ def edit_recipe(recipe_id):
         if creator_photo: recipe.creator_photo = creator_photo
         if memory: recipe.memory = memory
         if country: recipe.country = country
-
         db.session.commit()
-
         return jsonify({"message": "Recipe updated successfully", "recipe": recipe.to_dict()}), 200
+    
     except Exception as e:
         print(f"Error updating recipe with ID {recipe_id}: {e}")
         return jsonify({"error": "Could not update recipe"}), 422
@@ -154,31 +146,44 @@ def delete_recipe(recipe_id):
     try:
         data = request.get_json()
         clerk_id = data.get('clerk_id')
-
-        print("Received DELETE request for recipe ID:", recipe_id)
-        print("Provided clerk_id:", clerk_id)
-
         if not clerk_id:
             print("Error: clerk_id is required")
             return jsonify({"error": "clerk_id is required"}), 400
-
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
             print("Error: Recipe not found")
             return jsonify({"error": "Recipe not found"}), 404
-
         if recipe.user_clerk_id != clerk_id:
             print("Error: Unauthorized")
             return jsonify({"error": "Unauthorized"}), 403
-
         db.session.delete(recipe)
         db.session.commit()
-
-        print("Recipe deleted successfully")
         return jsonify({"message": "Recipe deleted successfully"}), 200
+    
     except Exception as e:
         print(f"Error deleting recipe with ID {recipe_id}: {e}")
         return jsonify({"error": "Could not delete recipe"}), 422
+
+
+@app.route('/search_recipes')
+def search_recipes():
+    try:
+        search_query = request.args.get('search_query', '')
+        recipes = Recipe.query.all()
+        filtered_recipes = []
+        for recipe in recipes:
+            inspector = inspect(recipe)
+            for attr, value in inspector.attrs.items():
+                if isinstance(value.value, str):
+                    print(f"Checking attribute '{attr}' with value: '{value.value}'")
+                    if search_query.lower() in value.value.lower():
+                        filtered_recipes.append(recipe.to_dict())
+                        break  
+
+        return jsonify(filtered_recipes), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Could not fetch recipes"}), 422
 
 
 @app.route('/recipes')

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
-import Explore from './components/Explore'
+import Global from './components/Global'
 import Profile from './components/Profile';
-import About from './components/About';
+import Mission from './components/Mission';
 import Family from './components/Family';
 import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
@@ -48,9 +48,9 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Explore user={userData} />} />
+        <Route path="/" element={<Global user={userData} />} />
         <Route path="/profile" element={<Profile user={userData} />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/mission" element={<Mission />} />
         <Route path="/family" element={<Family user={userData} />} />
         <Route path="/recipes/:id" element={<RecipePage user={userData}/>} />
       </Routes>

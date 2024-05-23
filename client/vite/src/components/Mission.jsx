@@ -1,4 +1,4 @@
-function About() {
+function Mission() {
     return (
         <div>
             This is our Story
@@ -6,4 +6,4 @@ function About() {
     )
 }
 
-export default About
+export default Mission
