@@ -60,7 +60,7 @@ class Recipe(db.Model, SerializerMixin):
 
     ingredients = db.relationship('Ingredient', backref='recipe', lazy=True)
     directions = db.relationship('Direction', backref='recipe', lazy=True)
-    favorited_by = db.relationship('Favorite', backref='favorited_recipe', lazy=True)
+    favorited_by = db.relationship('Favorite', backref='favorited_recipe', cascade='all, delete', lazy=True)
 
     def to_dict(self):
         return {
@@ -118,7 +118,7 @@ class Favorite(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     user_clerk_id = db.Column(db.String, db.ForeignKey('users.clerk_id')) 
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), nullable=False)
 
     user = db.relationship('User', backref='user_favorites')
     recipe = db.relationship('Recipe', backref='favorited_by_user')

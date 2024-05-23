@@ -126,15 +126,12 @@ def edit_recipe(recipe_id):
             return jsonify({"error": "User not found"}), 404
 
         if user.family_id:
-            # If user is in a family, allow setting visibility to "family"
             if visibility == "family":
                 recipe.visibility = visibility
         else:
-            # If user is not in a family, only allow setting visibility to "global"
             if visibility == "global":
                 recipe.visibility = visibility
 
-        # Update other fields
         if title: recipe.title = title
         if desc: recipe.desc = desc
         if creator_name: recipe.creator_name = creator_name
@@ -158,24 +155,31 @@ def delete_recipe(recipe_id):
         data = request.get_json()
         clerk_id = data.get('clerk_id')
 
+        print("Received DELETE request for recipe ID:", recipe_id)
+        print("Provided clerk_id:", clerk_id)
+
         if not clerk_id:
+            print("Error: clerk_id is required")
             return jsonify({"error": "clerk_id is required"}), 400
 
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
+            print("Error: Recipe not found")
             return jsonify({"error": "Recipe not found"}), 404
 
         if recipe.user_clerk_id != clerk_id:
+            print("Error: Unauthorized")
             return jsonify({"error": "Unauthorized"}), 403
 
         db.session.delete(recipe)
         db.session.commit()
 
+        print("Recipe deleted successfully")
         return jsonify({"message": "Recipe deleted successfully"}), 200
     except Exception as e:
         print(f"Error deleting recipe with ID {recipe_id}: {e}")
         return jsonify({"error": "Could not delete recipe"}), 422
-    
+
 
 @app.route('/recipes')
 def get_all_recipes():
