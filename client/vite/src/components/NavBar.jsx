@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { Link } from 'react-router-dom';
 
-
 function NavBar() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -51,7 +50,9 @@ function NavBar() {
           
             <div className="max-w-7xl mx-auto p-4">
                 {filteredRecipes.map(recipe => (
-                    <div key={recipe.id}>{recipe.title}</div>
+                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="block text-lg text-gray-800 hover:text-gray-600 transition-colors">
+                        {recipe.title}
+                    </Link>
                 ))}
             </div>
         </nav>
