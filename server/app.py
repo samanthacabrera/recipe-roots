@@ -368,7 +368,7 @@ def get_all_families():
 @app.route('/family/status')
 def check_family_status():
     try:
-        clerk_id = request.args.get('clerk_id')  
+        clerk_id = request.args.get('clerk_id')
 
         if not clerk_id:
             return jsonify({"error": "User clerk_id is required"}), 400
@@ -382,12 +382,15 @@ def check_family_status():
             if not family:
                 return jsonify({"error": "Family not found"}), 404
 
+            family_members = [member.to_dict() for member in family.members]
+
             return jsonify({
                 "isInFamily": True,
                 "familyData": {
                     "id": family.id,
                     "name": family.name,
                     "moderator_id": family.moderator_id,
+                    "members": family_members
                 }
             }), 200
         else:
@@ -395,6 +398,7 @@ def check_family_status():
     except Exception as e:
         print(e)
         return jsonify({"error": "An error occurred"}), 500
+
 
 
 @app.route('/family/membership/<int:family_id>', methods=['POST'])

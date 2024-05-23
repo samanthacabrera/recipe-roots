@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
-import RecipeDetails from "./RecipeDetails";
 
 function RecipeCard({ recipe, user }) {
-  const [showDetails, setShowDetails] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
   const [visibility, setVisibility] = useState(recipe.visibility || "");
@@ -46,10 +44,6 @@ function RecipeCard({ recipe, user }) {
     }
   };
 
-  const handleToggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
-
   const handleVisibilityChange = async (event) => {
     setIsUpdatingVisibility(true);
     try {
@@ -80,40 +74,15 @@ function RecipeCard({ recipe, user }) {
   };
 
   return (
-    <div className="recipe-card w-fit pr-24 border border-gray-200 rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg">
-      <h3 className="text-lg font-semibold mb-2 text-gray-800">{recipe.title}</h3>
-      <p className="text-gray-600 mb-4">{recipe.desc}</p>
-      <button
-        onClick={handleToggleDetails}
-        className="mb-2 px-3 py-1 bg-gray-100 text-gray-800 rounded transition duration-300 hover:bg-gray-200 focus:outline-none"
-      >
-        {showDetails ? "Hide Details" : "Show Details"}
-      </button>
-      {showDetails && (
-        <div className="mb-2">
-          <RecipeDetails recipe={recipe} />
-        </div>
-      )}
-      <Link
-        to={`/recipes/${recipe.id}`}
-        className="mb-2 px-3 py-1 bg-blue-100 text-blue-800 rounded transition duration-300 hover:bg-blue-200 focus:outline-none"
-      >
-        View Full Recipe
-      </Link>
-      <div className="flex items-center mt-2">
-        {recipe.user_clerk_id === user.clerk_id && !isUpdatingVisibility ? (
-          <select
-            value={visibility || ""}
-            onChange={handleVisibilityChange}
-            className="mr-2 px-3 py-1 rounded focus:outline-none"
-          >
-            <option value="">Select Visibility</option>
-            <option value="global">Global</option>
-            <option value="family">Family</option>
-          </select>
-        ) : (
-          <span className="mr-2">{`Visibility: ${recipe.visibility}`}</span>
-        )}
+    <div className="recipe-card w-full md:w-1/2 lg:w-1/3 p-4 border border-gray-200 rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg">
+      <h3 className="text-lg font-semibold mb-2 text-gray-800">{`${recipe.creator_name}'s ${recipe.title} from ${recipe.country}`}</h3>
+      <div className="flex items-center justify-between mb-2">
+        <Link
+          to={`/recipes/${recipe.id}`}
+          className="px-3 py-1 bg-blue-100 text-blue-800 rounded transition duration-300 hover:bg-blue-200 focus:outline-none"
+        >
+          View Full Recipe
+        </Link>
         <button
           onClick={handleToggleFavorite}
           className={`px-3 py-1 rounded transition duration-300 focus:outline-none ${
@@ -124,6 +93,21 @@ function RecipeCard({ recipe, user }) {
         >
           {isFavorited ? "Unfavorite" : "Favorite"}
         </button>
+      </div>
+      <div className="flex items-center">
+        {recipe.user_clerk_id === user.clerk_id && !isUpdatingVisibility ? (
+          <select
+            value={visibility || ""}
+            onChange={handleVisibilityChange}
+            className="mr-2 px-3 py-1 rounded border border-gray-300 focus:outline-none"
+          >
+            <option value="">Select Visibility</option>
+            <option value="global">Global</option>
+            <option value="family">Family</option>
+          </select>
+        ) : (
+          <span className="mr-2">{`Visibility: ${recipe.visibility}`}</span>
+        )}
       </div>
     </div>
   );

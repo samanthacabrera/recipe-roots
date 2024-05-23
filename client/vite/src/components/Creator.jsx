@@ -1,6 +1,6 @@
 import React from "react";
 
-function CreatorDetails({ recipe }) {
+function Creator({ recipe }) {
   return (
     <>
       <p>Creator Name: {recipe.creator_name}</p>
@@ -11,4 +11,4 @@ function CreatorDetails({ recipe }) {
   );
 }
 
-export default CreatorDetails;
+export default Creator;

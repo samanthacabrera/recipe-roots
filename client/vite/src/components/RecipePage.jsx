@@ -146,7 +146,12 @@ function RecipePage({ user }) {
             ) : (
                 <>
                     <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-                        <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
+                        <div className="flex items-center justify-between">
+                            <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
+                            <a href="#recipe-core" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                                Jump to Recipe
+                            </a>
+                        </div>
                         <p className="text-gray-800 mb-4">{recipe.desc}</p>
                         <h2 className="text-xl font-bold mb-2">About the Creator</h2>
                         {recipe.creator_photo && (
@@ -159,7 +164,7 @@ function RecipePage({ user }) {
                         <p className="mb-4"><strong>Country:</strong> {recipe.country}</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <div id="recipe-core" className="bg-white rounded-lg shadow-md p-6 mb-8">
                         <h2 className="text-xl font-bold mb-2">Recipe Details</h2>
                         <h2 className="text-xl font-bold mb-2">Ingredients</h2>
                         <ul className="list-disc pl-6 mb-4">
@@ -187,10 +192,9 @@ function RecipePage({ user }) {
                         )}
                     </div>
                 </>)
-
             }
-        </div>)
+        </div>
+    )
 }
 
 export default RecipePage;
-

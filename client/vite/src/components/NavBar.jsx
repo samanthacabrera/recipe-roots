@@ -9,7 +9,12 @@ function NavBar() {
     const handleSearch = async (e) => {
         const query = e.target.value;
         setSearchQuery(query);
-        
+
+        if (query === '') {
+            setFilteredRecipes([]);
+            return;
+        }
+
         try {
             const response = await fetch(`/api/search_recipes?search_query=${query}`);
             if (!response.ok) {
@@ -47,7 +52,7 @@ function NavBar() {
                     </SignedIn>
                 </div>
             </div>
-          
+
             <div className="max-w-7xl mx-auto p-4">
                 {filteredRecipes.map(recipe => (
                     <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="block text-lg text-gray-800 hover:text-gray-600 transition-colors">

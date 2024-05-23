@@ -68,8 +68,8 @@ return (
           <RecipeCard key={recipe.id} user={user} recipe={recipe} />
         ))}
       </div>
-        
-      <AddRecipe/>
+      
+    <AddRecipe />
       </>
     )
 }
