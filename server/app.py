@@ -91,16 +91,23 @@ def add_recipe():
         return jsonify({"error": "Could not create recipe"}), 422
 
 
-
-@app.route('/recipes/<int:recipe_id>/visibility', methods=['PATCH'])
-def update_visibility(recipe_id):
+@app.route('/recipes/<int:recipe_id>', methods=['PATCH'])
+def edit_recipe(recipe_id):
     try:
         data = request.get_json()
-        visibility = data.get('visibility')
         clerk_id = data.get('clerk_id')
+        title = data.get('title')
+        desc = data.get('desc')
+        creator_name = data.get('creator_name')
+        creator_nickname = data.get('creator_nickname')
+        creator_bio = data.get('creator_bio')
+        creator_photo = data.get('creator_photo')
+        memory = data.get('memory')
+        country = data.get('country')
+        visibility = data.get('visibility')  # Add visibility field
 
-        if not visibility or not clerk_id:
-            return jsonify({"error": "Visibility and clerk_id are required"}), 400
+        if not clerk_id:
+            return jsonify({"error": "clerk_id is required"}), 400
 
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
@@ -109,14 +116,66 @@ def update_visibility(recipe_id):
         if recipe.user_clerk_id != clerk_id:
             return jsonify({"error": "Unauthorized"}), 403
 
-        recipe.visibility = visibility
+        # Validate visibility field
+        if visibility not in ['global', 'family']:
+            return jsonify({"error": "Invalid visibility value"}), 400
+
+        # Check if the user is in a family
+        user = User.query.filter_by(clerk_id=clerk_id).first()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        if user.family_id:
+            # If user is in a family, allow setting visibility to "family"
+            if visibility == "family":
+                recipe.visibility = visibility
+        else:
+            # If user is not in a family, only allow setting visibility to "global"
+            if visibility == "global":
+                recipe.visibility = visibility
+
+        # Update other fields
+        if title: recipe.title = title
+        if desc: recipe.desc = desc
+        if creator_name: recipe.creator_name = creator_name
+        if creator_nickname: recipe.creator_nickname = creator_nickname
+        if creator_bio: recipe.creator_bio = creator_bio
+        if creator_photo: recipe.creator_photo = creator_photo
+        if memory: recipe.memory = memory
+        if country: recipe.country = country
+
         db.session.commit()
 
-        return jsonify({"message": "Visibility updated successfully", "recipe": recipe.to_dict()}), 200
+        return jsonify({"message": "Recipe updated successfully", "recipe": recipe.to_dict()}), 200
     except Exception as e:
-        print(e)
-        return jsonify({"error": "Could not update visibility"}), 422
+        print(f"Error updating recipe with ID {recipe_id}: {e}")
+        return jsonify({"error": "Could not update recipe"}), 422
 
+
+@app.route('/recipes/<int:recipe_id>', methods=['DELETE'])
+def delete_recipe(recipe_id):
+    try:
+        data = request.get_json()
+        clerk_id = data.get('clerk_id')
+
+        if not clerk_id:
+            return jsonify({"error": "clerk_id is required"}), 400
+
+        recipe = Recipe.query.get(recipe_id)
+        if not recipe:
+            return jsonify({"error": "Recipe not found"}), 404
+
+        if recipe.user_clerk_id != clerk_id:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        db.session.delete(recipe)
+        db.session.commit()
+
+        return jsonify({"message": "Recipe deleted successfully"}), 200
+    except Exception as e:
+        print(f"Error deleting recipe with ID {recipe_id}: {e}")
+        return jsonify({"error": "Could not delete recipe"}), 422
+    
 
 @app.route('/recipes')
 def get_all_recipes():
@@ -128,6 +187,23 @@ def get_all_recipes():
         print(e)
         return jsonify({"error": "Could not fetch recipes"}), 422
 
+
+@app.route('/recipes/<int:recipe_id>', methods=['GET'])
+def get_recipe(recipe_id):
+    try:
+        print(f"Attempting to fetch recipe with ID: {recipe_id}")
+        recipe = Recipe.query.filter_by(id=recipe_id).first()
+        
+        if not recipe:
+            print(f"Recipe not found: {recipe_id}")
+            return jsonify({"error": "Recipe not found"}), 404
+        
+        print(f"Successfully fetched recipe: {recipe_id}")
+        return jsonify(recipe.to_dict()), 200
+    except Exception as e:
+        print(f"Error fetching recipe with ID {recipe_id}: {e}")
+        return jsonify({"error": "Could not fetch recipe"}), 422
+    
 
 @app.route('/users/<clerk_id>/recipes', methods=['GET'])
 def get_authored_recipes(clerk_id):

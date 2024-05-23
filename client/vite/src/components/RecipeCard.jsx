@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; 
 import RecipeDetails from "./RecipeDetails";
 
 function RecipeCard({ recipe, user }) {
@@ -6,7 +7,6 @@ function RecipeCard({ recipe, user }) {
   const [isFavorited, setIsFavorited] = useState(false);
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
   const [visibility, setVisibility] = useState(recipe.visibility || "");
-
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -50,35 +50,34 @@ function RecipeCard({ recipe, user }) {
     setShowDetails(!showDetails);
   };
 
-const handleVisibilityChange = async (event) => {
-  setIsUpdatingVisibility(true);
-  try {
-    const newVisibility = event.target.value;
-    const data = {
-      visibility: newVisibility,
-      clerk_id: user.clerk_id 
-    };
+  const handleVisibilityChange = async (event) => {
+    setIsUpdatingVisibility(true);
+    try {
+      const newVisibility = event.target.value;
+      const data = {
+        visibility: newVisibility,
+        clerk_id: user.clerk_id 
+      };
 
-    const response = await fetch(`/api/recipes/${recipe.id}/visibility`, {
-      method: "PATCH", 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data), 
-    });
+      const response = await fetch(`/api/recipes/${recipe.id}/visibility`, {
+        method: "PATCH", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), 
+      });
 
-    if (response.ok) {
-      setVisibility(newVisibility);
-    } else {
-      console.error("Failed to update visibility");
+      if (response.ok) {
+        setVisibility(newVisibility);
+      } else {
+        console.error("Failed to update visibility");
+      }
+    } catch (error) {
+      console.error("Error updating visibility:", error);
+    } finally {
+      setIsUpdatingVisibility(false);
     }
-  } catch (error) {
-    console.error("Error updating visibility:", error);
-  } finally {
-    setIsUpdatingVisibility(false);
-  }
-};
-
+  };
 
   return (
     <div className="recipe-card w-fit pr-24 border border-gray-200 rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg">
@@ -95,7 +94,13 @@ const handleVisibilityChange = async (event) => {
           <RecipeDetails recipe={recipe} />
         </div>
       )}
-      <div className="flex items-center">
+      <Link
+        to={`/recipes/${recipe.id}`}
+        className="mb-2 px-3 py-1 bg-blue-100 text-blue-800 rounded transition duration-300 hover:bg-blue-200 focus:outline-none"
+      >
+        View Full Recipe
+      </Link>
+      <div className="flex items-center mt-2">
         {recipe.user_clerk_id === user.clerk_id && !isUpdatingVisibility ? (
           <select
             value={visibility || ""}

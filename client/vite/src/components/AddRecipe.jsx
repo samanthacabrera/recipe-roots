@@ -191,20 +191,6 @@ return (
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="country" className="block text-sm font-medium">Country of Origin</label>
-            <select
-              name="country"
-              value={formData.country}
-              onChange={(e) => setFormData(prevState => ({ ...prevState, country: e.target.value }))}
-              className="w-full p-2 border rounded"
-            >
-              <option value="">Select Country</option>
-              {countries.map((country, index) => (
-                <option key={index} value={country}>{country}</option>
-              ))}
-            </select>
-            </div>
-            <div className="mb-2">
               <label htmlFor="desc" className="block text-sm font-medium">Description</label>
               <textarea
                 name="desc"
@@ -214,6 +200,20 @@ return (
                 onChange={(e) => setFormData(prevState => ({ ...prevState, desc: e.target.value }))}
                 className="w-full p-2 border rounded"
               ></textarea>
+            </div>
+            <div className="mb-2">
+              <label htmlFor="country" className="block text-sm font-medium">Country of Origin</label>
+            <select
+              name="country"
+              value={formData.country}
+              onChange={(e) => setFormData(prevState => ({ ...prevState, country: e.target.value }))}
+              className="w-full p-2 border rounded"
+             >
+              <option value="">Select Country</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country}>{country}</option>
+              ))}
+            </select>
             </div>
             <div className="mb-2">
               <label htmlFor="visibility" className="block text-sm font-medium">Visibility</label>

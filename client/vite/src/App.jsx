@@ -5,6 +5,7 @@ import Explore from './components/Explore'
 import Profile from './components/Profile';
 import About from './components/About';
 import Family from './components/Family';
+import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
 
 
@@ -50,7 +51,8 @@ function App() {
         <Route path="/" element={<Explore user={userData} />} />
         <Route path="/profile" element={<Profile user={userData} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/family" element={<Family user={userData} />}/>
+        <Route path="/family" element={<Family user={userData} />} />
+        <Route path="/recipes/:id" element={<RecipePage user={userData}/>} />
       </Routes>
     </Router>
   );

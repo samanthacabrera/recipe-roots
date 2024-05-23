@@ -124,7 +124,7 @@ function Family({ user }) {
             As a member of the {familyData ? familyData.name : '...'} family, you can access shared recipes uploaded by other members.
           </p>
           <h3 className="text-2xl font-medium text-gray-700 mb-2">Family Recipes:</h3>
-          <div id="family-recipe-list" className="flex flex-row space-x-12">
+          <div id="family-recipe-list" className="flex flex-row flex-wrap space-y-12">
         {familyRecipes.map((recipe) => (
         <RecipeCard key={recipe.id} user={user} recipe={recipe} />
           ))}

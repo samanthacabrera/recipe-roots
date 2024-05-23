@@ -1,26 +1,14 @@
 import React from "react";
 
-function RecipeDetails({ recipe }) {
+function CreatorDetails({ recipe }) {
   return (
-    <div className="recipe-details">
-      <h4>Description</h4>
-      <p>{recipe.desc}</p>
-
-      <h4>Ingredients</h4>
-      <ul>
-        {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
-          <li key={index}>{`${ingredient.quantity} ${ingredient.unit} ${ingredient.name}`}</li>
-        ))}
-      </ul>
-
-      <h4>Directions</h4>
-      <ol>
-        {recipe.directions && recipe.directions.map((direction, index) => (
-          <li key={index}>{direction.step}</li>
-        ))}
-      </ol>
-    </div>
+    <>
+      <p>Creator Name: {recipe.creator_name}</p>
+      <p>Creator Nickname: {recipe.creator_nickname}</p>
+      <p>Creator Bio: {recipe.creator_bio}</p>
+      <p>Memory: {recipe.memory}</p>
+    </>
   );
 }
 
-export default RecipeDetails;
+export default CreatorDetails;
