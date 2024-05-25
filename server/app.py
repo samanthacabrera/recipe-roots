@@ -42,7 +42,7 @@ def add_recipe():
         creator_name = data.get('creator_name')
         creator_nickname = data.get('creator_nickname')
         creator_bio=data.get('creator_bio')
-        creator_photo=data.get('creator_photo')
+        creator_photo_public_id = data.get('creator_photo_public_id')
         memory=data.get('memory')
         country = data.get('country')
         desc = data.get('desc')
@@ -59,6 +59,8 @@ def add_recipe():
             creator_name=creator_name,  
             creator_nickname=creator_nickname,
             creator_bio=creator_bio,
+            creator_photo_public_id=creator_photo_public_id, 
+            memory=memory,
             country=country,
             desc=desc,
             visibility=visibility,
@@ -101,10 +103,10 @@ def edit_recipe(recipe_id):
         creator_name = data.get('creator_name')
         creator_nickname = data.get('creator_nickname')
         creator_bio = data.get('creator_bio')
-        creator_photo = data.get('creator_photo')
+        creator_photo_public_id = data.get('creator_photo_public_id') 
         memory = data.get('memory')
         country = data.get('country')
-        visibility = data.get('visibility')  # Add visibility field
+        visibility = data.get('visibility')  
 
         if not clerk_id:
             return jsonify({"error": "clerk_id is required"}), 400
@@ -130,7 +132,7 @@ def edit_recipe(recipe_id):
         if creator_name: recipe.creator_name = creator_name
         if creator_nickname: recipe.creator_nickname = creator_nickname
         if creator_bio: recipe.creator_bio = creator_bio
-        if creator_photo: recipe.creator_photo = creator_photo
+        if creator_photo_public_id: recipe.creator_photo_public_id = creator_photo_public_id
         if memory: recipe.memory = memory
         if country: recipe.country = country
         db.session.commit()
@@ -278,18 +280,13 @@ def check_favorite_status():
         clerk_id = request.args.get('clerk_id')
         recipe_id = request.args.get('recipe_id')
 
-        print(f"Received in check_favorite_status - clerk_id: {clerk_id}, recipe_id: {recipe_id}")
-
         if not clerk_id or not recipe_id:
-            print("Missing clerk_id or recipe_id in check_favorite_status")
             return jsonify({"error": "Missing clerk_id or recipe_id"}), 400
 
         favorite = Favorite.query.filter_by(user_clerk_id=clerk_id, recipe_id=recipe_id).first()
         if favorite:
-            print("Recipe is favorited")
             return jsonify({"isFavorited": True}), 200
         else:
-            print("Recipe is not favorited")
             return jsonify({"isFavorited": False}), 200
     except Exception as e:
         print("Error in check_favorite_status:", e)
@@ -304,11 +301,8 @@ def toggle_favorite():
         recipe_id = data.get('recipe_id')
 
         if not clerk_id:
-            print(data)
-            print("Missing clerk_id")
             return jsonify({"error": "Missing clerk_id"}), 400
         if not recipe_id:
-            print("Missing recipe_id")
             return jsonify({"error": "Missing recipe_id"}), 400
 
         favorite = Favorite.query.filter_by(user_clerk_id=clerk_id, recipe_id=recipe_id).first()
@@ -323,7 +317,6 @@ def toggle_favorite():
             message = "Recipe favorited successfully"
 
         db.session.commit()
-        print("Toggle favorite result:", {"message": message, "isFavorited": is_favorited})
         return jsonify({"message": message, "isFavorited": is_favorited}), 200
     except Exception as e:
         print("Error in toggle_favorite:", e)
@@ -431,6 +424,55 @@ def toggle_family_membership(family_id):
     except Exception as e:
         print(e)
         return jsonify({"error": "An error occurred"}), 500
+    
+# @app.route('/upload', methods=['POST'])
+# def upload_photo():
+#     try:
+#         file_to_upload = request.files['file']
+#         print("Received file to upload:", file_to_upload.filename)  
+
+#         if file_to_upload:
+#             upload_result = cloudinary.uploader.upload(file_to_upload)
+#             print("Upload result:", upload_result)
+            
+#             public_id = upload_result['public_id']
+#             print("Public ID:", public_id)
+            
+#             with open('data.txt', 'a') as file:
+#                 file.write(public_id + '\n')
+
+#             return redirect(url_for('view_photos'))
+#         return 'No file uploaded', 400
+    
+#     except Exception as e:
+#         print("Error uploading file:", str(e))
+#         return 'Error uploading file', 500
+
+
+import traceback
+from flask import request, jsonify
+
+@app.route('/upload', methods=['POST'])
+def upload_photo():
+    try:
+        data = request.json
+        public_id = data.get('publicId')
+        print("Received public ID:", public_id)
+
+        default_title = "Untitled Recipe"
+
+        recipe = Recipe(creator_photo_public_id=public_id, title=default_title)
+        db.session.add(recipe)
+        db.session.commit()
+
+        return jsonify({"message": "Public ID received and saved successfully"}), 200
+
+    except Exception as e:
+        print("Error handling public ID:", str(e))
+        return jsonify({"error": "Internal server error"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

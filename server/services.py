@@ -1,9 +1,16 @@
 from flask import Flask, jsonify, request
+from flask import redirect, url_for, render_template_string
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, inspect
 from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
+from os import *
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
 
 
 app = Flask(__name__)
@@ -25,3 +32,4 @@ db = SQLAlchemy(metadata=metadata)
 
 migrate = Migrate(app, db)
 db.init_app(app)
+

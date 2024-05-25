@@ -52,7 +52,7 @@ class Recipe(db.Model, SerializerMixin):
     creator_name = db.Column(db.String)  
     creator_nickname = db.Column(db.String)
     creator_bio=db.Column(db.String)
-    creator_photo = db.Column(db.String) 
+    creator_photo_public_id = db.Column(db.String)
     memory = db.Column(db.Text)  
     country = db.Column(db.String)
     desc = db.Column(db.String)
@@ -70,7 +70,7 @@ class Recipe(db.Model, SerializerMixin):
             'creator_name': self.creator_name,
             'creator_nickname': self.creator_nickname,
             'creator_bio':self.creator_bio,
-            'creator_photo': self.creator_photo,
+            'creator_photo_public_id': self.creator_photo_public_id,
             'memory': self.memory,
             'country': self.country,
             'desc': self.desc,
