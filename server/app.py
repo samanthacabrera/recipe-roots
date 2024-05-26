@@ -424,33 +424,7 @@ def toggle_family_membership(family_id):
     except Exception as e:
         print(e)
         return jsonify({"error": "An error occurred"}), 500
-    
-# @app.route('/upload', methods=['POST'])
-# def upload_photo():
-#     try:
-#         file_to_upload = request.files['file']
-#         print("Received file to upload:", file_to_upload.filename)  
 
-#         if file_to_upload:
-#             upload_result = cloudinary.uploader.upload(file_to_upload)
-#             print("Upload result:", upload_result)
-            
-#             public_id = upload_result['public_id']
-#             print("Public ID:", public_id)
-            
-#             with open('data.txt', 'a') as file:
-#                 file.write(public_id + '\n')
-
-#             return redirect(url_for('view_photos'))
-#         return 'No file uploaded', 400
-    
-#     except Exception as e:
-#         print("Error uploading file:", str(e))
-#         return 'Error uploading file', 500
-
-
-import traceback
-from flask import request, jsonify
 
 @app.route('/upload', methods=['POST'])
 def upload_photo():
@@ -471,6 +445,16 @@ def upload_photo():
         print("Error handling public ID:", str(e))
         return jsonify({"error": "Internal server error"}), 500
 
+
+@app.route('/photo/<public_id>', methods=['GET'])
+def get_photo(public_id):
+    try:
+        url = cloudinary.CloudinaryImage(public_id).build_url()
+        return jsonify({"url": url}), 200
+    except Exception as e:
+        print(f"Error fetching photo: {e}")
+        return jsonify({"error": "Could not fetch photo"}), 500
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
-import AddRecipe from './AddRecipe';
 
 function Family({ user }) {
   const [isInFamily, setIsInFamily] = useState(false);
@@ -139,8 +138,6 @@ function Family({ user }) {
               </li>
             ))}
           </ul>
-
-          <AddRecipe />
 
           <button
             className="bg-red-400 text-white px-4 py-2 rounded shadow-sm hover:bg-red-500 transition-colors mt-4"

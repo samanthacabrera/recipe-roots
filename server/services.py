@@ -33,3 +33,8 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
+cloudinary.config(
+    cloud_name="dqwkvvhaq",
+    api_key="679418153555526",
+    api_secret="LazczTqaStibuPmdP4UhRTffKFA"
+)

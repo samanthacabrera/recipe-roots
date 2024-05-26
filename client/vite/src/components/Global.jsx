@@ -36,33 +36,47 @@ function Global({ user }) {
 
   return (
     <>
-      <div id='hero'>
-        <h1 className="text-9xl font-bolder m-12">Recipe Roots</h1>
+      <div id='hero' className="parallax">
+        <h1 className="text-9xl font-bold">Recipe Roots</h1>
       </div>
 
       {featuredCountry && (
-        <div id='featured' className="w-screen h-screen flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-semibold">Featured recipes from {featuredCountry.name}</h2>
-          <p className="text-center m-12">{featuredCountry.description}</p>
-          <div className="carousel flex overflow-x-scroll space-x-4">
-            {filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-            ))}
+        <div className="section">
+          <div className="section-content">
+            <h2 className="text-3xl font-semibold">Featured recipes from {featuredCountry.name}</h2>
+            <p className="text-center m-12">{featuredCountry.description}</p>
+            <div className="carousel flex overflow-x-scroll space-x-4">
+              {filteredRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      <div id='random-recipe' className="flex flex-col ml-[40%] space-y-8">
-        <button className="p-2 rounded outline w-fit" onClick={generateRandomRecipe}>Generate Random Recipe</button>
-        {randomRecipe && <RecipeCard user={user} recipe={randomRecipe} />}
+      <div className="parallax"></div>
+
+      <div id='random-recipe' className="section">
+        <div className="section-content">
+          <button className="p-2 rounded outline w-fit" onClick={generateRandomRecipe}>Generate Random Recipe</button>
+          {randomRecipe && <RecipeCard user={user} recipe={randomRecipe} />}
+        </div>
       </div>
 
-      <p className="text-center font-semibold text-4xl m-8">List of all recipes</p>
-      <div id="global-recipe-list" className="flex flex-row space-x-12">
-        {globalRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-        ))}
+      <div className="parallax"></div>
+
+      <div id="global-recipe-list" className="section">
+        <div className="section-content">
+          <p className="text-center font-semibold text-4xl m-8">List of all recipes</p>
+          <div className="flex flex-wrap justify-center">
+            {globalRecipes.map((recipe) => (
+              <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+            ))}
+          </div>
+        </div>
       </div>
+
+      <div className="parallax"></div>
 
       <AddRecipe />
     </>

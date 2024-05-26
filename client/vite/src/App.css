@@ -8,4 +8,98 @@ html {
   padding: 0;
   text-align: center;
   scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.parallax {
+  background-image: url("https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.parallax::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Adjust opacity here */
+  z-index: 1;
+}
+
+.parallax h1 {
+  position: relative;
+  z-index: 2;
+  font-size: 2rem;
+  font-weight: 200;
+  text-transform: lowercase;
+  color: whitesmoke;
+}
+
+.parallax p {
+  position: absolute;
+  bottom: 20px;
+  font-size: 1rem;
+  color: whitesmoke;
+  z-index: 2;
+}
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  padding: 20px;
+}
+
+.section-content {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 10px;
+  color: black;
+  text-shadow: none;
+  width: 80%;
+  margin: 0 auto;
+  z-index: 2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.recipe-card h3 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+.recipe-card {
+  width: calc(50% - 20px); /* Adjust the width to fit two cards in a row */
+  margin-bottom: 20px; /* Add some bottom margin for spacing */
+}
+
+@media (min-width: 768px) {
+  .recipe-card {
+    width: calc(50% - 24px); /* Adjust the width for larger screens */
+  }
 }
