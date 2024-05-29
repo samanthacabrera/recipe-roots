@@ -32,8 +32,8 @@ function RecipeCard({ recipe, user }) {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         color: 'white',
-        height: '500px', // Fixed height for all cards
-        width: '350px',  // Fixed width for all cards
+        height: '500px', 
+        width: '350px',  
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

@@ -10,6 +10,9 @@ function Family({ user }) {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
+    console.log('Family component mounted');
+    console.log('Initial user data:', user);
+
     if (user) {
       console.log('Fetching data for user:', user);
       fetchFamilyStatus();
@@ -22,12 +25,19 @@ function Family({ user }) {
   useEffect(() => {
     fetch("/api/recipes")
       .then((response) => response.json())
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        console.log("Recipes fetched:", data);
+        setRecipes(data);
+      })
       .catch((error) => console.error("Error fetching recipes:", error));
   }, []);
 
   const fetchFamilyStatus = async () => {
     console.log('Fetching family status');
+    if (!user || !user.clerk_id) {
+      console.error('User data or clerk_id is missing');
+      return;
+    }
     try {
       const response = await fetch(`/api/family/status?clerk_id=${user.clerk_id}`);
       if (!response.ok) {
@@ -62,6 +72,10 @@ function Family({ user }) {
 
   const handleCreateFamily = async () => {
     console.log('Creating family with name:', newFamilyName);
+    if (!user || !user.clerk_id) {
+      console.error('User data or clerk_id is missing');
+      return;
+    }
     try {
       const response = await fetch('/api/families', {
         method: 'POST',
@@ -76,7 +90,12 @@ function Family({ user }) {
       if (!response.ok) {
         throw new Error('Failed to create family');
       }
-      console.log('Family created successfully');
+      const data = await response.json();
+      console.log('Family created successfully', data);
+
+      setIsInFamily(true);
+      setFamilyData(data.family);
+
       fetchAllFamilies();
     } catch (error) {
       console.error('Error creating family:', error);
@@ -88,6 +107,10 @@ function Family({ user }) {
 
   const toggleFamilyMembership = async (familyId) => {
     console.log(`Toggling family membership for family ID: ${familyId}`);
+    if (!user || !user.clerk_id) {
+      console.error('User data or clerk_id is missing');
+      return;
+    }
     try {
       const response = await fetch(`/api/family/membership/${familyId}`, {
         method: 'POST',
@@ -114,24 +137,29 @@ function Family({ user }) {
   );
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      {isInFamily ? (
+    <div className="my-20 mx-12 p-20 max-w-4xl mx-auto bg-gray-100 shadow-lg container">
+      {isInFamily && familyData ? (
         <>
           <h2 className="text-4xl font-semibold text-gray-800 mb-4">
-            Welcome to the {familyData ? familyData.name : '...'} Family Dashboard
+            Welcome to the {familyData.name} Family Cookbook
           </h2>
           <p className="text-gray-600 mb-6">
-            As a member of the {familyData ? familyData.name : '...'} family, you can access shared recipes uploaded by other members.
+            As a member of the {familyData.name} family, you can access shared recipes uploaded by other members.
           </p>
+
           <h3 className="text-2xl font-medium text-gray-700 mb-2">Family Recipes:</h3>
-          <div id="family-recipe-list" className="flex flex-row flex-wrap space-y-12">
-            {familyRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-            ))}
+          <div id="family-recipe-list" className="section">
+            <div className="section-content">
+              <div className="flex flex-wrap justify-center">
+                {familyRecipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+                ))}
+              </div>
+            </div>
           </div>
           
           <h3 className="text-2xl font-medium text-gray-700 mb-2">Family Members:</h3>
-          <ul className="space-y-4">
+          <ul className="space-y-4 space-x-4">
             {familyData.members.map((member) => (
               <li key={member.clerk_id} >
                 <span>{member.first_name} {member.last_name}</span>
@@ -148,7 +176,7 @@ function Family({ user }) {
         </>
       ) : (
         <>
-          <h2 className="text-4xl font-semibold text-gray-800 mb-4">Welcome to the Family Dashboard</h2>
+          <h2 className="text-2xl font-semibold py-12">My Family's Recipes</h2>
           <p className="text-gray-600 mb-6">
             Joining a family allows you to upload recipes only members can view. Choose a family from the list below or create your own family group.
           </p>
@@ -215,4 +243,3 @@ function Family({ user }) {
 }
 
 export default Family;
-

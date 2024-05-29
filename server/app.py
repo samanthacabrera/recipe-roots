@@ -323,6 +323,28 @@ def toggle_favorite():
         return jsonify({"error": "Could not toggle favorite status"}), 422
 
 
+# @app.route('/families', methods=['POST'])
+# def create_family():
+#     try:
+#         data = request.get_json()
+#         name = data.get('name')
+#         moderator_id = data.get('moderator_id')
+
+#         if not name or not moderator_id:
+#             return jsonify({"error": "Name and moderator_id are required"}), 400
+
+#         moderator = User.query.filter_by(clerk_id=moderator_id).first()
+#         if not moderator:
+#             return jsonify({"error": "Moderator not found"}), 404
+
+#         new_family = Family(name=name, moderator_id=moderator_id)
+#         db.session.add(new_family)
+#         db.session.commit()
+
+#         return jsonify({"success": "Family created successfully", "family": new_family.to_dict()}), 201
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"error": "Could not create family"}), 500
 @app.route('/families', methods=['POST'])
 def create_family():
     try:
@@ -341,11 +363,15 @@ def create_family():
         db.session.add(new_family)
         db.session.commit()
 
+        new_family.members.append(moderator)
+        moderator.family_id = new_family.id
+        db.session.commit()
+
         return jsonify({"success": "Family created successfully", "family": new_family.to_dict()}), 201
     except Exception as e:
         print(e)
         return jsonify({"error": "Could not create family"}), 500
-    
+  
 
 @app.route('/families')
 def get_all_families():
@@ -445,16 +471,6 @@ def upload_photo():
         print("Error handling public ID:", str(e))
         return jsonify({"error": "Internal server error"}), 500
 
-
-@app.route('/photo/<public_id>', methods=['GET'])
-def get_photo(public_id):
-    try:
-        url = cloudinary.CloudinaryImage(public_id).build_url()
-        return jsonify({"url": url}), 200
-    except Exception as e:
-        print(f"Error fetching photo: {e}")
-        return jsonify({"error": "Could not fetch photo"}), 500
-    
 
 if __name__ == '__main__':
     app.run(debug=True)

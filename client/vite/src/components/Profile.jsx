@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
+import Family from "./Family"
 
 function Profile({ user }) {
   const [addedRecipes, setAddedRecipes] = useState([]);
@@ -71,6 +72,8 @@ function Profile({ user }) {
           )}
         </ul>
       </div>
+      
+      <Family user={user} />
     </>
   );
 }

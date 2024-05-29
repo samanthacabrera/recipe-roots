@@ -4,7 +4,6 @@ import { useUser } from "@clerk/clerk-react";
 import Global from './components/Global'
 import Profile from './components/Profile';
 import Mission from './components/Mission';
-import Family from './components/Family';
 import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
 
@@ -51,7 +50,6 @@ function App() {
         <Route path="/" element={<Global user={userData} />} />
         <Route path="/profile" element={<Profile user={userData} />} />
         <Route path="/mission" element={<Mission />} />
-        <Route path="/family" element={<Family user={userData} />} />
         <Route path="/recipes/:id" element={<RecipePage user={userData}/>} />
       </Routes>
     </Router>

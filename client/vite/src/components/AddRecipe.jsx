@@ -113,7 +113,7 @@ const sendPublicIdToBackend = async (publicId) => {
     } catch (error) {
         console.error("Error sending public ID to backend:", error.message);
     }
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -375,4 +375,3 @@ const sendPublicIdToBackend = async (publicId) => {
 };
 
 export default AddRecipe;
-

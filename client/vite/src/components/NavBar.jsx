@@ -39,7 +39,6 @@ function NavBar() {
                     <SignedIn>
                         <UserButton />
                         <Link to="/" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Global</Link>
-                        <Link to="/family" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Family</Link>
                         <Link to="/profile" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Cookbook</Link>
                         <Link to="/mission" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Our Mission</Link>
                         <input 
