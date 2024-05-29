@@ -126,6 +126,7 @@ function RecipePage({ user }) {
             />
             {isEditing && (
                 <EditRecipe
+                    user={user}
                     editForm={editForm}
                     onChange={handleEditChange}
                     handleEditSubmit={handleEditSubmit}

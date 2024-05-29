@@ -5,12 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, inspect
 from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
-from os import *
 import cloudinary
 import cloudinary.uploader
-import cloudinary.api
-
-
+import os
 
 
 app = Flask(__name__)
@@ -33,8 +30,10 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
+
 cloudinary.config(
-    cloud_name="dqwkvvhaq",
-    api_key="679418153555526",
-    api_secret="LazczTqaStibuPmdP4UhRTffKFA"
+    cloud_name='dbbrrtr9t',
+    api_key=os.getenv('api_key'),
+    api_secret=os.getenv('api_secret')
 )
+app.secret_key = os.getenv('secret_key')

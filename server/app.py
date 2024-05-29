@@ -323,28 +323,6 @@ def toggle_favorite():
         return jsonify({"error": "Could not toggle favorite status"}), 422
 
 
-# @app.route('/families', methods=['POST'])
-# def create_family():
-#     try:
-#         data = request.get_json()
-#         name = data.get('name')
-#         moderator_id = data.get('moderator_id')
-
-#         if not name or not moderator_id:
-#             return jsonify({"error": "Name and moderator_id are required"}), 400
-
-#         moderator = User.query.filter_by(clerk_id=moderator_id).first()
-#         if not moderator:
-#             return jsonify({"error": "Moderator not found"}), 404
-
-#         new_family = Family(name=name, moderator_id=moderator_id)
-#         db.session.add(new_family)
-#         db.session.commit()
-
-#         return jsonify({"success": "Family created successfully", "family": new_family.to_dict()}), 201
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "Could not create family"}), 500
 @app.route('/families', methods=['POST'])
 def create_family():
     try:
@@ -450,26 +428,6 @@ def toggle_family_membership(family_id):
     except Exception as e:
         print(e)
         return jsonify({"error": "An error occurred"}), 500
-
-
-@app.route('/upload', methods=['POST'])
-def upload_photo():
-    try:
-        data = request.json
-        public_id = data.get('publicId')
-        print("Received public ID:", public_id)
-
-        default_title = "Untitled Recipe"
-
-        recipe = Recipe(creator_photo_public_id=public_id, title=default_title)
-        db.session.add(recipe)
-        db.session.commit()
-
-        return jsonify({"message": "Public ID received and saved successfully"}), 200
-
-    except Exception as e:
-        print("Error handling public ID:", str(e))
-        return jsonify({"error": "Internal server error"}), 500
 
 
 if __name__ == '__main__':

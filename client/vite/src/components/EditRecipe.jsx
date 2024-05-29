@@ -1,14 +1,146 @@
+// import React, { useState, useEffect } from "react";
+// import { useParams } from 'react-router-dom';
+// import { countries, imperialUnits } from "/Users/samanthacabrera/FlatIron/phase-5/recipeRoots/client/vite/constants";
+
+// function EditRecipe() {
+//     const { id } = useParams(); 
+//     const [step, setStep] = useState(1);
+//     const [isInFamily, setIsInFamily] = useState(false);
+//     const [isEditing, setIsEditing] = useState(false); 
+//     const [recipe, setRecipe] = useState(null); 
+//     const [isLoading, setIsLoading] = useState(true);
+//     const [formData, setFormData] = useState({
+//         creator_name: "",
+//         creator_nickname: "",
+//         creator_photo_public_id: "",
+//         memory: "",
+//         title: "",
+//         country: "",
+//         desc: "",
+//         visibility: "global",
+//         ingredients: [{ name: "", quantity: "", unit: "" }],
+//         directions: [{ step: "" }]
+//     });
+
+//     useEffect(() => {
+//     const fetchRecipe = async () => {
+//         try {
+
+//             const response = await fetch(`/api/recipes/${id}`);
+//             console.log("Response:", response);
+//             const data = await response.json();
+//             console.log("Recipe data:", data);
+//             setRecipe(data.recipe);
+//             setIsInFamily(data.isInFamily);
+//             setIsEditing(data.recipe.creator_id === window.Clerk.user.id); 
+//             setIsLoading(false);
+//         } catch (error) {
+//             console.error("Failed to fetch recipe:", error.message);
+//         }
+//     };
+
+//     fetchRecipe();
+// }, [id]);
+
+
+//     const handleInputChange = (index, type, name, value) => {
+//         if (Array.isArray(formData[type])) {
+//             const updatedData = formData[type].map((item, i) => {
+//                 if (i === index) {
+//                     return { ...item, [name]: value };
+//                 }
+//                 return item;
+//             });
+//             setFormData(prevState => ({
+//                 ...prevState,
+//                 [type]: updatedData
+//             }));
+//         } else {
+//             setFormData(prevState => ({
+//                 ...prevState,
+//                 [type]: value
+//             }));
+//         }
+//     };
+
+//     const handleAddInput = (type) => {
+//         setFormData(prevState => ({
+//             ...prevState,
+//             [type]: [...formData[type], type === "ingredients" ? { name: "", quantity: "", unit: "" } : { step: "" }]
+//         }));
+//     };
+
+//     const handleRemoveInput = (index, type) => {
+//         const updatedData = formData[type].filter((_, i) => i !== index);
+//         setFormData(prevState => ({
+//             ...prevState,
+//             [type]: updatedData
+//         }));
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         try {
+//             const response = await fetch(`/api/recipe/${recipe.id}`, {
+//                 method: "PUT",
+//                 headers: {
+//                     "Content-Type": "application/json"
+//                 },
+//                 body: JSON.stringify({
+//                     ...formData,
+//                     clerk_id: window.Clerk.user.id
+//                 })
+//             });
+//             if (response.ok) {
+//                 alert("Recipe successfully updated!!");
+//                 // Reset form data and step if needed
+//                 setFormData({
+//                     creator_name: "",
+//                     creator_nickname: "",
+//                     creator_photo_public_id: "",
+//                     memory: "",
+//                     title: "",
+//                     country: "",
+//                     desc: "",
+//                     visibility: "global",
+//                     ingredients: [{ name: "", quantity: "", unit: "" }],
+//                     directions: [{ step: "" }]
+//                 });
+//                 setStep(1);
+//             } else {
+//                 alert("Failed to update recipe");
+//             }
+//         } catch (error) {
+//             console.error("Failed to update recipe:", error.message);
+//         }
+//     };
+
+//     const nextStep = () => {
+//         setStep(step + 1);
+//     };
+
+//     const prevStep = () => {
+//         setStep(step - 1);
+//     };
+
+//     if (isLoading) {
+//         return <div>Loading...</div>;
+//     }
+
+//     if (!isEditing) {
+//         return <div>You are not authorized to edit this recipe.</div>;
+//     }
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { countries, imperialUnits } from "/Users/samanthacabrera/FlatIron/phase-5/recipeRoots/client/vite/constants";
 
-function EditRecipe() {
-    const { id } = useParams(); // Import useParams from react-router-dom to access route parameters
+function EditRecipe({user}) {
+    const { id } = useParams(); 
     const [step, setStep] = useState(1);
     const [isInFamily, setIsInFamily] = useState(false);
-    const [isEditing, setIsEditing] = useState(false); // State to track if the user is editing the recipe
-    const [recipe, setRecipe] = useState(null); // State to store the recipe data
-    const [isLoading, setIsLoading] = useState(true); // State to track loading state
+    const [isEditing, setIsEditing] = useState(false); 
+    const [recipe, setRecipe] = useState(null); 
+    const [isLoading, setIsLoading] = useState(true);
     const [formData, setFormData] = useState({
         creator_name: "",
         creator_nickname: "",
@@ -22,22 +154,30 @@ function EditRecipe() {
         directions: [{ step: "" }]
     });
 
-    useEffect(() => {
-    const fetchRecipe = async () => {
-        try {
-            // Fetch recipe data from API using the id parameter from the route
-            const response = await fetch(`/api/recipes/${id}`);
-            console.log("Response:", response);
-            const data = await response.json();
-            console.log("Recipe data:", data);
+useEffect(() => {
+const fetchRecipe = () => {
+    fetch(`/api/recipes/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch recipe: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Data:", data);
             setRecipe(data.recipe);
             setIsInFamily(data.isInFamily);
-            setIsEditing(data.recipe.creator_id === window.Clerk.user.id); // Check if the current user is the creator of the recipe
+            const currentUserId = window.Clerk.user.id;
+            console.log("Current User ID:", currentUserId);
+            const isAuthorized = data.recipe && data.recipe.creator_id === currentUserId;
+            console.log("Is Authorized:", isAuthorized);
+            setIsEditing(isAuthorized);
             setIsLoading(false);
-        } catch (error) {
+        })
+        .catch(error => {
             console.error("Failed to fetch recipe:", error.message);
-        }
-    };
+        });
+};
 
     fetchRecipe();
 }, [id]);
@@ -123,13 +263,13 @@ function EditRecipe() {
         setStep(step - 1);
     };
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+if (isLoading) {
+    return <div>Loading...</div>;
+}
 
-    if (!isEditing) {
-        return <div>You are not authorized to edit this recipe.</div>;
-    }
+if (!isEditing) {
+    return <div>You are not authorized to edit this recipe.</div>;
+}
 
     return (
         <div>

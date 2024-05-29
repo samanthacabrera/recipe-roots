@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { countries, imperialUnits, metricUnits } from "/Users/samanthacabrera/FlatIron/phase-5/recipeRoots/client/vite/constants";
 
 function AddRecipe() {
+  const [photo, setPhoto] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState('');
   const [step, setStep] = useState(1);
   const [isInFamily, setIsInFamily] = useState(false);
 
@@ -72,84 +74,74 @@ function AddRecipe() {
     }));
   };
 
+  
+  const handlePhotoUpload = (file) => {
+  console.log('Uploading photo to Cloudinary...');
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'blunavtc');
 
-const handlePhotoUpload = async (file) => {
-    console.log("File selected by user:", file);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'blunavtc');
-
-    try {
-        console.log("Attempting to upload photo to Cloudinary");
-        console.log("Form data before appending file:", formData); 
-        const cloudinaryResponse = await fetch("https://api.cloudinary.com/v1_1/dqwkvvhaq/image/upload", {
-            method: "POST",
-            body: formData
-        });
-        const cloudinaryData = await cloudinaryResponse.json();
-        console.log("Response from Cloudinary:", cloudinaryData);
-
-        const publicId = cloudinaryData.public_id;
-        console.log("Public ID:", publicId);
-        await sendPublicIdToBackend(publicId);
-
-    } catch (error) {
-        console.error("Image upload failed:", error.message);
+  fetch('https://api.cloudinary.com/v1_1/dqwkvvhaq/image/upload', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to upload photo');
     }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Photo uploaded successfully:', data.url);
+    setPhotoUrl(data.url);
+    setPhoto(file);
+  })
+  .catch(error => {
+    console.error('Error uploading photo:', error);
+  });
 };
 
-const sendPublicIdToBackend = async (publicId) => {
-    try {
-        console.log("Sending public ID to backend:", publicId);
-        const backendResponse = await fetch('/api/upload', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ publicId }) 
-        });
-        const backendData = await backendResponse.json();
-        console.log("Response from backend:", backendData);
-    } catch (error) {
-        console.error("Error sending public ID to backend:", error.message);
-    }
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/create_recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ...formData,
-          clerk_id: window.Clerk.user.id
-        })
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log('Submitting recipe data:', formData);
+  try {
+    const response = await fetch("/api/create_recipe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ...formData,
+        clerk_id: window.Clerk.user.id,
+        creator_photo_public_id: photoUrl
+      })
+    });
+    if (response.ok) {
+      console.log('Recipe successfully added!!');
+      alert("Recipe successfully added!!");
+      setFormData({
+        creator_name: "",
+        creator_nickname: "",
+        creator_photo_public_id: "",
+        memory: "",
+        title: "",
+        country: "",
+        desc: "",
+        visibility: "global",
+        ingredients: [{ name: "", quantity: "", unit: "" }],
+        directions: [{ step: "" }]
       });
-      if (response.ok) {
-        alert("Recipe successfully added!!");
-        setFormData({
-          creator_name: "",
-          creator_nickname: "",
-          creator_photo_public_id: "",
-          memory: "",
-          title: "",
-          country: "",
-          desc: "",
-          visibility: "global",
-          ingredients: [{ name: "", quantity: "", unit: "" }],
-          directions: [{ step: "" }]
-        });
-        setStep(1);
-      } else {
-        alert("Failed to add recipe");
-      }
-    } catch (error) {
-      console.error("Failed to add recipe:", error.message);
+      setStep(1);
+    } else {
+      console.error('Failed to add recipe');
+      alert("Failed to add recipe");
     }
-  };
+  } catch (error) {
+    console.error("Failed to add recipe:", error.message);
+  }
+};
+
 
   const nextStep = () => {
     setStep(step + 1);
@@ -193,13 +185,13 @@ const sendPublicIdToBackend = async (publicId) => {
             <div className="mb-2">
               <label htmlFor="creator_photo" className="block text-sm font-medium">Creator's Photo (Optional)</label>
               <input
-                type="file"
-                name="creator_photo"
-                id="creator_photo"
-                accept="image/*"
-                onChange={(e) => handlePhotoUpload(e.target.files[0])}
-                className="w-full p-2 border rounded"
-              />
+  type="file"
+  name="creator_photo"
+  id="creator_photo"
+  accept="image/*"
+  onChange={(e) => handlePhotoUpload(e.target.files[0])}
+  className="w-full p-2 border rounded"
+/>
             </div>
             <div className="mb-2">
               <label htmlFor="memory" className="block text-sm font-medium">Memory</label>

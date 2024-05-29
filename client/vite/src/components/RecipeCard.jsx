@@ -3,34 +3,19 @@ import { Link } from "react-router-dom";
 import Favorite from "./Favorite";
 
 function RecipeCard({ recipe, user }) {
-  const [backgroundImage, setBackgroundImage] = useState('');
+  const [bgImage, setBgImage] = useState(""); // State to store background image URL
 
   useEffect(() => {
-    const fetchPhoto = async () => {
-      try {
-        const response = await fetch(`/photo/${recipe.creator_photo_public_id}`);
-
-        if (response.ok) {
-          const contentType = response.headers.get("content-type");
-          if (contentType && contentType.indexOf("application/json") !== -1) {
-            const data = await response.json();
-            setBackgroundImage(data.url);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching photo:', error);
-      }
-    };
-    fetchPhoto();
-  }, [recipe.creator_photo_public_id]);
+    if (recipe.creator_photo_public_id) {
+      // If recipe has a creator photo, set it as the background image
+      setBgImage(`url(${recipe.creator_photo_public_id})`);
+    }
+  }, [recipe.creator_photo_public_id]); // Update background image when creator photo changes
 
   return (
     <div
       className="recipe-card w-full md:w-1/2 lg:w-1/3 p-4 border border-gray-200 rounded-lg shadow-sm transition-shadow duration-300 hover:shadow-lg"
       style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         color: 'white',
         height: '500px', 
         width: '350px',  
@@ -41,7 +26,9 @@ function RecipeCard({ recipe, user }) {
         borderRadius: '10px',
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         transition: 'transform 0.3s ease-in-out',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        backgroundImage: bgImage, // Set background image dynamically
+        backgroundSize: 'cover', // Adjust background size to cover the div
       }}
       onClick={() => window.location.href = `/recipes/${recipe.id}`} // Redirect on click
     >
