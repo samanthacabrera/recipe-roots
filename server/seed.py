@@ -250,5 +250,156 @@ if __name__ == '__main__':
             user_clerk_id=1,
 
         )
+        # Taiwanese Family Recipe: Beef Noodle Soup
+        create_recipe(
+            title="Beef Noodle Soup",
+            creator_name="Pei-Ying Lin",
+            creator_nickname="",
+            creator_bio="The Lin family from Taiwan shares their famous Beef Noodle Soup recipe, a beloved Taiwanese comfort food.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717129636/creator7.jpg", 
+            memory="The Chen family from Taiwan shares their famous Beef Noodle Soup recipe.",
+            country="Taiwan",
+            desc="Beef Noodle Soup is a hearty Taiwanese soup made with braised beef, noodles, and a rich broth flavored with aromatic spices.",
+            visibility="global",
+            ingredients=[
+                {"name": "Beef shank", "quantity": 1, "unit": "lb"},
+                {"name": "Beef broth", "quantity": 4, "unit": "cups"},
+                {"name": "Soy sauce", "quantity": 1/4, "unit": "cup"},
+                {"name": "Dark soy sauce", "quantity": 2, "unit": "tbsp"},
+                {"name": "Star anise", "quantity": 3, "unit": ""},
+                {"name": "Cinnamon stick", "quantity": 1, "unit": ""},
+                {"name": "Ginger", "quantity": 1, "unit": "inch piece"},
+                {"name": "Garlic", "quantity": 3, "unit": "cloves"},
+                {"name": "Scallions", "quantity": 4, "unit": ""},
+                {"name": "Dried noodles", "quantity": 8, "unit": "oz"},
+                {"name": "Bok choy", "quantity": 2, "unit": ""},
+                {"name": "Chopped cilantro", "quantity": 1/4, "unit": "cup"},
+                {"name": "Chili oil", "quantity": 2, "unit": "tbsp"}
+            ],
+            directions=[
+                {"step": "In a large pot, heat some oil and sear the beef shank until browned on all sides."},
+                {"step": "Add beef broth, soy sauce, dark soy sauce, star anise, cinnamon stick, ginger, garlic, and scallions to the pot."},
+                {"step": "Simmer covered for 2-3 hours until beef is tender, then remove beef and shred it."},
+                {"step": "Cook noodles according to package instructions, then divide among bowls and top with shredded beef."},
+                {"step": "Add bok choy to the broth and cook until tender, then ladle broth over noodles and beef."},
+                {"step": "Garnish with chopped cilantro and drizzle with chili oil before serving."}
+            ],
+            user_clerk_id=1,
+        )
 
-            
+        # Mexican Family Recipe: Tacos al Pastor
+        create_recipe(
+            title="Tacos al Pastor",
+            creator_name="Mario Hernandez",
+            creator_nickname="",
+            creator_bio="The Hernandez family from Mexico shares their authentic Tacos al Pastor recipe, a classic Mexican street food favorite.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717129480/creator1.jpg", 
+            memory="The Hernandez family from Mexico shares their authentic Tacos al Pastor recipe.",
+            country="Mexico",
+            desc="Tacos al Pastor are delicious Mexican tacos made with marinated pork, pineapple, onions, and cilantro, served on corn tortillas.",
+            visibility="global",
+            ingredients=[
+                {"name": "Pork shoulder", "quantity": 2, "unit": "lbs"},
+                {"name": "Corn tortillas", "quantity": 16, "unit": ""},
+                {"name": "Pineapple", "quantity": 1, "unit": ""},
+                {"name": "Onion", "quantity": 1, "unit": ""},
+                {"name": "Cilantro", "quantity": 1/2, "unit": "bunch"},
+                {"name": "Garlic", "quantity": 4, "unit": "cloves"},
+                {"name": "Achiote paste", "quantity": 2, "unit": "tbsp"},
+                {"name": "White vinegar", "quantity": 1/4, "unit": "cup"},
+                {"name": "Orange juice", "quantity": 1/2, "unit": "cup"},
+                {"name": "Cumin", "quantity": 1, "unit": "tsp"},
+                {"name": "Oregano", "quantity": 1, "unit": "tsp"},
+                {"name": "Salt", "quantity": 1, "unit": "tsp"}
+            ],
+            directions=[
+                {"step": "Blend achiote paste, white vinegar, orange juice, cumin, oregano, salt, garlic, and a splash of water to make marinade."},
+                {"step": "Slice pork shoulder thinly and marinate in the mixture for at least 2 hours or overnight."},
+                {"step": "Grill marinated pork until cooked through and slightly charred, then chop into smaller pieces."},
+                {"step": "Chop pineapple and onion into small pieces, and chop cilantro."},
+                {"step": "Warm corn tortillas, then fill each with grilled pork, pineapple, onion, and cilantro."},
+                {"step": "Serve hot with lime wedges and your favorite salsa."}
+            ],
+            user_clerk_id=1,
+        )
+
+        # Hungarian Family Recipe: Goulash
+        create_recipe(
+            title="Goulash",
+            creator_name="Andras Kovacs",
+            creator_nickname="",
+            creator_bio="The Kovacs family from Hungary shares their traditional Goulash recipe, a hearty Hungarian stew.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717128591/creator6.jpg", 
+            memory="The Kovacs family from Hungary shares their traditional Goulash recipe.",
+            country="Hungary",
+            desc="Goulash is a hearty Hungarian stew made with beef, onions, paprika, tomatoes, and potatoes, seasoned with Hungarian spices.",
+            visibility="global",
+            ingredients=[
+                {"name": "Beef stew meat", "quantity": 2, "unit": "lbs"},
+                {"name": "Onion", "quantity": 2, "unit": ""},
+                {"name": "Potatoes", "quantity": 4, "unit": ""},
+                {"name": "Tomatoes", "quantity": 3, "unit": ""},
+                {"name": "Garlic", "quantity": 3, "unit": "cloves"},
+                {"name": "Beef broth", "quantity": 4, "unit": "cups"},
+                {"name": "Paprika", "quantity": 2, "unit": "tbsp"},
+                {"name": "Caraway seeds", "quantity": 1, "unit": "tbsp"},
+                {"name": "Bay leaves", "quantity": 2, "unit": ""},
+                {"name": "Salt", "quantity": 2, "unit": "tsp"},
+                {"name": "Black pepper", "quantity": 1, "unit": "tsp"},
+                {"name": "Vegetable oil", "quantity": 2, "unit": "tbsp"}
+            ],
+            directions=[
+                {"step": "Heat vegetable oil in a large pot over medium heat."},
+                {"step": "Add diced onions and minced garlic, and sauté until softened."},
+                {"step": "Add beef stew meat to the pot and brown on all sides."},
+                {"step": "Stir in paprika, caraway seeds, salt, and black pepper."},
+                {"step": "Add diced tomatoes, beef broth, and bay leaves to the pot."},
+                {"step": "Bring to a boil, then reduce heat and simmer covered for about 1.5-2 hours until beef is tender."},
+                {"step": "Add diced potatoes to the pot and continue to simmer until potatoes are cooked through."},
+                {"step": "Adjust seasoning if needed, then serve hot, garnished with chopped parsley if desired."}
+            ],
+            user_clerk_id=1,
+        )
+
+        # Slovenian Family Recipe: Potica
+        create_recipe(
+            title="Potica",
+            creator_name="Maja Novak",
+            creator_nickname="",
+            creator_bio="The Novak family from Slovenia shares their traditional Potica recipe, a sweet Slovenian nut roll.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717100035/creator2.jpg", 
+            memory="The Novak family from Slovenia shares their traditional Potica recipe.",
+            country="Slovenia",
+            desc="Potica is a traditional Slovenian dessert made with sweet yeast dough rolled with a filling of ground nuts, honey, and spices.",
+            visibility="global",
+            ingredients=[
+                {"name": "All-purpose flour", "quantity": 4, "unit": "cups"},
+                {"name": "Active dry yeast", "quantity": 1, "unit": "packet"},
+                {"name": "Milk", "quantity": 1, "unit": "cup"},
+                {"name": "Butter", "quantity": 1/2, "unit": "cup"},
+                {"name": "Granulated sugar", "quantity": 1/2, "unit": "cup"},
+                {"name": "Salt", "quantity": 1/2, "unit": "tsp"},
+                {"name": "Eggs", "quantity": 2, "unit": ""},
+                {"name": "Ground walnuts", "quantity": 2, "unit": "cups"},
+                {"name": "Honey", "quantity": 1, "unit": "cup"},
+                {"name": "Cinnamon", "quantity": 1, "unit": "tsp"},
+                {"name": "Vanilla extract", "quantity": 1, "unit": "tsp"},
+                {"name": "Rum", "quantity": 2, "unit": "tbsp"}
+            ],
+            directions=[
+                {"step": "In a small bowl, dissolve yeast in warm milk with a pinch of sugar and let it sit until foamy."},
+                {"step": "In a large bowl, combine flour, sugar, and salt. Cut in butter until mixture resembles coarse crumbs."},
+                {"step": "Add yeast mixture and beaten eggs to the flour mixture, and knead until a smooth dough forms."},
+                {"step": "Cover dough and let it rise in a warm place until doubled in size, about 1 hour."},
+                {"step": "In the meantime, prepare the filling by mixing ground walnuts, honey, cinnamon, vanilla extract, and rum."},
+                {"step": "Roll out the dough into a rectangle, spread the filling evenly over the dough, then roll it up tightly."},
+                {"step": "Place rolled dough into a greased loaf pan, cover, and let it rise again for about 30 minutes."},
+                {"step": "Bake in a preheated oven at 350°F (175°C) for 45-50 minutes until golden brown and cooked through."},
+                {"step": "Let it cool before slicing and serving. Enjoy your delicious Potica!"}
+            ],
+            user_clerk_id=1,
+        )
+
+
+
+                            

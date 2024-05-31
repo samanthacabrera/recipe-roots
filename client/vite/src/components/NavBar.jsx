@@ -41,20 +41,19 @@ function NavBar() {
                         <Link to="/" className="nav-link">Global</Link>
                         <Link to="/profile" className="nav-link">Cookbook</Link>
                         <Link to="/mission" className="nav-link">Our Mission</Link>
-                        <div className="translate-x-96">
-                        <input 
-                            type="text" 
-                            placeholder="Search" 
-                            className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500 transition-all duration-300"
-                            value={searchQuery}
-                            onChange={handleSearch}
-                        />
-                        </div>
-                        
-                        <div className="translate-x-96">
-                            <UserButton/>
-                        </div>
-                      
+                    </SignedIn>
+                </div>
+                
+                <div className="flex items-center space-x-4">
+                    <input 
+                        type="text" 
+                        placeholder="Search" 
+                        className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                    />
+                    <SignedIn>
+                        <UserButton/>
                     </SignedIn>
                 </div>
             </div>
@@ -71,6 +70,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
-
-
