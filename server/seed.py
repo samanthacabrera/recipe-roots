@@ -1,7 +1,7 @@
 from models import *
 from services import *
 
-def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_photo_public_id, memory, country, desc, ingredients, directions, user_clerk_id, family_id=None):
+def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_photo_public_id, memory, country, desc, visibility, ingredients, directions, user_clerk_id, family_id=None):
     recipe = Recipe(
         title=title,
         creator_name=creator_name,
@@ -11,6 +11,7 @@ def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_ph
         memory=memory,
         country=country,
         desc=desc,
+        visibility=visibility,
         user_clerk_id=user_clerk_id,
         family_id=family_id
     )
@@ -41,9 +42,27 @@ if __name__ == '__main__':
         db.drop_all()
         db.create_all()
 
+        # Create the Cabrera family
+        cabrera_family = Family(
+            name="Cabrera",
+            moderator_id="user_2gYebZGxBeBdQbTBV8SSJQ4SaHA"  # You need to replace this with the actual moderator ID
+        )
+        db.session.add(cabrera_family)
+        db.session.commit()
+
+        # Create Elsa Cabrera
+        elsa = User(
+            clerk_id="user_2hDLKhW3XuVHeefS4fO1YBVK5B1",  # You need to replace this with the actual clerk ID
+            first_name="Elsa",
+            last_name="Cabrera",
+            family=cabrera_family  # Associate Elsa with the Cabrera family
+        )
+        db.session.add(elsa)
+        db.session.commit()
+
         # Elsa's Pupusas recipe
         create_recipe(
-            title="Elsa's Pupusas",
+            title="Pupusas",
             creator_name="Elsa Cabrera",
             creator_nickname="Elsa",
             creator_bio="Elsa Cabrera from El Salvador is sharing her beloved pupusas recipe. Join her in discovering the rich flavors and traditional techniques that make this dish so special.",
@@ -51,6 +70,7 @@ if __name__ == '__main__':
             memory="Elsa Cabrera from El Salvador is sharing her beloved pupusas recipe.",
             country="El Salvador",
             desc="Pupusas are a traditional Salvadoran dish made of thick, handmade corn tortillas filled with various ingredients.",
+            visibility="family",
             ingredients=[
                 {"name": "Corn flour", "quantity": "2 cups", "unit": ""},
                 {"name": "Water", "quantity": "1 1/2 cups", "unit": ""},
@@ -66,9 +86,9 @@ if __name__ == '__main__':
                 {"step": "Cook the pupusas on a hot griddle until golden brown on both sides."},
                 {"step": "Serve hot with curtido on the side."}
             ],
-            user_clerk_id=1
+            user_clerk_id="user_2hDLKhW3XuVHeefS4fO1YBVK5B1" , # Associate the recipe with Elsa
+            family_id=1  # Associate the recipe with the Cabrera family
         )
-
         # Alice's Pandekager recipe
         create_recipe(
             title="Pandekager",
@@ -79,6 +99,7 @@ if __name__ == '__main__':
             memory="Ida Widman from Denmark is delighted to share her Pandekager recipe.",
             country="Denmark",
             desc="Pandekager are thin Danish pancakes often served with sweet or savory toppings.",
+            visibility="global",
             ingredients=[
                 {"name": "Flour", "quantity": "1 cup", "unit": ""},
                 {"name": "Milk", "quantity": "1 cup", "unit": ""},
@@ -99,7 +120,7 @@ if __name__ == '__main__':
 
         # Augusto's Marinara recipe
         create_recipe(
-            title="Augusto's Marinara Sauce",
+            title="Marinara Sauce",
             creator_name="Augusto",
             creator_nickname="",
             creator_bio="Augusto from Italy brings his cherished marinara recipe. Experience the authentic taste of Italy as Anthony guides you through the process of making this classic sauce.",
@@ -107,6 +128,7 @@ if __name__ == '__main__':
             memory="Anthony from Italy brings his cherished marinara recipe.",
             country="Italy",
             desc="Marinara sauce is a classic Italian tomato sauce made with tomatoes, garlic, onions, and herbs.",
+            visibility="global",
             ingredients=[
                 {"name": "Tomatoes", "quantity": "2 lbs", "unit": ""},
                 {"name": "Garlic", "quantity": "4 cloves", "unit": ""},
@@ -137,6 +159,7 @@ if __name__ == '__main__':
             memory="The Tan family from Malaysia shares their beloved Nasi Lemak recipe.",
             country="Malaysia",
             desc="Nasi Lemak is a fragrant rice dish cooked in coconut milk and pandan leaves, served with various accompaniments.",
+            visibility="global",
             ingredients=[
                 {"name": "Jasmine rice", "quantity": 2, "unit": "cups"},
                 {"name": "Coconut milk", "quantity": 2, "unit": "cups"},
@@ -167,6 +190,7 @@ if __name__ == '__main__':
             memory="The Diop family from Senegal shares their cherished Thieboudienne recipe.",
             country="Senegal",
             desc="Thieboudienne is a flavorful Senegalese dish featuring fish cooked in a tomato-based sauce with vegetables, served over rice.",
+            visibility="global",
             ingredients=[
                 {"name": "Fish", "quantity": 2, "unit": ""},
                 {"name": "Rice", "quantity": 3, "unit": "cups"},
@@ -201,6 +225,7 @@ if __name__ == '__main__':
             memory="The Khalil family from Lebanon shares their treasured Tabbouleh recipe.",
             country="Lebanon",
             desc="Tabbouleh is a refreshing Lebanese salad made with parsley, tomatoes, mint, bulgur, and a tangy lemon dressing.",
+            visibility="global",
             ingredients=[
                 {"name": "Parsley", "quantity": 4, "unit": "bunches"},
                 {"name": "Tomatoes", "quantity": 6, "unit": ""},

@@ -55,8 +55,8 @@ function Global({ user }) {
       
       {featuredCountry && (
           <>
-            <h2 className="pt-40 text-2xl">Featured recipes from {featuredCountry.name}</h2>
-            <p className="mx-56">{featuredCountry.description}</p>
+            <h2 className="pt-40 text-2xl">Featured recipe from {featuredCountry.name}</h2>
+            <p className="mx-56 -translate-y-12">{featuredCountry.description}</p>
             <div className="flex flex-col items-center">
               {filteredRecipes.map((recipe) => (
                 <RecipeCard key={recipe.id} user={user} recipe={recipe} />
@@ -65,7 +65,8 @@ function Global({ user }) {
         </>
       )}
 
-      <p className="text-4xl">List of all recipes</p>
+      <p className="text-2xl">Browse recipes from around the world</p>
+   
       <div className="ml-24 recipe-list">
       {globalRecipes.map((recipe) => (
         <RecipeCard key={recipe.id} user={user} recipe={recipe} />

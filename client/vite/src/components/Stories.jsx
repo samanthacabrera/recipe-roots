@@ -66,7 +66,7 @@ const Stories = () => {
               {slide.text}
             </p>
 
-            <button className="translate-y-96 p-2 rounded outline w-fit" onClick={handleClick}>Read More</button>
+            {/* <button className="translate-y-96 p-2 rounded outline w-fit" onClick={handleClick}>Read More</button> */}
 
           </div>
         </div>

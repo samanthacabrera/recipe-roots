@@ -7,6 +7,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     const [step, setStep] = useState(1);
     const [isInFamily, setIsInFamily] = useState(false);
     const [formData, setFormData] = useState(initialData);
+    const [visibility, setVisibility] = useState('global');
+
 
     useEffect(() => {
         const fetchFamilyStatus = async () => {
@@ -103,6 +105,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
             ...formData,
             creator_photo_public_id: photoUrl,
             clerk_id: window.Clerk.user.id,
+            visibility: visibility
         };
         onSubmit(completeFormData);
     };
@@ -134,7 +137,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                 className="w-full p-2 border rounded"
                             />
                         </div>
-                        <div className="mb-2">
+                        {/* <div className="mb-2">
                             <label htmlFor="creator_nickname" className="block text-sm font-medium">Creator's Nickname</label>
                             <input
                                 type="text"
@@ -145,7 +148,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                 onChange={(e) => handleInputChange(null, "creator_nickname", e.target.name, e.target.value)} 
                                 className="w-full p-2 border rounded"
                             />
-                        </div>
+                        </div> */}
                         <div className="mb-2">
                             <label htmlFor="creator_photo" className="block text-sm font-medium">Creator's Photo (Optional)</label>
                             <input
@@ -217,6 +220,20 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                 className="w-full p-2 border rounded"
                             ></textarea>
                         </div>
+                        <div className="mb-2">
+                            <label htmlFor="visibility" className="block text-sm font-medium">Visibility</label>
+                            <select
+                                name="visibility"
+                                id="visibility"
+                                value={visibility}
+                                onChange={(e) => setVisibility(e.target.value)}
+                                className="w-full p-2 border rounded"
+                            >
+                                <option value="global">Global</option>
+                                <option value="family">Family</option>
+                            </select>
+                        </div>
+
                         <div className="flex justify-between">
                             <button type="button" onClick={prevStep} className="p-2 bg-gray-500 text-white rounded">Previous</button>
                             <button type="button" onClick={nextStep} className="p-2 bg-blue-500 text-white rounded">Next</button>
@@ -314,3 +331,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
 };
 
 export default RecipeForm;
+
+
+
+
+
