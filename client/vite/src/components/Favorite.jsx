@@ -6,14 +6,12 @@ function Favorite({ recipeId, userId }) {
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
       try {
-        console.log('Fetching favorite status...');
         const response = await fetch(`/api/favorites/status?clerk_id=${userId}&recipe_id=${recipeId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setIsFavorited(data.isFavorited);
-        console.log('Favorite status fetched:', data.isFavorited);
       } catch (error) {
         console.error('Error fetching favorite status:', error);
         setIsFavorited(false);
@@ -24,7 +22,7 @@ function Favorite({ recipeId, userId }) {
   }, [userId, recipeId]);
 
   const handleToggleFavorite = async (event) => {
-    event.stopPropagation(); // Prevents the parent click handler from being triggered
+    event.stopPropagation(); 
     try {
       console.log('Toggling favorite status...');
       const response = await fetch('/api/favorites/toggle', {

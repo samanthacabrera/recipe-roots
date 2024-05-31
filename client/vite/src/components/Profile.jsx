@@ -45,13 +45,14 @@ function Profile({ user }) {
 
   return (
     <>
-      <h2 className="text-4xl font-semibold">Welcome to {user.firstName}'s digital cookbook!</h2>
+      <div className="my-20 mx-12 p-20 max-w-4xl mx-auto bg-gray-100 shadow-lg container">
+           <h2 className="text-4xl font-semibold">Welcome to {user.firstName}'s digital cookbook!</h2>
 
       <div>
         <h2 className="text-2xl font-semibold py-12">My Uploaded Recipes</h2>
-        <ul className="flex flex-row space-x-12">
+        <ul className="ml-24 recipe-list flex flex-row space-x-12">
           {addedRecipes.length === 0 ? (
-            <li>No recipes found</li>
+            <li className="translate-x-full mr-4">No recipes found</li>
           ) : (
             addedRecipes.map(recipe => (
               <RecipeCard key={recipe.id} recipe={recipe} user={user} />
@@ -62,9 +63,9 @@ function Profile({ user }) {
 
       <div>
         <h2 className="text-2xl font-semibold py-12">My Favorited Recipes</h2>
-        <ul className="flex flex-row space-x-12">
+        <ul className="ml-24 recipe-list flex flex-row space-x-12">
           {favoritedRecipes.length === 0 ? (
-            <li>No favorited recipes found</li>
+            <li className="translate-x-full mr-4">No favorited recipes found</li>
           ) : (
             favoritedRecipes.map(recipe => (
               <RecipeCard key={recipe.id} recipe={recipe} user={user} />
@@ -72,6 +73,8 @@ function Profile({ user }) {
           )}
         </ul>
       </div>
+      </div>
+     
       
       <Family user={user} />
     </>

@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import CreatorInfo from './CreatorInfo';
-import RecipeInfo from './RecipeInfo';
-import EditRecipe from './EditRecipe';
+import { useParams } from 'react-router-dom';
+import RecipeForm from './RecipeForm';
 
 function RecipePage({ user }) {
     const { id } = useParams(); 
-    const navigate = useNavigate();
     const [recipe, setRecipe] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editForm, setEditForm] = useState({});
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
                 const response = await fetch(`/api/recipes/${id}`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch recipe');
+                    throw new Error('Failed to fetch recipe data');
                 }
                 const data = await response.json();
                 setRecipe(data);
             } catch (error) {
-                console.error('Error fetching recipe:', error);
+                console.error('Error fetching recipe data:', error);
             } finally {
                 setLoading(false);
             }
@@ -31,112 +27,81 @@ function RecipePage({ user }) {
         fetchRecipe();
     }, [id]);
 
-
-    useEffect(() => {
-    if (recipe) {
-        setEditForm({
-            title: recipe.title,
-            desc: recipe.desc,
-            creator_name: recipe.creator_name,
-            creator_nickname: recipe.creator_nickname,
-            creator_bio: recipe.creator_bio,
-            creator_photo: recipe.creator_photo,
-            memory: recipe.memory,
-            country: recipe.country,
-            visibility: recipe.visibility,
-        });
-    }
-}, [recipe]);
+    const handleEditClick = () => {
+        setEditMode(true);
+    };
 
 
-   const handleEditChange = (updatedFormData) => {
-    setEditForm({
-        ...editForm,
-        ...updatedFormData,
-    });
-};
-
-
-
-
-    const handleEditSubmit = async (e) => {
-        e.preventDefault();
+     const handleUpdateRecipe = async (updatedRecipe) => {
         try {
             const response = await fetch(`/api/recipes/${id}`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...editForm, clerk_id: user.clerk_id }),
+                body: JSON.stringify(updatedRecipe),
             });
             if (!response.ok) {
                 throw new Error('Failed to update recipe');
             }
             const data = await response.json();
-            setRecipe(data.recipe);
-            setIsEditing(false);
+            setRecipe(data);
+            setEditMode(false);
         } catch (error) {
             console.error('Error updating recipe:', error);
         }
     };
 
-    const handleDelete = async () => {
-        try {
-            const response = await fetch(`/api/recipes/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ clerk_id: user.clerk_id }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to delete recipe');
-            }
-            navigate('/');
-        } catch (error) {
-            console.error('Error deleting recipe:', error);
-        }
-    };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
-    if (!recipe) {
-        return <div>Recipe not found</div>;
-    }
+if (loading) {
+    return <div>Loading...</div>;
+}
+if (!recipe) {
+    return <div>Recipe not found</div>;
+}
 
-    return (
-        <div className="container mx-auto py-8">
-            <CreatorInfo
-                creatorPhoto={recipe.creator_photo}
-                creatorName={recipe.creator_name}
-                creatorNickname={recipe.creator_nickname}
-                creatorBio={recipe.creator_bio}
-                memory={recipe.memory}
-                country={recipe.country}
-            />
-            <RecipeInfo
-                title={recipe.title}
-                description={recipe.desc}
-                handleEdit={() => setIsEditing(true)}
-                handleDelete={handleDelete}
-                user={user}
-                recipe={recipe}
-            />
-            {isEditing && (
-                <EditRecipe
-                    user={user}
-                    editForm={editForm}
-                    onChange={handleEditChange}
-                    handleEditSubmit={handleEditSubmit}
-                    setIsEditing={setIsEditing}
-                />
+return (
+        <>
+            <section id="creatorInfo">
+                <h1>Meet {recipe.creator_name}</h1>
+                <h6>{recipe.creator_nickname}</h6>
+                <h6>{recipe.creator_bio}</h6>
+                <h6>{recipe.memory}</h6>
+                <img src={recipe.creator_photo_public_id} className="translate-x-1/2 w-1/2" alt={`${recipe.creator_name}'s photo`} />
+            </section>
+
+            <section id="recipeInfo">
+                <h1>{recipe.title}</h1>
+                <h6>{recipe.country}</h6>
+                <h6>{recipe.desc}</h6>
+                <ul>
+                    {recipe.ingredients.map(ingredient => (
+                        <li key={ingredient.id}>
+                            {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                        </li>
+                    ))}
+                </ul>
+                <ol>
+                    {recipe.directions.map(direction => (
+                        <li key={direction.id}>
+                            {direction.step}
+                        </li>
+                    ))}
+                </ol>
+            </section>
+
+            <section id="editRecipe">
+            {user.clerk_id === recipe.user_clerk_id && !editMode && (
+                <button onClick={handleEditClick}>Edit Recipe</button>
             )}
-        </div>
+
+            {editMode && (
+                <RecipeForm initialData={recipe} handleUpdateRecipe={handleUpdateRecipe} />
+            )}
+            </section>
+        </>
     );
 }
 
 export default RecipePage;
-
-

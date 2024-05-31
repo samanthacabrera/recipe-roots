@@ -93,10 +93,11 @@ def add_recipe():
         return jsonify({"error": "Could not create recipe"}), 422
 
 
-@app.route('/recipes/<int:recipe_id>', methods=['PATCH'])
+@app.route('/recipes/<int:recipe_id>', methods=['PUT'])
 def edit_recipe(recipe_id):
     try:
         data = request.get_json()
+        print("Received data:", data)  
         clerk_id = data.get('clerk_id')
         title = data.get('title')
         desc = data.get('desc')
@@ -106,7 +107,7 @@ def edit_recipe(recipe_id):
         creator_photo_public_id = data.get('creator_photo_public_id') 
         memory = data.get('memory')
         country = data.get('country')
-        visibility = data.get('visibility')  
+        visibility = data.get('visibility')
 
         if not clerk_id:
             return jsonify({"error": "clerk_id is required"}), 400
@@ -141,6 +142,7 @@ def edit_recipe(recipe_id):
     except Exception as e:
         print(f"Error updating recipe with ID {recipe_id}: {e}")
         return jsonify({"error": "Could not update recipe"}), 422
+
 
 
 @app.route('/recipes/<int:recipe_id>', methods=['DELETE'])

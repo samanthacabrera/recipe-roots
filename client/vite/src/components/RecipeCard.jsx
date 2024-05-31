@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import Favorite from "./Favorite";
 
 function RecipeCard({ recipe, user }) {
-  const [bgImage, setBgImage] = useState(""); // State to store background image URL
+  const [bgImage, setBgImage] = useState(""); 
 
   useEffect(() => {
     if (recipe.creator_photo_public_id) {
-      // If recipe has a creator photo, set it as the background image
       setBgImage(`url(${recipe.creator_photo_public_id})`);
     }
-  }, [recipe.creator_photo_public_id]); // Update background image when creator photo changes
+  }, [recipe.creator_photo_public_id]); 
 
   return (
     <div
@@ -27,10 +26,10 @@ function RecipeCard({ recipe, user }) {
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         transition: 'transform 0.3s ease-in-out',
         cursor: 'pointer',
-        backgroundImage: bgImage, // Set background image dynamically
-        backgroundSize: 'cover', // Adjust background size to cover the div
+        backgroundImage: bgImage, 
+        backgroundSize: 'cover',
       }}
-      onClick={() => window.location.href = `/recipes/${recipe.id}`} // Redirect on click
+      onClick={() => window.location.href = `/recipes/${recipe.id}`} 
     >
       <div>
         <h3 className="text-lg font-semibold mb-2 text-white">
@@ -39,7 +38,10 @@ function RecipeCard({ recipe, user }) {
       </div>
       <div className="flex items-center justify-between">
         <Link
-          to={`/recipes/${recipe.id}`}
+          to={{
+            pathname: `/recipes/${recipe.id}`,
+            state: { recipe: recipe } 
+          }}
           className="py-1 px-2 bg-blue-100 text-blue-800 rounded transition duration-300 hover:bg-blue-200 focus:outline-none"
         >
           View Full Recipe

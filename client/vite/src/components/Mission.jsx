@@ -2,9 +2,9 @@ import React from 'react';
 
 function Mission() {
     return (
-        <div className="container mx-auto py-8 px-4">
-            <h1 className="text-2xl text-center mb-6">Our Mission</h1>
-            <div className="p-6">
+        <div className="container mx-auto pt-20 pb-36 px-36">
+            <h1 className="text-xl text-center mb-6">Our Mission</h1>
+            <div className="font-light p-6">
                 <p className="text-gray-800 mb-4">
                     At our core, we are driven by a deep passion for family history and the belief that our ancestors hold the keys to navigating the complexities of our modern world. Our platform was born out of a desire to preserve and celebrate the authentic family recipes that have been lovingly passed down through generations. These recipes are more than just instructions for preparing food; they are cherished stories, cultural artifacts, and tangible connections to our roots.
                 </p>

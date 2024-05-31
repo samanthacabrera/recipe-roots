@@ -1,178 +1,229 @@
 from models import *
 from services import *
 
+def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_photo_public_id, memory, country, desc, ingredients, directions, user_clerk_id, family_id=None):
+    recipe = Recipe(
+        title=title,
+        creator_name=creator_name,
+        creator_nickname=creator_nickname,
+        creator_bio=creator_bio,
+        creator_photo_public_id=creator_photo_public_id,
+        memory=memory,
+        country=country,
+        desc=desc,
+        user_clerk_id=user_clerk_id,
+        family_id=family_id
+    )
+    db.session.add(recipe)
+    db.session.commit()
+
+    for ingredient in ingredients:
+        new_ingredient = Ingredient(
+            recipe_id=recipe.id,
+            name=ingredient['name'],
+            quantity=ingredient['quantity'],
+            unit=ingredient['unit']
+        )
+        db.session.add(new_ingredient)
+
+    for i, direction in enumerate(directions):
+        new_direction = Direction(
+            recipe_id=recipe.id,
+            order=i+1,
+            step=direction['step']
+        )
+        db.session.add(new_direction)
+
+    db.session.commit()
 
 if __name__ == '__main__':
     with app.app_context():
         db.drop_all()
         db.create_all()
 
-#  jeff = User(
-#         username = "Jeff",
-#         email = "jeff@email.com",
-#         password = "hellothere",
-#         icon = "image@url.com"
-#     )
-#     bezos = User(
-#         username = "Bezos",
-#         email = "bezos@email.com",
-#         password = "yeet",
-#         icon = "hmmm@url.com"
-#     )
-#     elon = User(
-#         username = "Elon",
-#         email = "elon@email.com",
-#         password = "hellothere",
-#         icon = "image@url.com"
-#     )
-#     musk = User(
-#         username = "Musk",
-#         email = "musk@email.com",
-#         password = "yeet",
-#         icon = "hmmm@url.com"
-#     )
-#     andrew = User(
-#         username = "Andrew",
-#         email = "andrew@email.com",
-#         password = "hellothere",
-#         icon = "image@url.com"
-#     )
-#     tristan = User(
-#         username = "Tristan",
-#         email = "tristan@email.com",
-#         password = "yeet",
-#         icon = "hmmm@url.com"
-#     )
-#     tate = User(
-#         username = "Tate",
-#         email = "tate@email.com",
-#         password = "hellothere",
-#         icon = "image@url.com"
-#     )
-#     mark = User(
-#         username = "Mark",
-#         email = "mark@email.com",
-#         password = "yeet",
-#         icon = "hmmm@url.com"
-#     )
-#     bill = User(
-#         username = "Bill",
-#         email = "bill@email.com",
-#         password = "hellothere",
-#         icon = "image@url.com"
-#     )
-#     gates = User(
-#         username = "Gates",
-#         email = "gates@email.com",
-#         password = "yeet",
-#         icon = "hmmm@url.com"
-#     )
-#     db.session.add_all([jeff, bezos, elon, musk, andrew, tristan, tate, mark, bill, gates])
-#     db.session.commit()
+        # Elsa's Pupusas recipe
+        create_recipe(
+            title="Elsa's Pupusas",
+            creator_name="Elsa Cabrera",
+            creator_nickname="Elsa",
+            creator_bio="Elsa Cabrera from El Salvador is sharing her beloved pupusas recipe. Join her in discovering the rich flavors and traditional techniques that make this dish so special.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717089424/ElsaCabrera.jpg", 
+            memory="Elsa Cabrera from El Salvador is sharing her beloved pupusas recipe.",
+            country="El Salvador",
+            desc="Pupusas are a traditional Salvadoran dish made of thick, handmade corn tortillas filled with various ingredients.",
+            ingredients=[
+                {"name": "Corn flour", "quantity": "2 cups", "unit": ""},
+                {"name": "Water", "quantity": "1 1/2 cups", "unit": ""},
+                {"name": "Refried beans", "quantity": "1 cup", "unit": ""},
+                {"name": "Cheese", "quantity": "1 cup", "unit": ""},
+                {"name": "Loroco", "quantity": "1/4 cup (optional)", "unit": ""},
+                {"name": "Curtido (pickled cabbage slaw)", "quantity": "For serving", "unit": ""}
+            ],
+            directions=[
+                {"step": "Mix corn flour with water to form a pliable dough."},
+                {"step": "Take a portion of dough, flatten it, and fill with refried beans, cheese, and loroco."},
+                {"step": "Fold the dough over the filling to form a stuffed tortilla."},
+                {"step": "Cook the pupusas on a hot griddle until golden brown on both sides."},
+                {"step": "Serve hot with curtido on the side."}
+            ],
+            user_clerk_id=1
+        )
 
-#     denver = Marker(
-#         caption = "This city sucks",
-#         image_url = "https://marvel-b1-cdn.bc0a.com/f00000000295839/red.msudenver.edu/wp-content/uploads/2022/02/denversummer_hero2_RED.jpg",
-#         latitude = 39.7392,
-#         longitude = -104.9903,
-#         user_id = 1
-#     )
-#     london = Marker(
-#         caption = "Got stabbed here",
-#         image_url = "https://assets.editorial.aetnd.com/uploads/2019/03/topic-london-gettyimages-760251843-feature.jpg",
-#         latitude = 51.5074,
-#         longitude = -0.1278,
-#         user_id = 4
-#     )
-#     rome = Marker(
-#         caption = "Great Pizza",
-#         image_url = "https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateRome_Hero_shutterstock789412159.jpg",
-#         latitude = 41.9028,
-#         longitude = 12.4964,
-#         user_id = 3
-#     )
-#     moscow = Marker(
-#         caption = "блять",
-#         image_url = "https://www.nationsonline.org/gallery/Russia/State-Historical-Museum-Moscow.jpg",
-#         latitude = 55.7558,
-#         longitude = 37.6173,
-#         user_id = 4
-#     )
-#     sydney = Marker(
-#         caption = "ǝʇɐɯ ᴉO",
-#         image_url = "https://i.natgeofe.com/n/bd48279e-be5a-4f28-9551-5cb917c6766e/GettyImages-103455489cropped.jpg",
-#         latitude = -33.8688,
-#         longitude = 151.2093,
-#         user_id = 9
-#     )
-#     vancouver = Marker(
-#         caption = "Opioid capital of Canada",
-#         image_url = "https://upload.wikimedia.org/wikipedia/commons/5/57/Concord_Pacific_Master_Plan_Area.jpg",
-#         latitude = 49.2827,
-#         longitude = -123.1207,
-#         user_id = 6
-#     )
-#     dubai = Marker(
-#         caption = "What color is your Bugatti?",
-#         image_url = "https://miro.medium.com/v2/resize:fit:1358/1*sf4nQKh1ArnsfbT1uFly4w.jpeg",
-#         latitude = 25.276987,
-#         longitude = 55.296249,
-#         user_id = 7
-#     )
-#     new_york = Marker(
-#     caption="The city that never sleeps",
-#     image_url="https://www.nycgo.com/images/made/1.-Jin-Joo-Kim_600_399_70.jpg",
-#     latitude=40.7128,
-#     longitude=-74.0060,
-#     user_id=2
-#     )
-#     tokyo = Marker(
-#     caption="Land of the Rising Sun",
-#     image_url="https://www.japan.travel/content/dam/nto/en/images/experience/attractions/guides/culture-and-heritage/001_top/001_main/001_main.jpg",
-#     latitude=35.6895,
-#     longitude=139.6917,
-#     user_id=8
-#     )
-#     berlin = Marker(
-#     caption="Capital of Germany",
-#     image_url="https://cdn.getyourguide.com/img/location/5ffebf4ba07fb.jpeg/99.jpg",
-#     latitude=52.5200,
-#     longitude=13.4050,
-#     user_id=10
-#     )
-#     toronto = Marker(
-#     caption="The Six",
-#     image_url="https://media.tacdn.com/media/attractions-splice-spp-674x446/0a/99/a6/22.jpg",
-#     latitude=43.651070,
-#     longitude=-79.347015,
-#     user_id=11
-#     )
-#     beijing = Marker(
-#     caption="Capital of China",
-#     image_url="https://www.travelchinaguide.com/images/city/beijing/beijing.jpg",
-#     latitude=39.9042,
-#     longitude=116.4074,
-#     user_id=12
-#     )
-#     rio_de_janeiro = Marker(
-#     caption="Carnival Capital",
-#     image_url="https://media.timeout.com/images/105211701/image.jpg",
-#     latitude=-22.9068,
-#     longitude=-43.1729,
-#     user_id=13
-#     )
-#     cape_town = Marker(
-#     caption="Mother City",
-#     image_url="https://cdn.britannica.com/69/195669-050-535A27B4/Table-Mountain-Cape-Town-South-Africa.jpg",
-#     latitude=-33.9249,
-#     longitude=18.4241,
-#     user_id=14
-#     )
-#     bangkok = Marker(
-#     caption="City of Angels",
-#     image_url="https://www.bangkok.com/info/images/bangkok-highlights.jpg",
-#     latitude=13.7563,
-#     longitude=100.5018,
-#     user_id=15
-#     )
-   
+        # Alice's Pandekager recipe
+        create_recipe(
+            title="Pandekager",
+            creator_name="Alice Widman",
+            creator_nickname="",
+            creator_bio="Alice Widman from Denmark is delighted to share her Pandekager recipe. Learn how to make these delicious Danish pancakes, a favorite treat in her family.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717092157/AliceWidman.jpg", 
+            memory="Ida Widman from Denmark is delighted to share her Pandekager recipe.",
+            country="Denmark",
+            desc="Pandekager are thin Danish pancakes often served with sweet or savory toppings.",
+            ingredients=[
+                {"name": "Flour", "quantity": "1 cup", "unit": ""},
+                {"name": "Milk", "quantity": "1 cup", "unit": ""},
+                {"name": "Eggs", "quantity": "2", "unit": ""},
+                {"name": "Sugar", "quantity": "2 tbsp", "unit": ""},
+                {"name": "Butter (for frying)", "quantity": "As needed", "unit": ""}
+            ],
+            directions=[
+                {"step": "Whisk together flour, milk, eggs, and sugar until smooth."},
+                {"step": "Heat a skillet over medium heat and melt a knob of butter."},
+                {"step": "Pour a small amount of batter into the skillet, tilting to spread it evenly."},
+                {"step": "Cook until the edges start to brown, then flip and cook the other side."},
+                {"step": "Repeat with the remaining batter, stacking the pancakes as you go."},
+                {"step": "Serve warm with your choice of toppings."}
+            ],
+            user_clerk_id=1
+        )
+
+        # Augusto's Marinara recipe
+        create_recipe(
+            title="Augusto's Marinara Sauce",
+            creator_name="Augusto",
+            creator_nickname="",
+            creator_bio="Augusto from Italy brings his cherished marinara recipe. Experience the authentic taste of Italy as Anthony guides you through the process of making this classic sauce.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717092325/AugustoRomano.jpg", 
+            memory="Anthony from Italy brings his cherished marinara recipe.",
+            country="Italy",
+            desc="Marinara sauce is a classic Italian tomato sauce made with tomatoes, garlic, onions, and herbs.",
+            ingredients=[
+                {"name": "Tomatoes", "quantity": "2 lbs", "unit": ""},
+                {"name": "Garlic", "quantity": "4 cloves", "unit": ""},
+                {"name": "Onion", "quantity": "1 medium", "unit": ""},
+                {"name": "Olive oil", "quantity": "2 tbsp", "unit": ""},
+                {"name": "Basil", "quantity": "1/4 cup", "unit": "chopped"},
+                {"name": "Oregano", "quantity": "1 tsp", "unit": ""},
+                {"name": "Salt", "quantity": "To taste", "unit": ""},
+                {"name": "Pepper", "quantity": "To taste", "unit": ""}
+            ],
+            directions=[
+                {"step": "Heat olive oil in a pan and sauté minced garlic and diced onion until soft."},
+                {"step": "Add crushed tomatoes, basil, oregano, salt, and pepper."},
+                {"step": "Simmer the sauce for about 20 minutes, stirring occasionally."},
+                {"step": "Adjust seasoning to taste and serve over cooked pasta."}
+            ],
+            user_clerk_id=1
+        )
+
+
+        # Malaysian Family Recipe: Nasi Lemak
+        create_recipe(
+            title="Nasi Lemak",
+            creator_name="Wei Tan",
+            creator_nickname="",
+            creator_bio="The Tan family from Malaysia shares their beloved Nasi Lemak recipe, a traditional Malaysian coconut rice dish.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717099822/creator3.jpg", 
+            memory="The Tan family from Malaysia shares their beloved Nasi Lemak recipe.",
+            country="Malaysia",
+            desc="Nasi Lemak is a fragrant rice dish cooked in coconut milk and pandan leaves, served with various accompaniments.",
+            ingredients=[
+                {"name": "Jasmine rice", "quantity": 2, "unit": "cups"},
+                {"name": "Coconut milk", "quantity": 2, "unit": "cups"},
+                {"name": "Pandan leaves", "quantity": 2, "unit": "leaves"},
+                {"name": "Salt", "quantity": 1, "unit": "teaspoon"},
+                {"name": "Sambal (chili paste)", "quantity": 1, "unit": "cup"},
+                {"name": "Hard-boiled eggs", "quantity": 4, "unit": ""},
+                {"name": "Fried anchovies", "quantity": 1, "unit": "cup"},
+                {"name": "Cucumber slices", "quantity": 1, "unit": "cup"},
+                {"name": "Roasted peanuts", "quantity": 1, "unit": "cup"}
+            ],
+            directions=[
+                {"step": "Rinse jasmine rice until the water runs clear, then drain."},
+                {"step": "In a pot, combine rice, coconut milk, pandan leaves, and salt. Bring to a boil."},
+                {"step": "Once boiling, reduce heat and simmer until rice is cooked and fragrant, about 20 minutes."},
+                {"step": "Serve hot with sambal, hard-boiled eggs, fried anchovies, cucumber slices, and roasted peanuts."}
+            ],
+            user_clerk_id=1,
+        )
+
+        # Senegalese Family Recipe: Thieboudienne
+        create_recipe(
+            title="Thieboudienne",
+            creator_name="Ousmane Diop",
+            creator_nickname="",
+            creator_bio="The Diop family from Senegal shares their cherished Thieboudienne recipe, a traditional Senegalese fish and rice dish.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717120293/creator4.avif", 
+            memory="The Diop family from Senegal shares their cherished Thieboudienne recipe.",
+            country="Senegal",
+            desc="Thieboudienne is a flavorful Senegalese dish featuring fish cooked in a tomato-based sauce with vegetables, served over rice.",
+            ingredients=[
+                {"name": "Fish", "quantity": 2, "unit": ""},
+                {"name": "Rice", "quantity": 3, "unit": "cups"},
+                {"name": "Tomatoes", "quantity": 4, "unit": ""},
+                {"name": "Onion", "quantity": 2, "unit": ""},
+                {"name": "Carrots", "quantity": 3, "unit": ""},
+                {"name": "Potatoes", "quantity": 4, "unit": ""},
+                {"name": "Eggplant", "quantity": 1, "unit": ""},
+                {"name": "Cabbage", "quantity": 1, "unit": ""},
+                {"name": "Garlic", "quantity": 5, "unit": "cloves"},
+                {"name": "Vegetable oil", "quantity": 1, "unit": "cup"},
+                {"name": "Salt", "quantity": 2, "unit": "teaspoons"},
+                {"name": "Water", "quantity": 6, "unit": "cups"}
+            ],
+            directions=[
+                {"step": "Season fish with salt and set aside."},
+                {"step": "In a large pot, heat vegetable oil over medium heat. Add chopped onions and minced garlic, and sauté until softened."},
+                {"step": "Add chopped tomatoes, sliced carrots, diced potatoes, diced eggplant, shredded cabbage, and salt. Cook until vegetables are slightly softened."},
+                {"step": "Add seasoned fish on top of the vegetable mixture. Pour water over the fish and vegetables, covering them."},
+                {"step": "Simmer until fish is cooked through and vegetables are tender. Serve hot over cooked rice."}
+            ],
+            user_clerk_id=1,
+        )
+
+        # Lebanese Family Recipe: Tabbouleh
+        create_recipe(
+            title="Tabbouleh",
+            creator_name="Hilda Khalil",
+            creator_nickname="",
+            creator_bio="The Khalil family from Lebanon shares their treasured Tabbouleh recipe, a classic Lebanese parsley salad.",
+            creator_photo_public_id="https://res.cloudinary.com/dqwkvvhaq/image/upload/v1717120603/creator5.jpg", 
+            memory="The Khalil family from Lebanon shares their treasured Tabbouleh recipe.",
+            country="Lebanon",
+            desc="Tabbouleh is a refreshing Lebanese salad made with parsley, tomatoes, mint, bulgur, and a tangy lemon dressing.",
+            ingredients=[
+                {"name": "Parsley", "quantity": 4, "unit": "bunches"},
+                {"name": "Tomatoes", "quantity": 6, "unit": ""},
+                {"name": "Bulgur wheat", "quantity": 1
+        , "unit": "cup"},
+                {"name": "Fresh mint leaves", "quantity": 1, "unit": "cup"},
+                {"name": "Green onions", "quantity": 4, "unit": ""},
+                {"name": "Lemon juice", "quantity": 1, "unit": "cup"},
+                {"name": "Extra-virgin olive oil", "quantity": 1, "unit": "cup"},
+                {"name": "Salt", "quantity": 2, "unit": "teaspoons"},
+                {"name": "Black pepper", "quantity": 1, "unit": "teaspoon"}
+            ],
+            directions=[
+                {"step": "Soak bulgur wheat in hot water for about 30 minutes, then drain and squeeze out excess water."},
+                {"step": "Finely chop parsley, tomatoes, mint leaves, and green onions."},
+                {"step": "In a large bowl, combine chopped parsley, tomatoes, mint, green onions, and soaked bulgur wheat."},
+                {"step": "In a separate small bowl, whisk together lemon juice, olive oil, salt, and black pepper to make the dressing."},
+                {"step": "Pour the dressing over the salad and toss to combine. Adjust seasoning if needed."},
+                {"step": "Chill in the refrigerator for at least 1 hour before serving."},
+                {"step": "Serve cold as a refreshing appetizer or side dish."}
+            ],
+            user_clerk_id=1,
+
+        )
+
+            

@@ -29,7 +29,7 @@ function NavBar() {
     };
 
     return (
-        <nav className="top-0 w-full bg-white border-b border-gray-200 shadow-sm z-50">
+        <nav className="top-0 w-full bg-none border-b border-gray-200 shadow-sm z-50">
             <div className="flex justify-between items-center max-w-7xl mx-auto p-4">
                 <div className="flex items-center space-x-4">
                     <SignedOut>
@@ -37,24 +37,31 @@ function NavBar() {
                     </SignedOut>
 
                     <SignedIn>
-                        <UserButton />
-                        <Link to="/" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Global</Link>
-                        <Link to="/profile" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Cookbook</Link>
-                        <Link to="/mission" className="text-lg text-gray-800 hover:text-gray-600 transition-colors">Our Mission</Link>
+                        <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600">Roots</span></h1>
+                        <Link to="/" className="nav-link">Global</Link>
+                        <Link to="/profile" className="nav-link">Cookbook</Link>
+                        <Link to="/mission" className="nav-link">Our Mission</Link>
+                        <div className="translate-x-96">
                         <input 
                             type="text" 
                             placeholder="Search" 
-                            className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500"
+                            className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500 transition-all duration-300"
                             value={searchQuery}
                             onChange={handleSearch}
                         />
+                        </div>
+                        
+                        <div className="translate-x-96">
+                            <UserButton/>
+                        </div>
+                      
                     </SignedIn>
                 </div>
             </div>
 
             <div className="max-w-7xl mx-auto p-4">
                 {filteredRecipes.map(recipe => (
-                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="block text-lg text-gray-800 hover:text-gray-600 transition-colors">
+                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="block text-lg font-light text-gray-800 hover:text-gray-600 transition-colors">
                         {recipe.title}
                     </Link>
                 ))}
@@ -64,3 +71,6 @@ function NavBar() {
 }
 
 export default NavBar;
+
+
+

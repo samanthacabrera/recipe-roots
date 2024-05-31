@@ -11,30 +11,57 @@ html {
   height: 100%;
   overflow-x: hidden;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: #704d180b;
 }
 
+/* RECIPE CARD  */
 .recipe-card {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
 .recipe-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.recipe-card h3 {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-.recipe-card {
-  width: calc(50% - 20px);
-  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
   .recipe-card {
     width: calc(50% - 24px);
   }
+}
+
+/* RECIPE LISTS */
+.recipe-list {
+  display: grid;
+  gap: 12px;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .recipe-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .recipe-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* NAVBAR */
+.nav-link {
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #666;
 }

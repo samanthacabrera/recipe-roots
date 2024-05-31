@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
+import Hero from "./Hero";
+import Stories from "./Stories";
 import RecipeCard from "./RecipeCard";
 import AddRecipe from "./AddRecipe";
-import Stories from "./Stories";
 
 
 const countries = [
-  { name: "Mexico", description: "Mexican cuisine is known for its bold flavors and vibrant colors. It has a rich history that combines indigenous ingredients and techniques with Spanish colonial influences." },
-  { name: "Peru", description: "Peruvian cuisine is celebrated for its diversity; blending indigenous ingredients with influences from Spain, Africa, China, and Japan. It is famous for dishes like ceviche and its use of potatoes and corn." },
-  { name: "Cambodia", description: "Cambodian cuisine features a mix of flavors and textures, often incorporating rice, fish, and fresh herbs. It reflects the country's history and cultural exchanges with neighboring countries." }
+    { 
+    name: "Malaysia", 
+    description: "Malaysian cuisine is a vibrant and diverse tapestry of flavors, influenced by Malay, Chinese, Indian, and indigenous culinary traditions. It is characterized by its bold and aromatic spices, fresh herbs, and rich sauces. With a focus on layering flavors and textures, Malaysian dishes often feature a harmonious balance of sweet, sour, salty, and spicy elements. From fragrant coconut-based curries to tangy noodle soups and aromatic rice dishes, Malaysian cuisine offers a tantalizing journey through its rich cultural heritage and culinary diversity." 
+  },
+  { 
+    name: "Lebanon", 
+    description: "Lebanese cuisine is celebrated for its rich and aromatic flavors, drawing from a medley of Mediterranean and Middle Eastern influences. Fresh herbs, olive oil, garlic, and lemon juice are staple ingredients, creating vibrant and zesty dishes. Lebanese food is known for its mezze, a selection of small dishes that include hummus, tabbouleh, and baba ghanoush. Grilled meats, fresh vegetables, and hearty grains are also central to Lebanese cuisine, which emphasizes balance and harmony in its use of flavors and ingredients." 
+  },
+  { 
+    name: "Senegal", 
+    description: "Senegalese cuisine is a reflection of the country’s diverse ethnic groups and rich cultural heritage. It is characterized by its bold and flavorful dishes, often featuring fresh fish, peanuts, and a variety of vegetables. Spices and herbs such as chili, garlic, and ginger play a significant role, adding depth and complexity to the flavors. Traditional dishes like Thieboudienne (fish and rice) and Yassa (marinated chicken or fish) showcase the vibrant and dynamic nature of Senegalese food, offering a unique and satisfying culinary experience." 
+  }
 ];
+
 
 function Global({ user }) {
   const [recipes, setRecipes] = useState([]);
@@ -38,21 +49,15 @@ function Global({ user }) {
 
   return (
     <div className="space-y-40">
-      
+       
       <Stories />
-
-      <div>
-      <h1 className="text-4xl">Welcome to Recipe Roots</h1>
-      <p>
-        A platform dedicated to preserving culture through recipes.
-      </p>
-      </div>
+    
       
       {featuredCountry && (
           <>
-            <h2 className="text-3xl font-semibold">Featured recipes from {featuredCountry.name}</h2>
-            <p className="text-center m-12">{featuredCountry.description}</p>
-            <div className="carousel flex overflow-x-scroll space-x-4">
+            <h2 className="pt-40 text-2xl">Featured recipes from {featuredCountry.name}</h2>
+            <p className="mx-56">{featuredCountry.description}</p>
+            <div className="flex flex-col items-center">
               {filteredRecipes.map((recipe) => (
                 <RecipeCard key={recipe.id} user={user} recipe={recipe} />
               ))}
@@ -60,13 +65,12 @@ function Global({ user }) {
         </>
       )}
 
-
-      <p className="text-center font-semibold text-4xl m-8">List of all recipes</p>
-      <div id="global-recipe-list" className="flex flex-wrap justify-center space-x-12">
-        {globalRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-        ))}
-      </div>
+      <p className="text-4xl">List of all recipes</p>
+      <div className="ml-24 recipe-list">
+      {globalRecipes.map((recipe) => (
+        <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+      ))}
+    </div>
 
       <div id='random-recipe' className="flex flex-col items-center">
         <button className="p-2 rounded outline w-fit mb-4" onClick={generateRandomRecipe}>
@@ -78,6 +82,7 @@ function Global({ user }) {
       </div>
 
       <AddRecipe />
+ 
     </div>
   );
 }

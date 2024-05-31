@@ -10,11 +10,7 @@ function Family({ user }) {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    console.log('Family component mounted');
-    console.log('Initial user data:', user);
-
     if (user) {
-      console.log('Fetching data for user:', user);
       fetchFamilyStatus();
       fetchAllFamilies();
     } else {
@@ -26,14 +22,12 @@ function Family({ user }) {
     fetch("/api/recipes")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Recipes fetched:", data);
         setRecipes(data);
       })
       .catch((error) => console.error("Error fetching recipes:", error));
   }, []);
 
   const fetchFamilyStatus = async () => {
-    console.log('Fetching family status');
     if (!user || !user.clerk_id) {
       console.error('User data or clerk_id is missing');
       return;
@@ -44,7 +38,6 @@ function Family({ user }) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Family status response:', data);
       setIsInFamily(data.isInFamily);
       if (data.isInFamily) {
         setFamilyData(data.familyData);
@@ -56,14 +49,12 @@ function Family({ user }) {
   };
 
   const fetchAllFamilies = async () => {
-    console.log('Fetching all families');
     try {
       const response = await fetch('/api/families');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('All families response:', data);
       setFamilies(data);
     } catch (error) {
       console.error('Error fetching all families:', error);
