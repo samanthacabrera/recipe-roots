@@ -37,7 +37,8 @@ function NavBar() {
                     </SignedOut>
 
                     <SignedIn>
-                        <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600">Roots</span></h1>
+                        {/* <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600">Roots</span></h1> */}
+                         <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></h1>
                         <Link to="/" className="nav-link">Global</Link>
                         <Link to="/profile" className="nav-link">Cookbook</Link>
                         <Link to="/mission" className="nav-link">Our Mission</Link>

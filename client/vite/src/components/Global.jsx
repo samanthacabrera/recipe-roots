@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Hero from "./Hero";
 import Stories from "./Stories";
 import RecipeCard from "./RecipeCard";
 import AddRecipe from "./AddRecipe";

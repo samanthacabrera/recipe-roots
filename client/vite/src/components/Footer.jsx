@@ -5,12 +5,12 @@ const Footer = () => {
     <footer className="site-footer bg-olive-700 text-white pt-8 py-6">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* About */}
+     
           <div>
-            <h6 className="mb-2">About</h6>
+            <h6 className="mb-2">Our Mission</h6>
             <p className="font-light text-justify">We believe that preserving family recipes is crucial to staying connected to our roots. Each recipe on our platform is a piece of history, a testament to the resilience, creativity, and love of those who came before us. By sharing these recipes, we honor our ancestors and keep their spirits alive in our kitchens.</p>
           </div>
-          {/* Quick Links */}
+  
           <div>
             <h6 className="mb-2">Quick Links</h6>
             <ul className="font-light footer-links">
