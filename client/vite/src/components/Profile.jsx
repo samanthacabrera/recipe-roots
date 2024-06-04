@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
-import Family from "./Family"
 
 function Profile({ user }) {
   const [addedRecipes, setAddedRecipes] = useState([]);
@@ -45,10 +44,10 @@ function Profile({ user }) {
 
   return (
     <>
-      <div className="my-20 mx-12 p-20 max-w-4xl mx-auto bg-gray-100 shadow-lg container">
+      <div className="container">
            <h2 className="text-4xl font-semibold">Welcome to {user.firstName}'s digital cookbook!</h2>
 
-      <div>
+      <div className="p-8  m-20 bg-gray-100 shadow-lg">
         <h2 className="text-2xl font-semibold py-12">My Uploaded Recipes</h2>
         <ul className="ml-24 recipe-list flex flex-row space-x-12">
           {addedRecipes.length === 0 ? (
@@ -61,7 +60,7 @@ function Profile({ user }) {
         </ul>
       </div>
 
-      <div>
+      <div className="p-8  m-20 bg-gray-100 shadow-lg">
         <h2 className="text-2xl font-semibold py-12">My Favorited Recipes</h2>
         <ul className="ml-24 recipe-list flex flex-row space-x-12">
           {favoritedRecipes.length === 0 ? (
@@ -74,9 +73,6 @@ function Profile({ user }) {
         </ul>
       </div>
       </div>
-     
-      
-      <Family user={user} />
     </>
   );
 }
