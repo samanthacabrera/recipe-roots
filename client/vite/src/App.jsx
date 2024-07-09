@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
 import NavBar from './components/NavBar';
-import Global from './components/Global';
+import Home from './components/Home';
 import Stories from './components/Stories';
 import Profile from './components/Profile';
 import Mission from './components/Mission';
 import RecipeCard from './components/RecipeCard';
 import RecipePage from './components/RecipePage';
-import Footer from './components/Footer';
 
 
 function App() {
@@ -50,14 +49,13 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Global user={userData} />} />
+        <Route path="/" element={<Home user={userData} />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/profile" element={<Profile user={userData} />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/recipes" element={<RecipeCard user={userData}/>} />
         <Route path="/recipes/:id" element={<RecipePage user={userData} />} />
       </Routes>
-      <Footer/>
     </Router>
   );
 }

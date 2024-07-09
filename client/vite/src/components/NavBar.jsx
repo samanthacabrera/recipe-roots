@@ -29,27 +29,27 @@ function NavBar() {
     };
 
     return (
-        <nav className="top-0 w-full bg-none border-b border-gray-200 shadow-sm z-50">
-            <div className="flex justify-between items-center max-w-7xl mx-auto p-4">
-                <div className="flex items-center space-x-4">
+        <nav className="sticky top-0 z-50 ">
+            <div className="flex justify-between items-center p-4 bg-white">
+                <div className="space-x-4" >
                     <SignedOut>
+                        <Link to="/" className="nav-link">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></Link>
                         <SignInButton />
                     </SignedOut>
 
                     <SignedIn>
-                        {/* <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600">Roots</span></h1> */}
-                         <h1 className="text-lg font-light text-gray-800">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></h1>
-                        <Link to="/" className="nav-link">Global</Link>
+                        <Link to="/" className="nav-link">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></Link>
+                        <Link to="/stories" className="nav-link">Stories</Link>
                         <Link to="/profile" className="nav-link">Cookbook</Link>
-                        <Link to="/mission" className="nav-link">Our Mission</Link>
+                        <Link to="/mission" className="nav-link">Mission</Link>
                     </SignedIn>
                 </div>
                 
                 <div className="flex items-center space-x-4">
                     <input 
                         type="text" 
-                        placeholder="Search" 
-                        className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                        placeholder="Search recipes" 
+                        className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:border-green-800 transition-all duration-300"
                         value={searchQuery}
                         onChange={handleSearch}
                     />
@@ -59,10 +59,10 @@ function NavBar() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto p-4">
+            <div className="bg-white">
                 {filteredRecipes.map(recipe => (
-                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="block text-lg font-light text-gray-800 hover:text-gray-600 transition-colors">
-                        {recipe.title}
+                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="text-centerblock p-2 m-2 rounded outline w-fit mb-4">
+                        {recipe.title} 
                     </Link>
                 ))}
             </div>

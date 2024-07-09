@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+US+Modern:wght@100..400&display=swap");
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -11,7 +12,8 @@ html {
   height: 100%;
   overflow-x: hidden;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: #704d180b;
+  font-weight: 300;
+  /* background-color: #795f3717; */
 }
 
 /* RECIPE CARD  */
@@ -36,6 +38,7 @@ html {
 
 /* RECIPE LISTS */
 .recipe-list {
+  margin-left: 5%;
   display: grid;
   gap: 12px;
   justify-content: center;
@@ -55,13 +58,19 @@ html {
 
 /* NAVBAR */
 .nav-link {
-  font-size: 14px;
-  font-weight: 400;
-  color: #333;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .nav-link:hover {
   color: #666;
+}
+
+/* SECTION */
+section {
+  height: 100vh;
+}
+
+#welcome h1 {
+  font-family: "Playwrite US Modern", cursive;
 }

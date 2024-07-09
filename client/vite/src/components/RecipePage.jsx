@@ -48,6 +48,17 @@ function RecipePage({ user }) {
         }
     };
 
+    const getPinterestShareUrl = () => {
+        const url = window.location.href;
+        const description = recipe ? recipe.title : '';
+        return `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(description)}`;
+    };
+
+    const getFacebookShareUrl = () => {
+        const url = window.location.href;
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -95,6 +106,26 @@ function RecipePage({ user }) {
                 {user.clerk_id === recipe.user_clerk_id && (
                     <button onClick={handleDeleteRecipe}>Delete Recipe</button> 
                 )}
+            </section>
+
+            <section id="socialSharing" className="p-4 text-left">
+                <h6 className="font-semibold mb-4">Share this recipe:</h6>
+                <a
+                    href={getPinterestShareUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mr-4"
+                >
+                    <button>Pinterest</button>
+                </a>
+                <a
+                    href={getFacebookShareUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mr-4"
+                >
+                    <button>Facebook</button>
+                </a>
             </section>
         </div>
     );

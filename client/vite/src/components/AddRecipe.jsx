@@ -42,7 +42,7 @@ const AddRecipe = () => {
   };
 
   return (
-    <div className="py-20">
+    <div>
       <RecipeForm initialData={initialData} onSubmit={handleSubmit} />
     </div>
   )
