@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Favorite from './Favorite';
 import { useParams } from 'react-router-dom';
 
 function RecipePage({ user }) {
@@ -67,9 +68,9 @@ function RecipePage({ user }) {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-4 mt-12">
+        <div className="grid grid-cols-2 mt-12">
             <div id="creatorInfo" className="space-y-12 p-4">
-                <h1 className="text-2xl underline mb-6">Meet {recipe.creator_name}</h1>
+                <h1 className="text-4xl mb-6">Meet {recipe.creator_name}</h1>
                 <h6 className="px-24">{recipe.creator_bio}</h6>
                 <img
                     src={recipe.creator_photo_public_id}
@@ -77,6 +78,7 @@ function RecipePage({ user }) {
                     alt={`${recipe.creator_name}'s photo`}
                     style={{ maxWidth: 'calc(50% - 20px)' }}
                 />
+                <Favorite recipeId={recipe.id} userId={user.clerk_id} />
             </div>
 
             <div id="recipeInfo" className="text-justify p-4">
@@ -102,13 +104,13 @@ function RecipePage({ user }) {
                 </ol>
             </div>
 
-            <section id="editRecipe" className="p-4">
+            <div id="editRecipe" className="p-4">
                 {user.clerk_id === recipe.user_clerk_id && (
                     <button onClick={handleDeleteRecipe}>Delete Recipe</button> 
                 )}
-            </section>
+            </div>
 
-            <section id="socialSharing" className="p-4 text-left">
+            <div id="socialSharing" className="p-4 text-left">
                 <h6 className="font-semibold mb-4">Share this recipe:</h6>
                 <a
                     href={getPinterestShareUrl()}
@@ -126,7 +128,7 @@ function RecipePage({ user }) {
                 >
                     <button>Facebook</button>
                 </a>
-            </section>
+            </div>
         </div>
     );
 }

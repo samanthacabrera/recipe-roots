@@ -119,8 +119,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     };
 
     return (
-        <div className="bg-white shadow-lg rounded-lg max-w-2xl mx-auto p-24">
-            <h2 className="text-center text-2xl font-semibold mb-4">Share your own family recipes!</h2>
+        <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit} className="space-y-4">
                 {step === 1 && (
                     <div>
@@ -137,18 +136,6 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                 className="w-full p-2 border rounded"
                             />
                         </div>
-                        {/* <div className="mb-2">
-                            <label htmlFor="creator_nickname" className="block text-sm font-medium">Creator's Nickname</label>
-                            <input
-                                type="text"
-                                name="creator_nickname"
-                                id="creator_nickname"
-                                placeholder="i.e. Ama"
-                                value={formData.creator_nickname || ""}
-                                onChange={(e) => handleInputChange(null, "creator_nickname", e.target.name, e.target.value)} 
-                                className="w-full p-2 border rounded"
-                            />
-                        </div> */}
                         <div className="mb-2">
                             <label htmlFor="creator_photo" className="block text-sm font-medium">Creator's Photo (Optional)</label>
                             <input

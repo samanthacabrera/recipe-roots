@@ -78,7 +78,7 @@ function Home({ user }) {
         ))}
       </div>
      
-      <section className="mx-52 space-y-8 text-xl">
+      <section className="max-w-2xl mx-auto space-y-8 text-xl">
         <p>Feeling inspired? Share your own family recipe.</p>
         <p>To ensure that the recipes shared on our website align with our mission and purpose, we encourage you to reflect on the following guidelines. These points aim to help you determine if your recipe embodies the emotional depth and cultural significance we cherish:</p>
         <ol>

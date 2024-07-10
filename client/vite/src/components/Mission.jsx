@@ -3,7 +3,7 @@ import React from 'react';
 function Mission() {
     return (
         <div className="container mx-auto px-36">
-            <h1 className="text-4xl my-12">Our Mission</h1>
+            <h1 className="text-9xl my-12">Our Mission</h1>
             <div className="font-light space-y-4">
                 <p>
                     At our core, we are driven by a deep passion for family history and the belief that our ancestors hold the keys to navigating the complexities of our modern world. Our platform was born out of a desire to preserve and celebrate the authentic family recipes that have been lovingly passed down through generations. These recipes are more than just instructions for preparing food; they are cherished stories, cultural artifacts, and tangible connections to our roots.
@@ -23,6 +23,11 @@ function Mission() {
                 <p>
                     Join us on this journey to preserve and celebrate the rich tapestry of family recipes. Let's cook, share, and connect through the flavors that define our histories and shape our futures. Together, we can ensure that the cultural heritage embedded in our family recipes continues to nourish us and inspire generations to come.
                 </p>
+
+                <div className="inline-block p-6 space-x-6">
+                    <button className="p-2 border border-current rounded">learn more</button>
+                    <button className="p-2 border border-current rounded">ways to help</button>
+                </div>
             </div>
         </div>
     );
