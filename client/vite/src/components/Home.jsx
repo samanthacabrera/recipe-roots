@@ -86,7 +86,7 @@ function Home({ user }) {
           <li>Do you have a photo of the recipe creator, such as a beloved family member, or the dish itself?</li>
           <li>Is this dish typically prepared for special occasions, holidays, or family gatherings?</li>
           <li>How does this recipe contribute to the celebration of these events and bring people together?</li>
-          <li>Is this recipe a representation of your cultural heritage or a traditional dish from your community</li>
+          <li>Is this recipe a representation of your cultural heritage?</li>
         </ol>
         <p>By following these guidelines, you help us maintain the integrity and spirit of our community.</p>
       </section>

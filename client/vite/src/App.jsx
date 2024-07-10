@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Mission from './components/Mission';
 import RecipeCard from './components/RecipeCard';
 import RecipePage from './components/RecipePage';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
         <Route path="/recipes" element={<RecipeCard user={userData}/>} />
         <Route path="/recipes/:id" element={<RecipePage user={userData} />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
