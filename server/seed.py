@@ -1,7 +1,7 @@
 from models import *
 from services import *
 
-def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_photo_public_id, memory, country, desc, visibility, ingredients, directions, user_clerk_id, family_id=None):
+def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_photo_public_id, memory, country, desc, ingredients, directions, user_clerk_id):
     recipe = Recipe(
         title=title,
         creator_name=creator_name,
@@ -11,9 +11,9 @@ def create_recipe(title, creator_name, creator_nickname, creator_bio, creator_ph
         memory=memory,
         country=country,
         desc=desc,
-        visibility=visibility,
+        # visibility=visibility,
         user_clerk_id=user_clerk_id,
-        family_id=family_id
+        # family_id=family_id
     )
     db.session.add(recipe)
     db.session.commit()
@@ -43,22 +43,22 @@ if __name__ == '__main__':
         db.create_all()
 
         # Create the Cabrera family
-        cabrera_family = Family(
-            name="Cabrera",
-            moderator_id="user_2gYebZGxBeBdQbTBV8SSJQ4SaHA"  # You need to replace this with the actual moderator ID
-        )
-        db.session.add(cabrera_family)
-        db.session.commit()
+        # cabrera_family = Family(
+        #     name="Cabrera",
+        #     moderator_id="user_2gYebZGxBeBdQbTBV8SSJQ4SaHA"  # You need to replace this with the actual moderator ID
+        # )
+        # db.session.add(cabrera_family)
+        # db.session.commit()
 
         # Create Elsa Cabrera
-        elsa = User(
-            clerk_id="user_2hDLKhW3XuVHeefS4fO1YBVK5B1",  # You need to replace this with the actual clerk ID
-            first_name="Elsa",
-            last_name="Cabrera",
-            family=cabrera_family  # Associate Elsa with the Cabrera family
-        )
-        db.session.add(elsa)
-        db.session.commit()
+        # elsa = User(
+        #     clerk_id="user_2hDLKhW3XuVHeefS4fO1YBVK5B1",  # You need to replace this with the actual clerk ID
+        #     first_name="Elsa",
+        #     last_name="Cabrera",
+        #     # family=cabrera_family  # Associate Elsa with the Cabrera family
+        # )
+        # db.session.add(elsa)
+        # db.session.commit()
 
         # Elsa's Pupusas recipe
         create_recipe(
@@ -70,7 +70,7 @@ if __name__ == '__main__':
             memory="Elsa Cabrera from El Salvador is sharing her beloved pupusas recipe.",
             country="El Salvador",
             desc="Pupusas are a traditional Salvadoran dish made of thick, handmade corn tortillas filled with various ingredients.",
-            visibility="family",
+            # visibility="family",
             ingredients=[
                 {"name": "Corn flour", "quantity": "2 cups", "unit": ""},
                 {"name": "Water", "quantity": "1 1/2 cups", "unit": ""},
@@ -86,8 +86,8 @@ if __name__ == '__main__':
                 {"step": "Cook the pupusas on a hot griddle until golden brown on both sides."},
                 {"step": "Serve hot with curtido on the side."}
             ],
-            user_clerk_id="user_2hDLKhW3XuVHeefS4fO1YBVK5B1" , # Associate the recipe with Elsa
-            family_id=1  # Associate the recipe with the Cabrera family
+            user_clerk_id="1" , # Associate the recipe with Elsa
+            # family_id=1  # Associate the recipe with the Cabrera family
         )
         # Alice's Pandekager recipe
         create_recipe(
@@ -99,7 +99,7 @@ if __name__ == '__main__':
             memory="Ida Widman from Denmark is delighted to share her Pandekager recipe.",
             country="Denmark",
             desc="Pandekager are thin Danish pancakes often served with sweet or savory toppings.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Flour", "quantity": "1 cup", "unit": ""},
                 {"name": "Milk", "quantity": "1 cup", "unit": ""},
@@ -128,7 +128,7 @@ if __name__ == '__main__':
             memory="Anthony from Italy brings his cherished marinara recipe.",
             country="Italy",
             desc="Marinara sauce is a classic Italian tomato sauce made with tomatoes, garlic, onions, and herbs.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Tomatoes", "quantity": "2 lbs", "unit": ""},
                 {"name": "Garlic", "quantity": "4 cloves", "unit": ""},
@@ -159,7 +159,7 @@ if __name__ == '__main__':
             memory="The Tan family from Malaysia shares their beloved Nasi Lemak recipe.",
             country="Malaysia",
             desc="Nasi Lemak is a fragrant rice dish cooked in coconut milk and pandan leaves, served with various accompaniments.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Jasmine rice", "quantity": 2, "unit": "cups"},
                 {"name": "Coconut milk", "quantity": 2, "unit": "cups"},
@@ -190,7 +190,7 @@ if __name__ == '__main__':
             memory="The Diop family from Senegal shares their cherished Thieboudienne recipe.",
             country="Senegal",
             desc="Thieboudienne is a flavorful Senegalese dish featuring fish cooked in a tomato-based sauce with vegetables, served over rice.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Fish", "quantity": 2, "unit": ""},
                 {"name": "Rice", "quantity": 3, "unit": "cups"},
@@ -225,7 +225,7 @@ if __name__ == '__main__':
             memory="The Khalil family from Lebanon shares their treasured Tabbouleh recipe.",
             country="Lebanon",
             desc="Tabbouleh is a refreshing Lebanese salad made with parsley, tomatoes, mint, bulgur, and a tangy lemon dressing.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Parsley", "quantity": 4, "unit": "bunches"},
                 {"name": "Tomatoes", "quantity": 6, "unit": ""},
@@ -260,7 +260,7 @@ if __name__ == '__main__':
             memory="The Chen family from Taiwan shares their famous Beef Noodle Soup recipe.",
             country="Taiwan",
             desc="Beef Noodle Soup is a hearty Taiwanese soup made with braised beef, noodles, and a rich broth flavored with aromatic spices.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Beef shank", "quantity": 1, "unit": "lb"},
                 {"name": "Beef broth", "quantity": 4, "unit": "cups"},
@@ -297,7 +297,7 @@ if __name__ == '__main__':
             memory="The Hernandez family from Mexico shares their authentic Tacos al Pastor recipe.",
             country="Mexico",
             desc="Tacos al Pastor are delicious Mexican tacos made with marinated pork, pineapple, onions, and cilantro, served on corn tortillas.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Pork shoulder", "quantity": 2, "unit": "lbs"},
                 {"name": "Corn tortillas", "quantity": 16, "unit": ""},
@@ -333,7 +333,7 @@ if __name__ == '__main__':
             memory="The Kovacs family from Hungary shares their traditional Goulash recipe.",
             country="Hungary",
             desc="Goulash is a hearty Hungarian stew made with beef, onions, paprika, tomatoes, and potatoes, seasoned with Hungarian spices.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "Beef stew meat", "quantity": 2, "unit": "lbs"},
                 {"name": "Onion", "quantity": 2, "unit": ""},
@@ -371,7 +371,7 @@ if __name__ == '__main__':
             memory="The Novak family from Slovenia shares their traditional Potica recipe.",
             country="Slovenia",
             desc="Potica is a traditional Slovenian dessert made with sweet yeast dough rolled with a filling of ground nuts, honey, and spices.",
-            visibility="global",
+            # visibility="global",
             ingredients=[
                 {"name": "All-purpose flour", "quantity": 4, "unit": "cups"},
                 {"name": "Active dry yeast", "quantity": 1, "unit": "packet"},
@@ -399,6 +399,8 @@ if __name__ == '__main__':
             ],
             user_clerk_id=1,
         )
+        print("recipes seeded")
+
 
 
 

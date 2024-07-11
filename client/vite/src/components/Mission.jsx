@@ -25,8 +25,8 @@ function Mission() {
                 </p>
 
                 <div className="inline-block p-6 space-x-6">
-                    <button className="p-2 border border-current rounded">learn more</button>
-                    <button className="p-2 border border-current rounded">ways to help</button>
+                    <button className="p-2 border border-current rounded">Donate</button>
+                    <button className="p-2 border border-current rounded">Learn more</button>
                 </div>
             </div>
         </div>

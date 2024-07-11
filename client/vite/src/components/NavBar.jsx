@@ -29,9 +29,9 @@ function NavBar() {
     };
 
     return (
-        <nav className="sticky top-0 z-50 ">
+        <nav className="sticky top-0 z-50 shadow ">
             <div className="flex justify-between items-center p-4 bg-white">
-                <div className="space-x-4" >
+                <div className="space-x-6" >
                     <SignedOut>
                         <Link to="/" className="nav-link">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></Link>
                         <SignInButton />
@@ -40,6 +40,7 @@ function NavBar() {
                     <SignedIn>
                         <Link to="/" className="nav-link">Recipe<span className="text-olive-600 inline-block hover:rotate-6 hover:-translate-y-1 transition duration-300 ease-in-out">Roots</span></Link>
                         <Link to="/stories" className="nav-link">Stories</Link>
+                        {/* <Link to="/community" className="nav-link">Community</Link> */}
                         <Link to="/profile" className="nav-link">Cookbook</Link>
                         <Link to="/mission" className="nav-link">Mission</Link>
                     </SignedIn>
@@ -61,8 +62,11 @@ function NavBar() {
 
             <div className="bg-white">
                 {filteredRecipes.map(recipe => (
-                    <Link key={recipe.id} to={`/recipes/${recipe.id}`} className="text-centerblock p-2 m-2 rounded outline w-fit mb-4">
-                        {recipe.title} 
+                    <Link
+                        key={recipe.id}
+                        to={`/recipes/${recipe.id}`} 
+                        className="text-centerblock p-2 m-2 rounded-full bg-olive-600 text-white w-fit">
+                        {recipe.title}
                     </Link>
                 ))}
             </div>

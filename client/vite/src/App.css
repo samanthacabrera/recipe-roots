@@ -66,11 +66,7 @@ html {
   color: #666;
 }
 
-/* SECTION */
-section {
-  height: 100vh;
-}
-
-#welcome h1 {
+h1,
+h2 {
   font-family: "Playwrite US Modern", cursive;
 }

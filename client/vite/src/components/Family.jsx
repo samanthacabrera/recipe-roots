@@ -123,9 +123,9 @@ function Family({ user }) {
     }
   };
 
-  const familyRecipes = recipes.filter(
-    (recipe) => recipe.visibility === 'family' && isInFamily && familyData && familyData.members.some(member => member.clerk_id === user.clerk_id)
-  );
+  // const familyRecipes = recipes.filter(
+  //   (recipe) => recipe.visibility === 'family' && isInFamily && familyData && familyData.members.some(member => member.clerk_id === user.clerk_id)
+  // );
 
   return (
     <div className="my-20 mx-12 p-20 max-w-4xl mx-auto bg-gray-100 shadow-lg container">

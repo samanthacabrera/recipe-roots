@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate} from 'react-router-dom'
 import RecipeCard from "./RecipeCard";
 
 function Profile({ user }) {
@@ -6,6 +7,11 @@ function Profile({ user }) {
   const [favoritedRecipes, setFavoritedRecipes] = useState([]);
   const [favoritesMap, setFavoritesMap] = useState({});
 
+  const navigate = useNavigate();
+  const navToUploadForm = () => {
+    navigate('/upload');
+  };
+  
   useEffect(() => {
     const fetchAddedRecipes = async () => {
       if (!user) return;
@@ -89,6 +95,7 @@ function Profile({ user }) {
         {/* User Info Column */}
         <div className="col-span-1">
           <h2 className="text-4xl">Welcome, {user.firstName}!</h2>
+          <button onClick={navToUploadForm}>Upload recipe</button>
         </div>
 
         {/* Recipes Collections */}

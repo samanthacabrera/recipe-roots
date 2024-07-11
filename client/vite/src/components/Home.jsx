@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Mission from "./Mission";
+import { useNavigate } from 'react-router-dom'
 import RecipeCard from "./RecipeCard";
-import AddRecipe from "./AddRecipe";
-
 
 const countries = [
     { 
@@ -19,11 +17,14 @@ const countries = [
   }
 ];
 
-
 function Home({ user }) {
   const [recipes, setRecipes] = useState([]);
   const [featuredCountry, setFeaturedCountry] = useState(null);
-  const [randomRecipe, setRandomRecipe] = useState(null);
+  
+  const navigate = useNavigate();
+  const navToUploadForm = () => {
+    navigate('/upload');
+  };
 
   useEffect(() => {
     fetch("/api/recipes")
@@ -37,19 +38,13 @@ function Home({ user }) {
     setFeaturedCountry(countries[randomIndex]);
   }, []);
 
-  const generateRandomRecipe = () => {
-    const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
-    const randomIndex = Math.floor(Math.random() * globalRecipes.length);
-    setRandomRecipe(globalRecipes[randomIndex]);
-  };
-
-  const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
-  const filteredRecipes = globalRecipes.filter(recipe => recipe.country === (featuredCountry ? featuredCountry.name : ''));
+  // const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
+  const filteredRecipes = recipes.filter(recipe => recipe.country === (featuredCountry ? featuredCountry.name : ''));
 
   return (
     <div className="space-y-40">
-      
-      <section id="welcome" className="flex justify-center">
+      {/* WELCOME HERO */}
+      <section id="welcome" className="flex">
         <div className="flex-1 mx-24">
           <h1 className="text-7xl font-semibold leading-loose pt-12">Welcome to Recipe Roots</h1>
           <p className="pt-12">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations. We are dedicated to sharing authentic family recipes to a global audience.</p>
@@ -58,27 +53,41 @@ function Home({ user }) {
           <img src="https://media.istockphoto.com/id/1130855116/vector/magic-cookbook.jpg?s=612x612&w=0&k=20&c=O-U1He20MPVOJvhAdb4fKvf5dSUoEsi3IuwW5bT2u4I=" alt="Pixelized Books" className="w-full h-auto" />
         </div>
       </section>
-      
-      {featuredCountry && (
-          <div className="mx-24 space-y-8">
-            <h2 className="text-4xl">Featured recipe from {featuredCountry.name}</h2>
-            <p>{featuredCountry.description}</p>
-            <div className="flex flex-col items-center">
+      {/* FEATURED */}
+      <section className="min-h-screen m-24 px-40">
+        {featuredCountry && (
+          <>
+            <h2 className="text-7xl leading-relaxed font-semibold py-24">
+              Featured recipe from <span className="italic">{featuredCountry.name}</span>
+            </h2>
+            <div className="flex items-center space-x-12">
+              <p className="w-3/5 leading-loose">
+                {featuredCountry.description}
+              </p>
               {filteredRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+                <RecipeCard
+                  key={recipe.id}
+                  user={user}
+                  recipe={recipe}
+                 />
               ))}
-          </div>
-        </div>
+            </div>
+          </>
       )}
-      
-      <h2 className="text-4xl">Recipes from around the world</h2>
-      <div className="recipe-list">
-        {globalRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} user={user} recipe={recipe} />
-        ))}
-      </div>
-     
-      <section className="max-w-2xl mx-auto space-y-8 text-xl">
+      </section>
+      {/* EXPLORE  */}
+      <section className="">
+        <h2 className="text-7xl leading-relaxed font-semibold py-24">Recipes from around the world</h2>
+        <div className="recipe-list">
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+          ))}
+        </div>
+      </section>
+
+
+      {/* UPLOAD RECIPE CTA */}
+      <section className="">
         <p>Feeling inspired? Share your own family recipe.</p>
         <p>To ensure that the recipes shared on our website align with our mission and purpose, we encourage you to reflect on the following guidelines. These points aim to help you determine if your recipe embodies the emotional depth and cultural significance we cherish:</p>
         <ol>
@@ -89,10 +98,8 @@ function Home({ user }) {
           <li>Is this recipe a representation of your cultural heritage?</li>
         </ol>
         <p>By following these guidelines, you help us maintain the integrity and spirit of our community.</p>
+        <button onClick={navToUploadForm}>Let's get started !!</button>
       </section>
-
-      <AddRecipe />
- 
     </div>
   );
 }

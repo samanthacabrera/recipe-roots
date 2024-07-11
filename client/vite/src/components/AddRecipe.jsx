@@ -10,7 +10,7 @@ const AddRecipe = () => {
     title: "",
     country: "",
     desc: "",
-    visibility: "global",
+    // visibility: "global",
     ingredients: [{ name: "", quantity: "", unit: "" }],
     directions: [{ step: "" }]
   };
