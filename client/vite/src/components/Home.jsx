@@ -38,15 +38,14 @@ function Home({ user }) {
     setFeaturedCountry(countries[randomIndex]);
   }, []);
 
-  // const globalRecipes = recipes.filter(recipe => recipe.visibility === 'global');
   const filteredRecipes = recipes.filter(recipe => recipe.country === (featuredCountry ? featuredCountry.name : ''));
 
   return (
     <div className="space-y-40">
       {/* WELCOME HERO */}
       <section id="welcome" className="flex">
-        <div className="flex-1 mx-24">
-          <h1 className="text-7xl font-semibold leading-loose pt-12">Welcome to Recipe Roots</h1>
+        <div className="flex-1 p-24">
+          <h1 className="text-2xl leading-loose">Welcome to <span className="block text-9xl">Recipe Roots</span></h1>
           <p className="pt-12">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations. We are dedicated to sharing authentic family recipes to a global audience.</p>
         </div>
         <div className="flex-1 mx-24">
@@ -85,20 +84,13 @@ function Home({ user }) {
         </div>
       </section>
 
-
       {/* UPLOAD RECIPE CTA */}
-      <section className="">
+      <section className="px-24">
         <p>Feeling inspired? Share your own family recipe.</p>
-        <p>To ensure that the recipes shared on our website align with our mission and purpose, we encourage you to reflect on the following guidelines. These points aim to help you determine if your recipe embodies the emotional depth and cultural significance we cherish:</p>
-        <ol>
-          <li>Does preparing or eating this dish evoke fond memories or strong emotions for you and your loved ones?</li>
-          <li>Do you have a photo of the recipe creator, such as a beloved family member, or the dish itself?</li>
-          <li>Is this dish typically prepared for special occasions, holidays, or family gatherings?</li>
-          <li>How does this recipe contribute to the celebration of these events and bring people together?</li>
-          <li>Is this recipe a representation of your cultural heritage?</li>
-        </ol>
-        <p>By following these guidelines, you help us maintain the integrity and spirit of our community.</p>
-        <button onClick={navToUploadForm}>Let's get started !!</button>
+        <p>To ensure that the recipes shared on our website align with our mission and purpose, we encourage you to reflect on the follow questions:</p>
+        
+        <p>By keeping these guidelines in mind, you help us maintain the integrity of our community.</p>
+        <button onClick={navToUploadForm} className="bg-olive-600 text-slate-50 rounded-full p-2 m-4">Upload a recipe</button>
       </section>
     </div>
   );

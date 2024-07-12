@@ -46,7 +46,6 @@ def add_recipe():
         memory=data.get('memory')
         country = data.get('country')
         desc = data.get('desc')
-        # visibility = data.get('visibility', 'global')
         ingredients = data.get('ingredients')
         directions = data.get('directions')
 
@@ -63,7 +62,6 @@ def add_recipe():
             memory=memory,
             country=country,
             desc=desc,
-            # visibility=visibility,
             author=user  
         )
 
@@ -193,35 +191,6 @@ def get_favorited_recipes(clerk_id):
     except Exception as e:
         print(e)
         return jsonify({"error": "Could not fetch favorited recipes"}), 422
-    
-
-# @app.route('/family/recipes', methods=['GET'])
-# def get_family_recipes():
-#     try:
-#         clerk_id = request.args.get('clerk_id')
-
-#         if not clerk_id:
-#             return jsonify({"error": "User clerk_id is required"}), 400
-
-#         user = User.query.filter_by(clerk_id=clerk_id).first()
-#         if not user:
-#             return jsonify({"error": "User not found"}), 404
-
-#         if not user.family_id:
-#             return jsonify({"error": "User is not in a family"}), 400
-
-#         family = Family.query.get(user.family_id)
-#         if not family:
-#             return jsonify({"error": "Family not found"}), 404
-
-#         recipes = Recipe.query.filter_by(family_id=family.id).all()
-#         recipes_data = [recipe.to_dict() for recipe in recipes]
-
-#         return jsonify({"recipes": recipes_data}), 200
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "An error occurred"}), 500
-
 
 @app.route('/favorites/status', methods=['GET'])
 def check_favorite_status():
@@ -270,114 +239,6 @@ def toggle_favorite():
     except Exception as e:
         print("Error in toggle_favorite:", e)
         return jsonify({"error": "Could not toggle favorite status"}), 422
-
-
-# @app.route('/families', methods=['POST'])
-# def create_family():
-#     try:
-#         data = request.get_json()
-#         name = data.get('name')
-#         moderator_id = data.get('moderator_id')
-
-#         if not name or not moderator_id:
-#             return jsonify({"error": "Name and moderator_id are required"}), 400
-
-#         moderator = User.query.filter_by(clerk_id=moderator_id).first()
-#         if not moderator:
-#             return jsonify({"error": "Moderator not found"}), 404
-
-#         new_family = Family(name=name, moderator_id=moderator_id)
-#         db.session.add(new_family)
-#         db.session.commit()
-
-#         new_family.members.append(moderator)
-#         moderator.family_id = new_family.id
-#         db.session.commit()
-
-#         return jsonify({"success": "Family created successfully", "family": new_family.to_dict()}), 201
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "Could not create family"}), 500
-  
-
-# @app.route('/families')
-# def get_all_families():
-#     try:
-#         families = Family.query.all()
-#         families_data = [family.to_dict() for family in families]
-#         return jsonify(families_data), 200
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "Could not fetch families"}), 422
-
-
-# @app.route('/family/status')
-# def check_family_status():
-#     try:
-#         clerk_id = request.args.get('clerk_id')
-
-#         if not clerk_id:
-#             return jsonify({"error": "User clerk_id is required"}), 400
-
-#         user = User.query.filter_by(clerk_id=clerk_id).first()
-#         if not user:
-#             return jsonify({"error": "User not found"}), 404
-
-#         if user.family_id:
-#             family = Family.query.get(user.family_id)
-#             if not family:
-#                 return jsonify({"error": "Family not found"}), 404
-
-#             family_members = [member.to_dict() for member in family.members]
-
-#             return jsonify({
-#                 "isInFamily": True,
-#                 "familyData": {
-#                     "id": family.id,
-#                     "name": family.name,
-#                     "moderator_id": family.moderator_id,
-#                     "members": family_members
-#                 }
-#             }), 200
-#         else:
-#             return jsonify({"isInFamily": False}), 200
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "An error occurred"}), 500
-
-
-
-# @app.route('/family/membership/<int:family_id>', methods=['POST'])
-# def toggle_family_membership(family_id):
-#     try:
-#         data = request.get_json()
-#         clerk_id = data.get('clerk_id')
-
-#         if not clerk_id:
-#             return jsonify({"error": "User clerk_id is required"}), 400
-
-#         family = Family.query.get(family_id)
-#         if not family:
-#             return jsonify({"error": "Family not found"}), 404
-
-#         user = User.query.filter_by(clerk_id=clerk_id).first()
-#         if not user:
-#             return jsonify({"error": "User not found"}), 404
-
-#         if user in family.members:
-#             family.members.remove(user)
-#             user.family_id = None
-#             db.session.commit()
-#             return jsonify({"success": f"User {clerk_id} left the family"}), 200
-#         else:
-#             family.members.append(user)
-#             user.family_id = family.id
-#             db.session.commit()
-#             return jsonify({"success": f"User {clerk_id} joined the family"}), 200
-#     except Exception as e:
-#         print(e)
-#         return jsonify({"error": "An error occurred"}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -5,28 +5,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     const [photo, setPhoto] = useState(null);
     const [photoUrl, setPhotoUrl] = useState('');
     const [step, setStep] = useState(1);
-    // const [isInFamily, setIsInFamily] = useState(false);
     const [formData, setFormData] = useState(initialData);
-    // const [visibility, setVisibility] = useState('global');
-
-    // useEffect(() => {
-    //     const fetchFamilyStatus = async () => {
-    //         try {
-    //             const response = await fetch(`/api/family/status?clerk_id=${window.Clerk.user.id}`, {
-    //                 method: "GET",
-    //                 headers: {
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             });
-    //             const data = await response.json();
-    //             setIsInFamily(data.isInFamily);
-    //         } catch (error) {
-    //             console.error("Failed to fetch family status:", error.message);
-    //         }
-    //     };
-
-    //     fetchFamilyStatus();
-    // }, []);
 
     useEffect(() => {
         setFormData(initialData);
@@ -100,7 +79,6 @@ const RecipeForm = ({ initialData, onSubmit }) => {
             ...formData,
             creator_photo_public_id: photoUrl,
             clerk_id: window.Clerk.user.id,
-            // visibility: visibility
         };
         onSubmit(completeFormData);
     };
@@ -114,11 +92,21 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     };
 
     return (
-         <form onSubmit={handleSubmit} className="w-screen h-screen bg-olive-600 text-slate-50 flex flex-col justify-center items-center">
+         <form onSubmit={handleSubmit} className="w-screen h-screen bg-olive-600 flex flex-col justify-center items-center">
             {step === 1 && (
                 <div className="space-y-4 w-full max-w-lg px-8">
-                    <div className="flex flex-col">
-                        <label htmlFor="creator_name" className="text-4xl">Creator's Name</label>
+                    <p>We're excited to help you preserve and share your family recipes. Please click "Next" to begin.</p>
+                    <div className="flex justify-end">
+                        <button type="button" onClick={nextStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Next</button>
+                    </div> 
+                </div>
+            )}
+            {step === 2 && (
+                <div className="space-y-4 w-full max-w-lg px-8 text-left">
+                    <div className="flex flex-col space-y-2">
+                        <h3 className="text-4xl">Let's get started!</h3>
+                        <h6 className="text-xl pb-4">First, tell us about alittle about who created this recipe.</h6>
+                        <label htmlFor="creator_name" className="">Recipe creator's Name</label>
                         <input
                             type="text"
                             name="creator_name"
@@ -127,41 +115,43 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.creator_name || ""}
                             onChange={(e) => handleInputChange(null, "creator_name", e.target.name, e.target.value)}
                             required
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="creator_photo" className="text-4xl">Creator's Photo (Optional)</label>
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="creator_photo" className="">Recipe creator's Photo</label>
                         <input
                             type="file"
                             name="creator_photo"
                             id="creator_photo"
                             accept="image/*"
                             onChange={(e) => handlePhotoUpload(e.target.files[0])}
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="memory" className="text-4xl">Memory</label>
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="memory" className="">Share a special memory you have about this recipe</label>
                         <textarea
                             name="memory"
                             id="memory"
-                            placeholder="Share a memory you have about a time you ate this recipe."
+                            placeholder="My family and I would eat this every year around the holidays."
                             value={formData.memory || ""}
                             onChange={(e) => handleInputChange(null, "memory", e.target.name, e.target.value)}
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         />
                     </div>
-                    <div className="flex justify-end">
-                        <button type="button" onClick={nextStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Next</button>
+                    <div className="flex justify-between">
+                        <button type="button" onClick={prevStep} className="">Previous</button>
+                        <button type="button" onClick={nextStep} className="">Next</button>
                     </div>
                 </div>
             )}
 
-            {step === 2 && (
-                <div className="space-y-4 w-full max-w-lg px-8">
-                    <div className="flex flex-col">
-                        <label htmlFor="title" className="text-4xl">Recipe Title</label>
+            {step === 3 && (
+                <div className="space-y-4 w-full max-w-lg px-8 text-left">
+                    <div className="flex flex-col space-y-2">
+                        <p className="text-4xl pb-4">Now, let's add the basics of your recipe.</p>
+                        <label htmlFor="title" className="">Recipe Title</label>
                         <input
                             type="text"
                             name="title"
@@ -170,18 +160,18 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.title || ""}
                             onChange={(e) => handleInputChange(null, "title", e.target.name, e.target.value)}
                             required
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="country" className="text-4xl">Country of Origin</label>
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="country" className="">Country of Origin</label>
                         <select
                             name="country"
                             id="country"
                             value={formData.country || ""}
                             onChange={(e) => handleInputChange(null, "country", e.target.name, e.target.value)}
                             required
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         >
                             <option value="">Select a country</option>
                             {countries.map((country, index) => (
@@ -189,8 +179,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             ))}
                         </select>
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="desc" className="text-4xl">Recipe Description</label>
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="desc" className="">Recipe Description</label>
                         <textarea
                             name="desc"
                             id="desc"
@@ -198,58 +188,49 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.desc || ""}
                             onChange={(e) => handleInputChange(null, "desc", e.target.name, e.target.value)}
                             required
-                            className="p-3 bg-white rounded-md"
+                            className="p-2 bg-white rounded-md focus:outline-white"
                         />
                     </div>
-                    {/* <div className="flex flex-col">
-                        <label htmlFor="visibility" className="text-4xl">Visibility</label>
-                        <select
-                            name="visibility"
-                            id="visibility"
-                            value={visibility}
-                            onChange={(e) => setVisibility(e.target.value)}
-                            className="p-3 bg-white rounded-md"
-                        >
-                            <option value="global">Global</option>
-                            <option value="family">Family</option>
-                        </select>
-                    </div> */}
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Previous</button>
-                        <button type="button" onClick={nextStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Next</button>
+                        <button type="button" onClick={prevStep} className="">Previous</button>
+                        <button type="button" onClick={nextStep} className="">Next</button>
                     </div>
                 </div>
             )}
 
-            {step === 3 && (
-                <div className="space-y-4 w-full max-w-lg px-8">
+            {step === 4 && (
+                <div className="space-y-4 w-full max-w-lg px-8 text-left">
+                    <h6 className="text-4xl pb-4">Next, let's add the ingredients</h6>
                     {formData.ingredients.map((ingredient, index) => (
-                        <div key={index} className="space-y-2">
-                            <div className="flex flex-col">
+                        <div key={index} >
+                            <div className="flex flex-col space-y-2">
+                                <label htmlFor={`ingredient-name-${index}`} className="">Ingredient Name</label>
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder="Ingredient Name"
+                                    placeholder="i.e. Sugar"
                                     value={ingredient.name || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-3 bg-white rounded-md"
+                                    className="p-2 bg-white rounded-md focus:outline-white"
                                 />
+                                <label htmlFor={`ingredient-quantity-${index}`} className="">Quantity</label>
                                 <input
                                     type="number"
                                     name="quantity"
-                                    placeholder="Quantity"
+                                    placeholder="i.e. 1"
                                     value={ingredient.quantity || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-3 bg-white rounded-md"
+                                    className="p-2 bg-white rounded-md focus:outline-white"
                                 />
+                                <label htmlFor={`ingredient-unit-${index}`} className="">Unit</label>
                                 <select
                                     name="unit"
                                     value={ingredient.unit || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-3 bg-white rounded-md"
+                                    className="p-2 bg-white rounded-md focus:outline-white"
                                 >
                                     <option value="">Select Unit</option>
                                     {imperialUnits.map((unit, index) => (
@@ -262,28 +243,30 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             </div>
                             <div className="flex justify-between">
                                 {index === formData.ingredients.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("ingredients")} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Add Ingredient</button>
+                                    <button type="button" onClick={() => handleAddInput("ingredients")} className="">Add Ingredient</button>
                                 )}
                                 {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "ingredients")} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Remove Ingredient</button>
+                                    <button type="button" onClick={() => handleRemoveInput(index, "ingredients")} className="">Remove Ingredient</button>
                                 )}
                             </div>
                         </div>
                     ))}
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Previous</button>
-                        <button type="button" onClick={nextStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Next</button>
+                        <button type="button" onClick={prevStep} className="">Previous</button>
+                        <button type="button" onClick={nextStep} className="">Next</button>
                     </div>
                 </div>
             )}
 
-            {step === 4 && (
-                <div className="space-y-4 w-full max-w-lg px-8">
+            {step === 5 && (
+                <div className="space-y-4 w-full max-w-lg px-8 text-left">
+                    <h6 className="text-4xl pb-4">Now, add step-by-step directions for making the recipe.</h6>
                     {formData.directions.map((direction, index) => (
                         <div key={index} className="space-y-2">
+                            <label htmlFor={`direction-step-${index}`} className="">Step {index + 1}</label>
                             <textarea
                                 name="step"
-                                placeholder={`Step ${index + 1}`}
+                                placeholder="Describe this step."
                                 value={direction.step || ""}
                                 onChange={(e) => handleInputChange(index, "directions", e.target.name, e.target.value)}
                                 required
@@ -291,17 +274,17 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             ></textarea>
                             <div className="flex justify-between">
                                 {index === formData.directions.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("directions")} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Add Direction</button>
+                                    <button type="button" onClick={() => handleAddInput("directions")} className="">Add Direction</button>
                                 )}
                                 {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "directions")} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Remove Direction</button>
+                                    <button type="button" onClick={() => handleRemoveInput(index, "directions")} className="">Remove Direction</button>
                                 )}
                             </div>
                         </div>
                     ))}
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Previous</button>
-                        <button type="submit" className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:bg-gray-600">Share Family Recipe!</button>
+                        <button type="button" onClick={prevStep} className="">Previous</button>
+                        <button type="submit" className="">Share Family Recipe!</button>
                     </div>
                 </div>
             )}
@@ -310,6 +293,3 @@ const RecipeForm = ({ initialData, onSubmit }) => {
 };
 
 export default RecipeForm;
-
-
-

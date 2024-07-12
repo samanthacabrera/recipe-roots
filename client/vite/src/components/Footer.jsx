@@ -5,21 +5,21 @@ const Footer = () => {
   return (
     <footer className="bg-olive-600 text-slate-50 mt-24 px-12">
       <div className="container mx-auto pt-8 flex justify-start items-center">
-          <p className="text-6xl"> Recipe Roots</p>
+          <h2 className="text-4xl"> Recipe Roots</h2>
       </div>
-      <div className="container mx-auto py-16 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="container mx-auto py-12 grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Quick Links */}
           <nav className="text-left flex flex-col space-y-4">
             <h3>Quick Links</h3>
-            <a href="#">Explore</a>
-            <a href="#">Featured Stories</a>
-            <a href="#">My Cookbook</a>
-            <a href="#">Our Mission</a>
+            <a href="/">Explore</a>
+            <a href="/stories">Featured Stories</a>
+            <a href="/profile">My Cookbook</a>
+            <a href="/mission">Our Mission</a>
           </nav>
         {/* Newsletter Signup */}
         <div className="flex flex-col space-y-4 text-left">
           <h3 className="text-xl">Join our newsletter</h3>
-          <p className="text-sm leading-loose pb-4">Stay updated with the latest recipes, culinary tips, and special offers! Join our newsletter for a delicious dose of inspiration delivered straight to your inbox.</p>
+          <p className="text-sm leading-loose pb-4">Stay updated with the latest recipes, culinary tips, and free online events! Join our newsletter for a dose of inspiration delivered straight to your inbox.</p>
           <form className="flex space-x-4">
             <input type="email" className="w-full px-4 py-2 rounded-lg focus:outline-none" placeholder="Your email address" />
             <button type="submit" className="py-2 px-4 rounded-full border focus:outline-none">Subscribe</button>

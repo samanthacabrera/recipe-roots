@@ -9,7 +9,6 @@ import Mission from './components/Mission';
 import RecipeCard from './components/RecipeCard';
 import RecipePage from './components/RecipePage';
 import Footer from './components/Footer';
-import CommunityBoard from './components/Community';
 import AddRecipe from './components/AddRecipe';
 
 
@@ -55,7 +54,6 @@ function App() {
         <Route path="/" element={<Home user={userData} />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/profile" element={<Profile user={userData} />} />
-        <Route path="/community" element={<CommunityBoard />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/recipes" element={<RecipeCard user={userData}/>} />
         <Route path="/recipes/:id" element={<RecipePage user={userData} />} />
