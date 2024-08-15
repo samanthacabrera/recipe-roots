@@ -23,11 +23,12 @@ const slides = [
 
 function Stories(){
   return (
-    <div className="flex flex-col items-center p-24 space-y-40">
-
-      <div className="w-full text-center">
-        <h2 className="text-6xl font-semibold">Discover Featured Stories</h2>
-        <p className="text-xl mt-8">Be inspired by heartfelt stories and delicious recipes from our community around the world.</p>
+    <div className="flex flex-col items-center">
+      <div className="justify-center w-2/3 space-y-40">
+      <div className="w-full text-center space-y-4">
+        <h2 className="text-6xl">Discover Featured Stories</h2>
+        <p className="text-xl">Be inspired by heartfelt stories and delicious recipes from our community around the world.</p>
+        <p>For a chance to be featured, share your experience with the hashtag #reciperoots</p>
       </div>
 
       <div className="space-y-24 w-full">
@@ -42,11 +43,8 @@ function Stories(){
           </article>
         ))}
       </div>
-      
-      <div className="text-xl">
-        <p>For a chance to be featured, share your experience with the hashtag #reciperoots</p>
-      </div>
     </div>
+  </div>
   );
 };
 

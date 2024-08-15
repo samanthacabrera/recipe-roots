@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { countries, imperialUnits, metricUnits } from '/Users/samanthacabrera/FlatIron/phase-5/recipeRoots/client/vite/constants';
+import { countries, imperialUnits, metricUnits } from './constants.js';
 
 const RecipeForm = ({ initialData, onSubmit }) => {
     const [photo, setPhoto] = useState(null);

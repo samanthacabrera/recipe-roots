@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from 'react-router-dom'
-import RecipeCard from "./RecipeCard";
+import { useNavigate } from 'react-router-dom';
 
 function Profile({ user }) {
   const [addedRecipes, setAddedRecipes] = useState([]);
   const [favoritedRecipes, setFavoritedRecipes] = useState([]);
   const [favoritesMap, setFavoritesMap] = useState({});
+  const [bio, setBio] = useState('');
 
   const navigate = useNavigate();
+
   const navToUploadForm = () => {
     navigate('/upload');
   };
-  
+
   useEffect(() => {
     const fetchAddedRecipes = async () => {
       if (!user) return;
@@ -87,45 +88,84 @@ function Profile({ user }) {
     }
   };
 
+  const handleBioChange = (e) => {
+    setBio(e.target.value);
+  };
+
   if (!user) return <div>Loading...</div>;
 
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* User Info Column */}
-        <div className="col-span-1">
-          <h2 className="text-4xl">Welcome, {user.firstName}!</h2>
-          <button onClick={navToUploadForm}>Upload recipe</button>
+        <div className="col-span-1 bg-opacity-80 bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-4xl mb-4">Welcome, {user.firstName}!</h2>
+          <p className="text-gray-600 mb-4">
+            This is your profile page where you can manage your recipes and favorites.
+          </p>
+          <button 
+            onClick={navToUploadForm} 
+            className="px-4 py-2 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition"
+          >
+            Upload Recipe
+          </button>
+          <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-2">Bio</h3>
+            <textarea 
+              value={bio}
+              onChange={handleBioChange}
+              rows="4"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Share a bit about yourself..."
+            />
+          </div>
         </div>
 
         {/* Recipes Collections */}
         <div className="col-span-1 lg:col-span-2 space-y-8">
-          <div className="bg-white border shadow-lg rounded-lg p-6">
+          <div className="bg-olive-100 border border-olive-200 shadow-lg rounded-lg p-6">
             <h2 className="text-2xl mb-4">My Uploaded Recipes</h2>
+            <p className="text-gray-600 mb-4">
+              Here you can edit or delete the recipes you’ve added.
+            </p>
             <div className="overflow-x-auto">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {addedRecipes.length === 0 ? (
                   <p className="text-gray-600">No recipes found</p>
                 ) : (
                   addedRecipes.map(recipe => (
-                    <RecipeCard key={recipe.id} recipe={recipe} user={user} />
+                    <div 
+                      key={recipe.id} 
+                      className="bg-olive-50 border border-olive-200 rounded-lg p-4 shadow-md transition-transform transform hover:scale-105"
+                      style={{ backgroundColor: '#F0F4F0' }}
+                    >
+                      <h3 className="text-lg font-semibold mb-2 text-olive-800">{recipe.title}</h3>
+                      <p className="text-gray-600">{recipe.description}</p>
+                    </div>
                   ))
                 )}
               </div>
             </div>
           </div>
 
-          <div className="bg-white border shadow-lg rounded-lg p-6">
+          <div className="bg-olive-100 border border-olive-200 shadow-lg rounded-lg p-6">
             <h2 className="text-2xl mb-4">My Favorites</h2>
+            <p className="text-gray-600 mb-4">
+              Here are your favorite recipes. Discover and revisit them anytime.
+            </p>
             <div className="overflow-x-auto">
-              <div className="flex space-x-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {favoritedRecipes.length === 0 ? (
                   <p className="text-gray-600">No favorited recipes found</p>
                 ) : (
                   favoritedRecipes.map(recipe => (
-                    <div key={recipe.id} className="">
-                      <RecipeCard recipe={recipe} user={user} />
-                    
+                    <div 
+                      key={recipe.id} 
+                      className="bg-olive-50 border border-olive-200 rounded-lg p-4 shadow-md transition-transform transform hover:scale-105"
+                      style={{ backgroundColor: '#F0F4F0' }}
+                    >
+                      <h3 className="text-lg  mb-2 text-olive-800">{recipe.title}</h3>
+                      <p className="text-gray-600">{recipe.description}</p>
                     </div>
                   ))
                 )}

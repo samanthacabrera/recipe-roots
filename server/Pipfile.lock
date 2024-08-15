@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "177ea4121353598ae4c84f78864df4d023b7c567d71993e87695dea02b21ed86"
+            "sha256": "be798e7218212ad328d87344106876f2769d704bb06b7c2da31d23dde45ecbb2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -286,7 +286,7 @@
                 "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
             ],
             "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.9.0.post0"
         },
         "python-dotenv": {
@@ -304,7 +304,7 @@
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
             "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "sqlalchemy": {

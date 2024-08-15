@@ -5,8 +5,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, inspect
 from flask_migrate import Migrate
 from sqlalchemy_serializer import SerializerMixin
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
 import cloudinary
-import cloudinary.uploader
 import os
 
 

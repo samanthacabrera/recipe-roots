@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
-import NavBar from './components/NavBar';
-import Home from './components/Home';
-import Stories from './components/Stories';
-import Profile from './components/Profile';
-import Mission from './components/Mission';
-import RecipeCard from './components/RecipeCard';
-import RecipePage from './components/RecipePage';
-import Footer from './components/Footer';
-import AddRecipe from './components/AddRecipe';
+import NavBar from './NavBar';
+import Home from './Home';
+import Profile from './Profile';
+import Mission from './Mission';
+import RecipeCard from './RecipeCard';
+import RecipePage from './RecipePage';
+import AddRecipe from './AddRecipe';
 
 
 function App() {
@@ -52,14 +50,12 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home user={userData} />} />
-        <Route path="/stories" element={<Stories />} />
         <Route path="/profile" element={<Profile user={userData} />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/recipes" element={<RecipeCard user={userData}/>} />
         <Route path="/recipes/:id" element={<RecipePage user={userData} />} />
         <Route path="/upload" element={<AddRecipe user={userData}/>} />
       </Routes>
-      <Footer/>
     </Router>
   );
 }

@@ -3,6 +3,7 @@
 Recipe Roots is an online platform designed for sharing family recipes, with the goal of preserving and sharing authentic, culturally accurate dishes with a global audience. Users can browse family recipes from around the world and save their favorite recipes to a personal favorites list.
 
 ## Table of Contents
+
 - [Mission](#mission)
 - [Features](#features)
 - [Project Structure](#project-structure)
@@ -11,7 +12,6 @@ Recipe Roots is an online platform designed for sharing family recipes, with the
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [License](#license)
-
 
 ## Mission
 
@@ -30,31 +30,30 @@ We believe that preserving family recipes is crucial to staying connected to our
 reciperoots/
 │
 ├── backend/
-│   ├── app.py
-│   ├── models.py
-│   ├── routes.py
-│   ├── services/
-│   └── ...
+│ ├── app.py
+│ ├── models.py
+│ ├── routes.py
+│ ├── services/
+│ └── ...
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── App.js
-│   │   └── ...
-│   ├── public/
-│   └── ...
+│ ├── src/
+│ │ ├── components/
+│ │ ├── App.js
+│ │ └── ...
+│ ├── public/
+│ └── ...
 │
 ├── migrations/
 ├── venv/
 ├── requirements.txt
 └── package.json
 
-
 ## Technologies
 
 Recipe Roots is built using the following technologies:
 
-- **Frontend**: 
+- **Frontend**:
   - React
   - Tailwind CSS
 - **Backend**:
@@ -74,22 +73,26 @@ Ensure you have the following installed:
 ### Backend Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/reciperoots.git
    cd reciperoots
    ```
 
 2. Create a virtual environment:
+
    ```bash
-   pipenv install 
+   pipenv install
    ```
 
 3. Install backend dependencies:
+
    ```bash
-   pipenv shell 
+   pipenv shell
    ```
 
 4. Set up the database:
+
    ```bash
    flask db init
    flask db migrate
@@ -104,11 +107,13 @@ Ensure you have the following installed:
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
+
    ```bash
    cd frontend
    ```
 
 2. Install frontend dependencies:
+
    ```bash
    npm install
    ```
@@ -133,14 +138,6 @@ Ensure you have the following installed:
 - `POST /api/users`: Create a new user.
 - `PUT /api/users/<id>`: Update a user by ID.
 - `DELETE /api/users/<id>`: Delete a user by ID.
-
-### Families
-
-- `GET /api/families`: Retrieve a list of all families.
-- `GET /api/families/<id>`: Retrieve a specific family by ID.
-- `POST /api/families`: Create a new family.
-- `PUT /api/families/<id>`: Update a family by ID.
-- `DELETE /api/families/<id>`: Delete a family by ID.
 
 ### Recipes
 
@@ -176,6 +173,7 @@ Ensure you have the following installed:
 ## Screenshots
 
 ### Home Page
+
 ### Recipe Page
 
 ## License
