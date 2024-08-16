@@ -52,7 +52,7 @@ function AddRecipe() {
 ];
 
   return (
-    <div className="w-screen h-screen bg-olive-600 flex flex-col justify-center items-center">
+    <div className="w-screen h-screen bg-olive-700 bg-opacity-30 flex flex-col justify-center items-center">
       {isSubmitted ? (
         <div className="max-w-md px-12 py-8 my-2 bg-gray-100 text-gray-700 rounded-lg shadow-md space-y-4">
           <h3 className="text-2xl">Recipe successfully added!</h3>

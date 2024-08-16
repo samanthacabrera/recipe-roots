@@ -13,7 +13,7 @@ function RecipeCard({ recipe, user }) {
 
   return (
     <div
-      className="recipe-card relative w-full md:w-1/2 lg:w-1/3 p-4 border border-gray-200 rounded-lg shadow-sm transition-shadow duration-300 hover:shadow-lg overflow-hidden"
+      className="recipe-card relative w-full md:w-1/2 lg:w-1/3 p-4 rounded-lg shadow-sm transition-shadow duration-300 hover:shadow-lg overflow-hidden"
       style={{
         color: "white",
         height: "500px",
@@ -37,18 +37,18 @@ function RecipeCard({ recipe, user }) {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">
-        <Link
-          to={`/recipes/${recipe.id}`}
-          className=""
-        >
-          View Full Recipe
-        </Link>
+      <div className="absolute space-y-12 inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">
         <Favorite
           recipeId={recipe.id}
           userId={user.clerk_id}
           className=""
         />
+        <Link
+          to={`/recipes/${recipe.id}`}
+          className="btn-light"
+        >
+          Get Recipe
+        </Link>
       </div>
     </div>
   );

@@ -8,7 +8,6 @@ alembic = "==1.13.1"
 blinker = "==1.8.2"
 certifi = "==2024.2.2"
 click = "==8.1.7"
-cloudinary = "*"
 faker = "==25.2.0"
 flask = "==3.0.3"
 flask-cors = "==4.0.1"
@@ -30,6 +29,7 @@ typing-extensions = "==4.11.0"
 urllib3 = "==2.2.1"
 werkzeug = "==3.0.3"
 zipp = "==3.18.2"
+cloudinary = "*"
 
 [dev-packages]
 

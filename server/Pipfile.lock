@@ -54,10 +54,10 @@
         },
         "cloudinary": {
             "hashes": [
-                "sha256:fe1a5309734814b481de637ab3041e8699995387df965ec0f2d8f767db7067a2"
+                "sha256:e189739a796a7d2ad15c19971741d33a9300816b16c0282b4b14ccf1dd2948c0"
             ],
             "index": "pypi",
-            "version": "==1.40.0"
+            "version": "==1.41.0"
         },
         "faker": {
             "hashes": [

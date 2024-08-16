@@ -13,12 +13,9 @@ html {
   height: 100%;
   overflow-x: hidden;
   font-family: Helvetica, sans-serif;
+  background-color: #a0996147;
+  color: rgb(31, 45, 30);
 }
-
-/* h1,
-h2 {
-  font-family: "Times New Roman", Times, serif;
-} */
 
 /* RECIPE CARD  */
 .recipe-card {
@@ -26,7 +23,7 @@ h2 {
   overflow: hidden;
   border-radius: 10px;
   width: calc(50% - 20px);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .recipe-card:hover {
@@ -42,10 +39,8 @@ h2 {
 
 /* RECIPE LISTS */
 .recipe-list {
-  margin-left: 5%;
   display: grid;
-  gap: 64px;
-  justify-content: center;
+  gap: 24px;
 }
 
 @media (min-width: 768px) {
@@ -53,9 +48,21 @@ h2 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
+/* 
 @media (min-width: 1024px) {
   .recipe-list {
     grid-template-columns: repeat(3, 1fr);
   }
+} */
+
+.btn-dark {
+  @apply text-gray-900 bg-transparent border border-gray-900;
+  @apply hover:scale-110 focus:outline-none transition duration-200;
+  @apply font-medium rounded-full text-sm px-5 py-2.5 text-center;
+}
+
+.btn-light {
+  @apply text-gray-100 bg-transparent border border-gray-100;
+  @apply hover:scale-110 focus:outline-none transition duration-200;
+  @apply font-medium rounded-full text-sm px-5 py-2.5 text-center;
 }

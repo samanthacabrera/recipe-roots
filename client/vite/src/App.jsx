@@ -8,7 +8,7 @@ import Mission from './Mission';
 import RecipeCard from './RecipeCard';
 import RecipePage from './RecipePage';
 import AddRecipe from './AddRecipe';
-
+import Footer from './Footer';
 
 function App() {
   const { user } = useUser(); 
@@ -56,6 +56,7 @@ function App() {
         <Route path="/recipes/:id" element={<RecipePage user={userData} />} />
         <Route path="/upload" element={<AddRecipe user={userData}/>} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

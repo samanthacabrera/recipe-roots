@@ -22,22 +22,26 @@ function Home({ user }) {
 
 
   return (
-    <div className="space-y-40">
+    <div className="space-y-40 flex flex-col justify-center items-center">
 
-      <section id="welcome" className="flex">
-        <div className="flex-1 p-24">
+      <section id="welcome" className="flex justify-center">
+        <div className="w-1/2 space-y-12 py-16">
           <h1 className="text-2xl leading-loose">Welcome to <span className="block text-9xl">Recipe Roots</span></h1>
-          <p className="pt-12">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations. We are dedicated to sharing authentic family recipes to a global audience.</p>
-        </div>
-        <div className="flex-1 mx-24">
-          <img src="https://media.istockphoto.com/id/1130855116/vector/magic-cookbook.jpg?s=612x612&w=0&k=20&c=O-U1He20MPVOJvhAdb4fKvf5dSUoEsi3IuwW5bT2u4I=" alt="Pixelized Books" className="w-full h-auto" />
+          <p className="">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations. We are dedicated to sharing authentic family recipes to a global audience.
+             By sharing these recipes, we honor our ancestors and keep their spirits alive in our kitchens.
+          </p>
+
         </div>
       </section>
 
       <Stories/>
 
-      <section className="">
-        <h2 className="text-7xl py-24">Recipes from around the world</h2>
+      <section className="flex flex-col items-center justify-center pt-20 space-y-20">
+        <div className="w-1/2 space-y-8">
+          <h2 className="text-6xl">Explore Global Recipes</h2>
+          <p className="text-lg">Discover cherished family recipes and traditions from around the world. Dive into a collection of dishes passed down through generations and explore the rich stories behind each recipe.</p>
+        </div>
+
         <div className="recipe-list">
           {recipes.map((recipe) => (
             <RecipeCard key={recipe.id} user={user} recipe={recipe} />
@@ -48,9 +52,9 @@ function Home({ user }) {
   
 
       {/* UPLOAD RECIPE CTA */}
-      <section className="p-8 md:p-32">
+      <section className="w-1/2 p-8 md:p-32 space-y-4">
         <p>Feeling inspired? Share your own family recipe.</p>
-        <button onClick={navToUploadForm} className="bg-olive-600 text-slate-50 rounded-full p-2 m-4">Upload a recipe</button>
+        <button onClick={navToUploadForm} className="btn-dark">Upload a recipe</button>
       </section>
     </div>
   );

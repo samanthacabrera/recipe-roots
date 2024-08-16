@@ -92,7 +92,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     };
 
     return (
-         <form onSubmit={handleSubmit} className="w-screen h-screen bg-olive-600 flex flex-col justify-center items-center">
+         <form onSubmit={handleSubmit} className="w-screen h-screen flex flex-col justify-center items-center">
             {step === 1 && (
                 <div className="space-y-4 w-full max-w-lg px-8">
                     <p>We're excited to help you preserve and share your family recipes. Please click "Next" to begin.</p>

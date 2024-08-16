@@ -69,6 +69,7 @@ function RecipePage({ user }) {
 
     return (
         <div className="grid grid-cols-2 mt-12">
+            {/* CreatorInfo */}
             <div id="creatorInfo" className="space-y-12 p-4">
                 <h1 className="text-4xl mb-6">Meet {recipe.creator_name}</h1>
                 <h6 className="px-24">{recipe.creator_bio}</h6>
@@ -78,10 +79,14 @@ function RecipePage({ user }) {
                     alt={`${recipe.creator_name}'s photo`}
                     style={{ maxWidth: 'calc(50% - 20px)' }}
                 />
-                <Favorite recipeId={recipe.id} userId={user.clerk_id} />
             </div>
 
-            <div id="recipeInfo" className="text-justify p-4">
+            {/* RecipeInfo */}
+            <div id="recipeInfo" className="flex flex-col text-justify p-4">
+                <div className="self-end pr-24">
+                    <Favorite recipeId={recipe.id} userId={user.clerk_id}/>
+                </div>
+          
                 <h1 className="text-2xl underline mb-6">{recipe.title}</h1>
                 <h6 className="font-semibold mb-4">Country of Origin: <span className="font-normal"> {recipe.country}</span></h6>
                 <h6 className="font-semibold mb-4">Description: <span className="font-normal"> {recipe.desc}</span></h6>
@@ -110,25 +115,6 @@ function RecipePage({ user }) {
                 )}
             </div>
 
-            <div id="socialSharing" className="p-4 text-left">
-                <h6 className="font-semibold mb-4">Share this recipe:</h6>
-                <a
-                    href={getPinterestShareUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-4"
-                >
-                    <button>Pinterest</button>
-                </a>
-                <a
-                    href={getFacebookShareUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-4"
-                >
-                    <button>Facebook</button>
-                </a>
-            </div>
         </div>
     );
 }

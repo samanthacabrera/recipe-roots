@@ -48,11 +48,7 @@ function Favorite({ recipeId, userId }) {
   return (
     <button
       onClick={handleToggleFavorite}
-      className={`px-3 py-1 rounded transition duration-300 focus:outline-none ${
-        isFavorited
-          ? "bg-red-100 text-red-600 hover:bg-red-200"
-          : "bg-green-100 text-green-600 hover:bg-green-200"
-      }`}
+      className="btn-light"
     >
       {isFavorited ? "Unfavorite" : "Favorite"}
     </button>
