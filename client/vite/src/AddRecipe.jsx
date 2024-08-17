@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecipeForm from './RecipeForm';
 
 function AddRecipe() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [recipeLink, setRecipeLink] = useState(null);
+
   const initialData = {
     creator_name: "",
     creator_nickname: "",
@@ -31,8 +32,12 @@ function AddRecipe() {
         })
       });
       if (response.ok) {
-        console.log('Recipe successfully added!!');
+        const data = await response.json();
+        const recipeId = data.id;  // Assuming the response includes the ID of the created recipe
+        const recipeURL = `/recipe/${recipeId}`;
+        setRecipeLink(recipeURL);
         setIsSubmitted(true);
+        console.log('Recipe successfully added!!');
       } else {
         console.error('Failed to add recipe');
         alert("Failed to add recipe");
@@ -43,17 +48,24 @@ function AddRecipe() {
   };
 
   return (
-    <div className="w-screen h-screen  flex flex-col justify-center items-center">
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
       {isSubmitted ? (
-        <div className="p-20 bg-black bg-opacity-5 rounded-lg shadow-md ">
-          <h3 className="text-2xl mb-12">Recipe successfully added!</h3>
-          <a href="/">&larr; Explore more recipes</a>
+        <div className="p-20 bg-black bg-opacity-5 rounded-lg shadow-md">
+          <h3 className="mb-8">Recipe successfully added.</h3>
+          <div className="mb-2 hover:scale-110 duration-300">
+            <a href={recipeLink} target="_blank" rel="noopener noreferrer">
+              View your recipe &rarr; 
+            </a>
+          </div>
+          <div className="hover:scale-110 duration-300">
+            <a href="/" >&larr; Explore more recipes</a>
+          </div>
         </div>
       ) : (
         <RecipeForm initialData={initialData} onSubmit={handleSubmit} />
       )}
     </div>
-  )
-};
+  );
+}
 
 export default AddRecipe;

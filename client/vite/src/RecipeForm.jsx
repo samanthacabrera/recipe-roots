@@ -105,8 +105,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                 <div className="space-y-4 w-full max-w-lg px-8 text-left">
                     <div className="flex flex-col space-y-2">
                         <h3 className="text-4xl">Let's get started!</h3>
-                        <h6 className="text-xl pb-4">First, tell us about alittle about who created this recipe.</h6>
-                        <label htmlFor="creator_name" className="">Recipe creator's Name</label>
+                        <h6 className="pb-4">First, tell us about a little about who created this recipe.</h6>
+                        <label htmlFor="creator_name" className="">Recipe Creator's Name:</label>
                         <input
                             type="text"
                             name="creator_name"
@@ -119,7 +119,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="creator_photo" className="">Recipe creator's Photo</label>
+                        <label htmlFor="creator_photo" className="">Recipe Creator's Photo: </label>
                         <input
                             type="file"
                             name="creator_photo"
@@ -130,11 +130,11 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="memory" className="">Share a special memory you have about this recipe</label>
+                        <label htmlFor="memory" className="">Recipe Memory: <span className="text-xs block">(Share the story of how this recipe was first made or your favorite memory eating this recipe.)</span></label>
                         <textarea
                             name="memory"
                             id="memory"
-                            placeholder="My family and I would eat this every year around the holidays."
+                            placeholder="i.e. My family and I would make this every Christmas Eve."
                             value={formData.memory || ""}
                             onChange={(e) => handleInputChange(null, "memory", e.target.name, e.target.value)}
                             className="p-2 bg-white rounded-md focus:outline-white"
@@ -151,7 +151,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                 <div className="space-y-4 w-full max-w-lg px-8 text-left">
                     <div className="flex flex-col space-y-2">
                         <p className="text-4xl pb-4">Now, let's add the basics of your recipe.</p>
-                        <label htmlFor="title" className="">Recipe Title</label>
+                        <label htmlFor="title" className="">Recipe Title:</label>
                         <input
                             type="text"
                             name="title"
@@ -164,7 +164,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="country" className="">Country of Origin</label>
+                        <label htmlFor="country" className="">Country of Origin:</label>
                         <select
                             name="country"
                             id="country"
@@ -180,7 +180,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         </select>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="desc" className="">Recipe Description</label>
+                        <label htmlFor="desc" className="">Recipe Description:</label>
                         <textarea
                             name="desc"
                             id="desc"
@@ -204,7 +204,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                     {formData.ingredients.map((ingredient, index) => (
                         <div key={index} >
                             <div className="flex flex-col space-y-2">
-                                <label htmlFor={`ingredient-name-${index}`} className="">Ingredient Name</label>
+                                <label htmlFor={`ingredient-name-${index}`} className="">Ingredient Name:</label>
                                 <input
                                     type="text"
                                     name="name"
@@ -214,7 +214,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                     required
                                     className="p-2 bg-white rounded-md focus:outline-white"
                                 />
-                                <label htmlFor={`ingredient-quantity-${index}`} className="">Quantity</label>
+                                <label htmlFor={`ingredient-quantity-${index}`} className="">Quantity:</label>
                                 <input
                                     type="number"
                                     name="quantity"
@@ -224,7 +224,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                     required
                                     className="p-2 bg-white rounded-md focus:outline-white"
                                 />
-                                <label htmlFor={`ingredient-unit-${index}`} className="">Unit</label>
+                                <label htmlFor={`ingredient-unit-${index}`} className="">Unit:</label>
                                 <select
                                     name="unit"
                                     value={ingredient.unit || ""}
