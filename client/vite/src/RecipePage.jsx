@@ -28,17 +28,12 @@ function RecipePage({ user }) {
 
     const handleDeleteRecipe = async () => {
         try {
-            console.log("Deleting recipe with ID:", id);
-            console.log("User clerk_id:", user.clerk_id);
-            
             const response = await fetch(`/api/recipes/${id}?clerk_id=${user.clerk_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
             });
-            
-            console.log("Delete recipe response:", response);
 
             if (!response.ok) {
                 throw new Error('Failed to delete recipe');
@@ -49,72 +44,69 @@ function RecipePage({ user }) {
         }
     };
 
-    const getPinterestShareUrl = () => {
-        const url = window.location.href;
-        const description = recipe ? recipe.title : '';
-        return `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(description)}`;
-    };
-
-    const getFacebookShareUrl = () => {
-        const url = window.location.href;
-        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    };
-
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }
     if (!recipe) {
-        return <div>Recipe not found</div>;
+        return <div className="flex justify-center items-center h-screen">Recipe not found</div>;
     }
 
     return (
-        <div className="grid grid-cols-2 mt-12">
+        <div id="recipePage" className="max-w-4xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-lg space-y-12">
             {/* CreatorInfo */}
-            <div id="creatorInfo" className="space-y-12 p-4">
-                <h1 className="text-4xl mb-6">Meet {recipe.creator_name}</h1>
-                <h6 className="px-24">{recipe.creator_bio}</h6>
+            <div id="creatorInfo" className="flex flex-col items-center text-center space-y-4">
+                <h1 className="text-4xl font-bold text-gray-800">{recipe.creator_name}</h1>
+                <p className="text-gray-600">{recipe.creator_bio}</p>
                 <img
                     src={recipe.creator_photo_public_id}
-                    className="w-full translate-x-1/2 rounded-lg"
+                    className="w-48 h-48 rounded-full object-cover"
                     alt={`${recipe.creator_name}'s photo`}
-                    style={{ maxWidth: 'calc(50% - 20px)' }}
                 />
             </div>
 
             {/* RecipeInfo */}
-            <div id="recipeInfo" className="flex flex-col text-justify p-4">
-                <div className="self-end pr-24">
-                    <Favorite recipeId={recipe.id} userId={user.clerk_id}/>
+            <div id="recipeInfo" className="bg-yellow-50 border border-gray-300 p-6 rounded-lg shadow-md">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl font-bold underline text-gray-700">{recipe.title}</h1>
+                    <Favorite recipeId={recipe.id} userId={user.clerk_id} />
                 </div>
-          
-                <h1 className="text-2xl underline mb-6">{recipe.title}</h1>
-                <h6 className="font-semibold mb-4">Country of Origin: <span className="font-normal"> {recipe.country}</span></h6>
-                <h6 className="font-semibold mb-4">Description: <span className="font-normal"> {recipe.desc}</span></h6>
-                <h6 className="font-semibold mb-4">Ingredients:</h6>
-                <ul className="space-y-1">
-                    {recipe.ingredients.map(ingredient => (
-                        <li key={ingredient.id}>
-                            {ingredient.quantity} {ingredient.unit} {ingredient.name}
-                        </li>
-                    ))}
-                </ul>
-            
-                <h6 className="font-semibold my-4">Directions:</h6>
-                <ol className="space-y-2">
-                    {recipe.directions.map(direction => (
-                        <li key={direction.id}>
-                            {direction.step}
-                        </li>
-                    ))}
-                </ol>
+
+                <div className="mt-6 text-gray-700 space-y-4">
+                    <p><strong>Country of Origin:</strong> {recipe.country}</p>
+                    <p><strong>Description:</strong> {recipe.desc}</p>
+                    <div>
+                        <h6 className="font-semibold mb-2">Ingredients:</h6>
+                        <ul className="list-disc pl-5 space-y-1">
+                            {recipe.ingredients.map((ingredient) => (
+                                <li key={ingredient.id}>
+                                    {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h6 className="font-semibold mb-2">Directions:</h6>
+                        <ol className="list-decimal pl-5 space-y-2">
+                            {recipe.directions.map((direction) => (
+                                <li key={direction.id}>
+                                    {direction.step}
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
             </div>
 
-            <div id="editRecipe" className="p-4">
+            <div id="editRecipe" className="flex justify-end">
                 {user.clerk_id === recipe.user_clerk_id && (
-                    <button onClick={handleDeleteRecipe}>Delete Recipe</button> 
+                    <button
+                        onClick={handleDeleteRecipe}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                    >
+                        Delete Recipe
+                    </button>
                 )}
             </div>
-
         </div>
     );
 }

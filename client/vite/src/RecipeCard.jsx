@@ -30,11 +30,7 @@ function RecipeCard({ recipe, user }) {
         backgroundSize: "cover",
       }}
     >
-      <div>
-        <h3 className="text-lg font-semibold mb-2 text-white">
-          {`${recipe.creator_name}'s ${recipe.title} from ${recipe.country}`}
-        </h3>
-      </div>
+
 
       {/* Overlay */}
       <div className="absolute space-y-12 inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">

@@ -33,7 +33,7 @@ function AddRecipe() {
       });
       if (response.ok) {
         const data = await response.json();
-        const recipeId = data.id;  // Assuming the response includes the ID of the created recipe
+        const recipeId = data.id; 
         const recipeURL = `/recipe/${recipeId}`;
         setRecipeLink(recipeURL);
         setIsSubmitted(true);

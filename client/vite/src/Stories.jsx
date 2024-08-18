@@ -26,12 +26,12 @@ function Stories(){
 
       <div className="space-y-24 w-full">
         {slides.map((slide, index) => (
-          <article key={index} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center space-y-12 lg:space-y-0 lg:space-x-12 lg:space-x-reverse bg-black bg-opacity-10  p-8 rounded-lg shadow-lg `}>
+          <article key={index} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center space-y-12 lg:space-y-0 lg:space-x-12 lg:space-x-reverse bg-white bg-opacity-5  p-8 rounded-lg shadow-lg `}>
             <img src={slide.image} alt={slide.title} className="w-full lg:w-1/2 h-96 object-cover rounded-lg"/>
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left p-4 space-y-6">
               <h3 className="text-4xl">{slide.title}</h3>
               <p>{slide.text}</p>
-              <a href={slide.route} className="btn-dark">Read More</a>
+              <a href={slide.route} className="">Read More &rarr;</a>
             </div>
           </article>
         ))}

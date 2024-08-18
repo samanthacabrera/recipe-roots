@@ -26,7 +26,8 @@ function Home({ user }) {
 
       <section id="welcome" className="flex justify-center">
         <div className="w-1/2 space-y-12 py-16">
-          <h1 className="text-2xl leading-loose">Welcome to <span className="block text-9xl">Recipe Roots</span></h1>
+      
+          <h1 className="text-9xl">Recipe Roots</h1>
           <p className="">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations. We are dedicated to sharing authentic family recipes to a global audience.
              By sharing these recipes, we honor our ancestors and keep their spirits alive in our kitchens.
           </p>
@@ -44,7 +45,13 @@ function Home({ user }) {
 
         <div className="recipe-list">
           {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+            <div>
+              <h3 className="text-xl py-6">
+                {`${recipe.creator_name}'s ${recipe.title} recipe`}
+              </h3>
+  
+              <RecipeCard key={recipe.id} user={user} recipe={recipe} />
+            </div>  
           ))}
         </div>
       </section>
@@ -54,7 +61,7 @@ function Home({ user }) {
       {/* UPLOAD RECIPE CTA */}
       <section className="w-1/2 p-8 md:p-32 space-y-4">
         <p>Feeling inspired? Share your own family recipe.</p>
-        <button onClick={navToUploadForm} className="btn-dark">Upload a recipe</button>
+        <button onClick={navToUploadForm} className="btn-light">Upload a recipe</button>
       </section>
     </div>
   );

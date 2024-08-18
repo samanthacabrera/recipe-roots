@@ -13,8 +13,8 @@ html {
   height: 100%;
   overflow-x: hidden;
   font-family: Helvetica, sans-serif;
-  background-color: #f9f3e8;
-  color: rgb(31, 45, 30);
+  background-color: rgb(50, 65, 49);
+  color: rgba(213, 201, 171, 0.823);
 }
 
 /* RECIPE CARD  */
@@ -65,4 +65,8 @@ html {
   @apply text-gray-100 bg-transparent border border-gray-100;
   @apply hover:scale-110 focus:outline-none transition duration-200;
   @apply font-medium rounded-full text-sm px-5 py-2.5 text-center;
+}
+
+#recipePage {
+  font-family: "Times New Roman", Times, serif;
 }
