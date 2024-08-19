@@ -92,12 +92,12 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     };
 
     return (
-         <form onSubmit={handleSubmit} className="w-screen h-screen flex flex-col justify-center items-center">
+         <form id="recipeForm" onSubmit={handleSubmit} className="w-screen h-screen flex flex-col justify-center items-center">
             {step === 1 && (
                 <div className="space-y-4 w-full max-w-lg px-8">
-                    <p>We're excited to help you preserve and share your family recipes. Please click "Next" to begin.</p>
+                    <p>We're excited to help you preserve and share your family recipes. Please click "Start" to begin.</p>
                     <div className="flex justify-end">
-                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
+                        <button type="button" onClick={nextStep} className="btn-light">Start</button>
                     </div> 
                 </div>
             )}

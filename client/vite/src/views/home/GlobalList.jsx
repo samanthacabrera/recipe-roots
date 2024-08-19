@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RecipeCard from "../../components/RecipeCard";
 
 
-function GlobalList(user) {
+function GlobalList({ user }) {
   const [recipes, setRecipes] = useState([]);
 
 
@@ -13,13 +13,13 @@ function GlobalList(user) {
       .catch((error) => console.error("Error fetching recipes:", error));
   }, []);
   return (
-      <section className="flex flex-col items-center pt-20 space-y-20">
-            <div className="w-2/3">
-                <div className="w-full space-y-4">
+      <section className="flex flex-col justify-center items-center w-2/3 space-y-20">
+
+            <div className="space-y-4">
                 <h1 className="text-6xl">Recipe Collection</h1>
                 <p className="text-lg">Browse and discover cherished family recipes from around the world.</p>
-                </div>
             </div>
+
             
             <div className="recipe-list">
             {recipes.map((recipe) => (

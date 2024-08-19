@@ -14,15 +14,19 @@ html {
   overflow-x: hidden;
   font-family: "Times New Roman", Times, serif;
   background-color: rgb(50, 65, 49);
-  color: rgba(215, 212, 204, 0.823);
+  color: rgba(235, 231, 220, 0.823);
 }
 
 h1 {
-  font-family: Arial, Helvetica, sans-serif;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-/* RECIPE CARD  */
+input::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+/* recipe card styles */
 .recipe-card {
   position: relative;
   overflow: hidden;
@@ -42,24 +46,22 @@ h1 {
   }
 }
 
-/* RECIPE LISTS */
+/* recipe list styles */
 .recipe-list {
   display: grid;
   gap: 24px;
 }
-
 @media (min-width: 768px) {
   .recipe-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-/* 
-@media (min-width: 1024px) {
-  .recipe-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-} */
 
+/* recipe form styles  */
+#recipeForm {
+  font-family: Helvetica, sans-serif;
+}
+/* custom tailwind styles */
 .btn-dark {
   @apply text-gray-900 bg-transparent border border-gray-900;
   @apply hover:scale-110 focus:outline-none transition duration-200;

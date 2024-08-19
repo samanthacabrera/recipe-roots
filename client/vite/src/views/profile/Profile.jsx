@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserButton } from "@clerk/clerk-react";
+import { SignIn, UserButton } from "@clerk/clerk-react";
 import { Link } from 'react-router-dom';
 
 function Profile({ user }) {
@@ -47,13 +47,14 @@ function Profile({ user }) {
     setActiveTab(e.target.value);
   };
 
-  if (!user) return <div>Loading...</div>;
+  if (!user) return <div className="h-screen flex flex-col justify-center items-center space-y-12">
+    <p>To see your profile, you must first be signed in.</p>
+    <SignIn/>
+  </div>;
 
   return (
-    <div className="container w-1/2 translate-x-1/2 pt-10 min-h-screen">
-      <div className="grid grid-cols-1 gap-8">
-        
-        <div className="bg-white bg-opacity-10 rounded-lg shadow-lg p-4">
+    <div className="container w-1/2 translate-x-1/2 flex flex-col pt-10 min-h-screen">       
+        <div className="bg-white bg-opacity-10 rounded-lg shadow-lg space-y-6 p-12">
           <div className="flex justify-center space-x-2 m-2">
             <UserButton />
             <h2 className="text-2xl">Hello, {user.firstName}!</h2>
@@ -63,12 +64,7 @@ function Profile({ user }) {
             This is your profile page where you can manage your recipes and favorites. Use the dropdown below to switch between your uploaded recipes and favorited recipes.
           </p>
 
-        </div>
-
-        {/* Recipes Card */}
-        <div className="bg-white bg-opacity-10 rounded-lg shadow-lg p-4">
-          
-          <div className="mb-4">
+          <div className="p-4">
             <select 
               value={activeTab}
               onChange={handleTabChange}
@@ -77,9 +73,8 @@ function Profile({ user }) {
               <option value="favorited">Favorited Recipes</option>
               <option value="uploaded">Uploaded Recipes</option>
             </select>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left m-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left m-4">
             {activeTab === 'uploaded' ? (
               addedRecipes.length === 0 ? (
                 <p className="">No uploaded recipes found</p>
@@ -104,7 +99,7 @@ function Profile({ user }) {
           </div>
         </div>
       </div>
-    </div>
+    </div> 
   );
 }
 

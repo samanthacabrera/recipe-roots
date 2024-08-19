@@ -30,19 +30,9 @@ function RecipeCard({ recipe, user }) {
         backgroundSize: "cover",
       }}
     >
-
-
       {/* Overlay */}
-      <div className="absolute space-y-12 inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">
-        <Favorite
-          recipeId={recipe.id}
-          userId={user.clerk_id}
-          className=""
-        />
-        <Link
-          to={`/recipes/${recipe.id}`}
-          className="btn-light"
-        >
+      <div className="absolute space-y-12 inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end items-center">
+        <Link to={`/recipes/${recipe.id}`} className="btn-light mb-12">
           Get Recipe
         </Link>
       </div>

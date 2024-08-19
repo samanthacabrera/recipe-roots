@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SignedIn, SignedOut, SignInButton, SignOutButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignOutButton } from "@clerk/clerk-react";
 import { Link } from 'react-router-dom';
 
 function NavBar() {
@@ -47,10 +47,14 @@ function NavBar() {
         };
     }, []);
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
-        <nav className="sticky top-0 z-50 bg-[rgb(50,65,49)]">
+        <nav className="sticky top-0 z-50">
             <div className="flex justify-between items-center p-4">
-                {/* Menu Toggle Button */}
+             
                 <button 
                     className="focus:outline-none"
                     onClick={toggleMenu}
@@ -74,7 +78,7 @@ function NavBar() {
             >
                 <div className="p-6 flex flex-col h-full">
                     
-                    {/* Close Button */}
+                 
                     <button 
                         className="focus:outline-none self-start mb-4"
                         onClick={toggleMenu}
@@ -84,19 +88,18 @@ function NavBar() {
                         </svg>
                     </button>
 
-                    {/* User Buttons */}
-                    <SignedOut >
+                    <SignedOut>
                         <div className="flex flex-col space-y-2 mx-4 text-lg"> 
-                            <Link to="/" className="">Recipe <span className="text-olive-600">Roots</span></Link>
-                            <Link to="/mission" className="">Mission</Link>
-                            <SignInButton className="text-left" />
+                            <Link to="/" onClick={scrollToTop} className="">Recipe <span className="text-olive-600">Roots</span></Link>
+                            <Link to="/profile" onClick={scrollToTop} className="">Profile</Link>
+                            <Link to="/mission" onClick={scrollToTop} className="">Mission</Link>
                         </div>
                     </SignedOut>
                     <SignedIn>
                         <div className="flex flex-col space-y-2 mx-4 text-lg">
-                        <Link to="/" className="">Recipe <span className="text-olive-600">Roots</span></Link>
-                        <Link to="/profile" className="">Profile</Link>
-                        <Link to="/mission" className="">Mission</Link>
+                        <Link to="/" onClick={scrollToTop} className="">Recipe <span className="text-olive-600">Roots</span></Link>
+                        <Link to="/profile" onClick={scrollToTop} className="">Profile</Link>
+                        <Link to="/mission" onClick={scrollToTop} className="">Mission</Link>
                         <SignOutButton className="text-left" />
                         </div>
                     </SignedIn>
@@ -105,7 +108,7 @@ function NavBar() {
                     <input 
                         type="text" 
                         placeholder="Search recipes" 
-                        className="border rounded-md p-2 m-4 focus:outline-none "
+                        className="border-top border-b bg-transparent py-1 m-4 focus:outline-none"
                         value={searchQuery}
                         onChange={handleSearch}
                     />

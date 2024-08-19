@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import RecipeForm from '../../components/RecipeForm';
 
 function AddRecipe() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [recipeLink, setRecipeLink] = useState(null);
+  const [showForm, setShowForm] = useState(false); 
 
   const navigate = useNavigate();
+
   const navToUploadForm = () => {
-    navigate('/upload');
-  }
+    setShowForm(true); 
+  };
 
   const initialData = {
     creator_name: "",
@@ -56,25 +58,28 @@ function AddRecipe() {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       {isSubmitted ? (
-        <div className="p-20 bg-black bg-opacity-5 rounded-lg shadow-md">
-          <h3 className="mb-8">Recipe successfully added.</h3>
-          <div className="mb-2 hover:scale-110 duration-300">
-            <a href={recipeLink} target="_blank" rel="noopener noreferrer">
-              View your recipe &rarr; 
-            </a>
-          </div>
-          <div className="hover:scale-110 duration-300">
-            <a href="/" >&larr; Explore more recipes</a>
-          </div>
+        <div className="bg-black bg-opacity-5 rounded-lg shadow-md space-y-6">
+            <h3 className="mb-8">Recipe successfully added.</h3>
+
+            <div className="btn-light">
+              <a href={recipeLink} target="_blank" rel="noopener noreferrer">View your recipe &rarr; </a>
+            </div>
+                        
+            <div className="btn-light">
+              <a href="/" >&larr; Explore more recipes</a>
+            </div>
         </div>
       ) : (
-          <>
-            <div className="w-1/2 p-8 md:p-32 space-y-4">
-                <p>Feeling inspired? Share your own family recipe.</p>
-                <button onClick={navToUploadForm} className="btn-light">Upload a recipe</button>
+        <>
+          {!showForm ? (
+            <div className="w-1/2 space-y-4">
+              <p>Feeling inspired? Share your own family recipe.</p>
+              <button onClick={navToUploadForm} className="btn-light">Upload a recipe</button>
             </div>
+          ) : (
             <RecipeForm initialData={initialData} onSubmit={handleSubmit} />
-           </>
+          )}
+        </>
       )}
     </div>
   );

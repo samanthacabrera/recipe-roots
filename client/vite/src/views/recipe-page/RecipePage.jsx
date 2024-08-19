@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Favorite from '../../components/Favorite';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function RecipePage({ user }) {
     const { id } = useParams();
@@ -28,6 +28,10 @@ function RecipePage({ user }) {
 
     const handleDeleteRecipe = async () => {
         try {
+            if (!user || !user.clerk_id) {
+                throw new Error('User not authenticated');
+            }
+
             const response = await fetch(`/api/recipes/${id}?clerk_id=${user.clerk_id}`, {
                 method: 'DELETE',
                 headers: {
@@ -52,26 +56,28 @@ function RecipePage({ user }) {
     }
 
     return (
-        <div id="recipePage" className="max-w-4xl mx-auto mt-12 p-6 bg-white bg-opacity-10 rounded-lg shadow-lg space-y-12">
+        <div id="recipePage" className="max-w-4xl mx-auto p-6 space-y-16">
             {/* CreatorInfo */}
-            <div id="creatorInfo" className="flex flex-col items-center text-center space-y-4">
+            <div id="creatorInfo" className="flex flex-col items-center text-center space-y-6">
                 <h1 className="text-4xl font-bold">{recipe.creator_name}</h1>
                 <img
                     src={recipe.creator_photo_public_id}
                     className="w-48 h-48 rounded-full object-cover"
                     alt={`${recipe.creator_name}'s photo`}
                 />
-                 <p className="w-1/2">{recipe.creator_bio}</p>
+                {user && user.clerk_id ? (
+                    <Favorite recipeId={recipe.id} userId={user.clerk_id} />
+                ) : (
+                    <span className="text-xs">Please sign in to favorite this recipe.</span>
+                )}
+                <p className="w-1/2">{recipe.creator_bio}</p>
             </div>
 
             {/* RecipeInfo */}
-            <div id="recipeInfo" className="bg-yellow-50 border border-gray-300 p-6 rounded-lg shadow-md">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold underline text-gray-700">{recipe.title}</h1>
-                    <Favorite recipeId={recipe.id} userId={user.clerk_id}  />
-                </div>
+            <div id="recipeInfo" className="bg-yellow-100 bg-opacity-90 border border-gray-300 text-gray-700 text-left p-6 rounded-lg shadow-md">
+                <h1 className="text-2xl font-bold underline my-4">{recipe.title}</h1>
 
-                <div className="mt-6 text-gray-700 space-y-4">
+                <div className="mt-6 space-y-4">
                     <p><strong>Country of Origin:</strong> {recipe.country}</p>
                     <p><strong>Description:</strong> {recipe.desc}</p>
                     <div>
@@ -97,8 +103,14 @@ function RecipePage({ user }) {
                 </div>
             </div>
 
+            <div className="flex justify-start">
+                <Link to="/" className="btn-light">
+                    &larr; Back to recipes
+                </Link>
+            </div>
+
             <div id="editRecipe" className="flex justify-end">
-                {user.clerk_id === recipe.user_clerk_id && (
+                {user && user.clerk_id === recipe.user_clerk_id && (
                     <button
                         onClick={handleDeleteRecipe}
                         className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"

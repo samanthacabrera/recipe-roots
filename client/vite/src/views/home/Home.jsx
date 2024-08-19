@@ -1,35 +1,33 @@
 import React from "react";
+import Hero from "./Hero";
 import Stories from "./Stories";
 import AddRecipe from "./AddRecipe";
 import GlobalList from "./GlobalList";
+import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
 
 function Home({ user }) {
-
-
-
   return (
-    <div className="space-y-40 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center space-y-20 sm:space-y-64 ">
 
-      <section id="welcome" className="flex justify-center">
-        <div className="w-1/2 space-y-12 py-16">
+      <Hero />
       
-          <h1 className="text-9xl">Recipe Roots</h1>
-          <p className="">Here we celebrate the art of cooking, the joy of sharing, and the warmth of family traditions passed down through generations.
-             By sharing these recipes, we honor our ancestors and keep their spirits alive in our kitchens.
-          </p>
-
-        </div>
-      </section>
-
-      <Stories/>
+      <Stories />
 
       <GlobalList user={user} />
-   
-      <AddRecipe/>
+
+      <SignedIn>
+        <AddRecipe />
+      </SignedIn>
+
+      <SignedOut>
+        <div className="space-y-12 p-8 sm:pb-40">
+          <p>Feeling inspired? Sign in and share your own family recipe.</p>
+          <SignIn/>
+        </div>
+      </SignedOut>
 
     </div>
   );
 }
 
 export default Home;
-

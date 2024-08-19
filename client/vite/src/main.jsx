@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ClerkProvider , SignedIn, SignedOut, SignIn} from '@clerk/clerk-react'
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react'
 import App from './App.jsx'
 import './styles/App.css'
 
@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <App />
     </SignedIn>
     <SignedOut>
-      <SignIn/>
+      <App/>
     </SignedOut>
     </ClerkProvider>
   </React.StrictMode>,
