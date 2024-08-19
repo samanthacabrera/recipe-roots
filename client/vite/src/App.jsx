@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
-import NavBar from './NavBar';
-import Home from './Home';
-import Profile from './Profile';
-import Mission from './Mission';
-import RecipeCard from './RecipeCard';
-import RecipePage from './RecipePage';
-import AddRecipe from './AddRecipe';
-import Footer from './Footer';
+import NavBar from './components/NavBar';
+import Home from './views/home/Home'
+import Profile from './views/profile/Profile';
+import Mission from './views/mission/Mission';
+import RecipeCard from './components/RecipeCard';
+import RecipePage from './views/recipe-page/RecipePage';
+import AddRecipe from './views/home/AddRecipe';
+import Footer from './components/Footer';
 
 function App() {
   const { user } = useUser(); 

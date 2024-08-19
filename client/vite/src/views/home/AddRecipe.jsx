@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import RecipeForm from './RecipeForm';
+import RecipeForm from '../../components/RecipeForm';
 
 function AddRecipe() {
   const [isSubmitted, setIsSubmitted] = useState(false);

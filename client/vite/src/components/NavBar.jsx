@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SignedIn, SignedOut, SignInButton, SignOutButton} from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, SignOutButton } from "@clerk/clerk-react";
 import { Link } from 'react-router-dom';
 
 function NavBar() {
@@ -48,7 +48,7 @@ function NavBar() {
     }, []);
 
     return (
-        <nav className="sticky top-0 z-50">
+        <nav className="sticky top-0 z-50 bg-[rgb(50,65,49)]">
             <div className="flex justify-between items-center p-4">
                 {/* Menu Toggle Button */}
                 <button 
@@ -69,7 +69,7 @@ function NavBar() {
 
             {/* Sidebar Menu */}
             <div 
-                className={`fixed top-0 left-0 h-full overflow-y-scroll transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-64 z-50`} 
+                className={`fixed top-0 left-0 h-full overflow-y-scroll rounded-lg border-r border-slate-300 border-opacity-50 shadow-lg text-left transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-64 z-50 bg-[rgb(50,65,49)]`} 
                 ref={menuRef}
             >
                 <div className="p-6 flex flex-col h-full">
@@ -84,33 +84,34 @@ function NavBar() {
                         </svg>
                     </button>
 
-                    {/* RecipeRoots Link */}
-                    <Link to="/" className="text-2xl mb-8">
-                        Recipe<span className="text-olive-600">Roots</span>
-                    </Link>
-
                     {/* User Buttons */}
-                    <SignedOut>
-                        <SignInButton className="mb-4 w-full text-center py-2 rounded-md hover:bg-olive-800 transition duration-300" />
+                    <SignedOut >
+                        <div className="flex flex-col space-y-2 mx-4 text-lg"> 
+                            <Link to="/" className="">Recipe <span className="text-olive-600">Roots</span></Link>
+                            <Link to="/mission" className="">Mission</Link>
+                            <SignInButton className="text-left" />
+                        </div>
                     </SignedOut>
                     <SignedIn>
-                        <Link to="/" className="block px-4 py-2  rounded-md">Home</Link>
-                        <Link to="/profile" className="block px-4 py-2 rounded-md">Profile</Link>
-                        <Link to="/mission" className="block px-4 py-2 rounded-md">Mission</Link>
-                        <SignOutButton className="mb-4 w-full text-center py-2 rounded-md hover:bg-olive-800 transition duration-300" />
+                        <div className="flex flex-col space-y-2 mx-4 text-lg">
+                        <Link to="/" className="">Recipe <span className="text-olive-600">Roots</span></Link>
+                        <Link to="/profile" className="">Profile</Link>
+                        <Link to="/mission" className="">Mission</Link>
+                        <SignOutButton className="text-left" />
+                        </div>
                     </SignedIn>
 
                     {/* Search Input */}
                     <input 
                         type="text" 
                         placeholder="Search recipes" 
-                        className="border border-gray-300 rounded-md px-4 py-2 mt-4 focus:outline-none focus:border-olive-600 transition-all duration-300"
+                        className="border rounded-md p-2 m-4 focus:outline-none "
                         value={searchQuery}
                         onChange={handleSearch}
                     />
 
                     {/* Filtered Recipes */}
-                    <div className="mt-4 space-y-2">
+                    <div className="m-4 space-y-2">
                         {filteredRecipes.map((recipe) => (
                             <Link
                                 key={recipe.id}

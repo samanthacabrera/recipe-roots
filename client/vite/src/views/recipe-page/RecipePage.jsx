@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Favorite from './Favorite';
+import Favorite from '../../components/Favorite';
 import { useParams } from 'react-router-dom';
 
 function RecipePage({ user }) {

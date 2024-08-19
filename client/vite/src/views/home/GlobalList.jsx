@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "../../components/RecipeCard";
 
 
 function GlobalList(user) {

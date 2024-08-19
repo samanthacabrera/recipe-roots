@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { countries, imperialUnits, metricUnits } from './constants.js';
+import { countries, imperialUnits, metricUnits } from '../utils/constants.js';
 
 const RecipeForm = ({ initialData, onSubmit }) => {
     const [photo, setPhoto] = useState(null);
