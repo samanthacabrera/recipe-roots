@@ -97,7 +97,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                 <div className="space-y-4 w-full max-w-lg px-8">
                     <p>We're excited to help you preserve and share your family recipes. Please click "Next" to begin.</p>
                     <div className="flex justify-end">
-                        <button type="button" onClick={nextStep} className="btn-dark">Next</button>
+                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
                     </div> 
                 </div>
             )}
@@ -141,8 +141,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-dark">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-dark">Next</button>
+                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
                     </div>
                 </div>
             )}
@@ -192,8 +192,8 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-dark">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-dark">Next</button>
+                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
                     </div>
                 </div>
             )}
@@ -243,17 +243,17 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             </div>
                             <div className="flex justify-between">
                                 {index === formData.ingredients.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("ingredients")} className="btn-dark">Add Ingredient</button>
+                                    <button type="button" onClick={() => handleAddInput("ingredients")} className="">Add Ingredient</button>
                                 )}
                                 {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "ingredients")} className="btn-dark">Remove Ingredient</button>
+                                    <button type="button" onClick={() => handleRemoveInput(index, "ingredients")} className="">Remove Ingredient</button>
                                 )}
                             </div>
                         </div>
                     ))}
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-dark">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-dark">Next</button>
+                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
                     </div>
                 </div>
             )}
@@ -274,17 +274,17 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             ></textarea>
                             <div className="flex justify-between">
                                 {index === formData.directions.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("directions")} className="btn-dark">Add Direction</button>
+                                    <button type="button" onClick={() => handleAddInput("directions")} className="">Add Direction</button>
                                 )}
                                 {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "directions")} className="btn-dark">Remove Direction</button>
+                                    <button type="button" onClick={() => handleRemoveInput(index, "directions")} className="">Remove Direction</button>
                                 )}
                             </div>
                         </div>
                     ))}
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-dark">Previous</button>
-                        <button type="submit" className="btn-dark hover:bg-olive-700 hover:text-white hover:border-white transition duration-500">Share Family Recipe!</button>
+                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
+                        <button type="submit" className="btn-light">Share Family Recipe!</button>
                     </div>
                 </div>
             )}

@@ -51,6 +51,7 @@ function Favorite({ recipeId, userId }) {
       className="btn-light"
     >
       {isFavorited ? "Unfavorite" : "Favorite"}
+      
     </button>
   );
 }

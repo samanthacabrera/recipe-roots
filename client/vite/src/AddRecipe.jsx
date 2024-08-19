@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import RecipeForm from './RecipeForm';
 
 function AddRecipe() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [recipeLink, setRecipeLink] = useState(null);
+
+  const navigate = useNavigate();
+  const navToUploadForm = () => {
+    navigate('/upload');
+  }
 
   const initialData = {
     creator_name: "",
@@ -62,7 +68,13 @@ function AddRecipe() {
           </div>
         </div>
       ) : (
-        <RecipeForm initialData={initialData} onSubmit={handleSubmit} />
+          <>
+            <div className="w-1/2 p-8 md:p-32 space-y-4">
+                <p>Feeling inspired? Share your own family recipe.</p>
+                <button onClick={navToUploadForm} className="btn-light">Upload a recipe</button>
+            </div>
+            <RecipeForm initialData={initialData} onSubmit={handleSubmit} />
+           </>
       )}
     </div>
   );

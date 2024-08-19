@@ -52,23 +52,23 @@ function RecipePage({ user }) {
     }
 
     return (
-        <div id="recipePage" className="max-w-4xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-lg space-y-12">
+        <div id="recipePage" className="max-w-4xl mx-auto mt-12 p-6 bg-white bg-opacity-10 rounded-lg shadow-lg space-y-12">
             {/* CreatorInfo */}
             <div id="creatorInfo" className="flex flex-col items-center text-center space-y-4">
-                <h1 className="text-4xl font-bold text-gray-800">{recipe.creator_name}</h1>
-                <p className="text-gray-600">{recipe.creator_bio}</p>
+                <h1 className="text-4xl font-bold">{recipe.creator_name}</h1>
                 <img
                     src={recipe.creator_photo_public_id}
                     className="w-48 h-48 rounded-full object-cover"
                     alt={`${recipe.creator_name}'s photo`}
                 />
+                 <p className="w-1/2">{recipe.creator_bio}</p>
             </div>
 
             {/* RecipeInfo */}
             <div id="recipeInfo" className="bg-yellow-50 border border-gray-300 p-6 rounded-lg shadow-md">
                 <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold underline text-gray-700">{recipe.title}</h1>
-                    <Favorite recipeId={recipe.id} userId={user.clerk_id} />
+                    <Favorite recipeId={recipe.id} userId={user.clerk_id}  />
                 </div>
 
                 <div className="mt-6 text-gray-700 space-y-4">
