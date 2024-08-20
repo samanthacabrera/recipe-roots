@@ -57,20 +57,36 @@ function RecipePage({ user }) {
 
     return (
         <div id="recipePage" className="max-w-4xl mx-auto p-6 space-y-16">
-            {/* CreatorInfo */}
-            <div id="creatorInfo" className="flex flex-col items-center text-center space-y-6">
-                <h1 className="text-4xl font-bold">{recipe.creator_name}</h1>
-                <img
-                    src={recipe.creator_photo_public_id}
-                    className="w-48 h-48 rounded-full object-cover"
-                    alt={`${recipe.creator_name}'s photo`}
-                />
-                {user && user.clerk_id ? (
-                    <Favorite recipeId={recipe.id} userId={user.clerk_id} />
-                ) : (
-                    <span className="text-xs">Please sign in to favorite this recipe.</span>
+        {/* CreatorInfo */}
+         <div id="creatorInfo" className="flex flex-col items-center text-center space-y-6">
+
+            <h1 className="text-4xl font-bold">{recipe.creator_name}</h1>
+            
+            <img
+                src={recipe.creator_photo_public_id}
+                className="w-48 h-48 rounded-full object-cover"
+                alt={`${recipe.creator_name}'s photo`}
+            />
+
+             <div className="flex flex-col items-center justify-between">
+                    <Favorite recipeId={recipe.id} userId={user?.clerk_id} />
+                               <div id="editRecipe" className="flex justify-end">
+                {user && user.clerk_id === recipe.user_clerk_id && (
+                    <button
+                        onClick={handleDeleteRecipe}
+                        className="btn"
+                    >
+                        Delete Recipe
+                    </button>
                 )}
-                <p className="w-1/2">{recipe.creator_bio}</p>
+                </div>
+                    {!user || !user.clerk_id ? (
+                        <span className="text-xs mt-4">Please sign in to favorite this recipe.</span>
+                    ) : null}
+                </div>
+            
+            {/* Creator Bio */}
+            <p className="w-1/2 text-lg">{recipe.creator_bio}</p>
             </div>
 
             {/* RecipeInfo */}
@@ -104,21 +120,10 @@ function RecipePage({ user }) {
             </div>
 
             <div className="flex justify-start">
-                <Link to="/" className="btn-light">
-                    &larr; Back to recipes
+                <Link to="/" className="btn">
+                    Back to recipes
                 </Link>
-            </div>
-
-            <div id="editRecipe" className="flex justify-end">
-                {user && user.clerk_id === recipe.user_clerk_id && (
-                    <button
-                        onClick={handleDeleteRecipe}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                    >
-                        Delete Recipe
-                    </button>
-                )}
-            </div>
+            </div>    
         </div>
     );
 }

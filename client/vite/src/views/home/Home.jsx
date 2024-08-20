@@ -11,7 +11,7 @@ function Home({ user }) {
 
       <Hero />
       
-      <Stories />
+      <Stories/>
 
       <GlobalList user={user} />
 

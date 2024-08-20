@@ -17,11 +17,11 @@ const slides = [
 
 function Stories(){
   return (
-    <div className="flex flex-col justify-center items-center w-2/3 space-y-20">
+    <div className="flex flex-col justify-center items-center w-1/2 space-y-20">
     
       <div className="space-y-4">
         <h1 className="text-6xl">Featured Stories</h1>
-        <p className="text-lg">Be inspired by heartfelt stories and delicious recipes from our global community.</p>
+        <p className="text-lg">Get inspired by stories and recipes from our global community.</p>
       </div>
 
       <div className="space-y-24 w-full">
@@ -31,7 +31,7 @@ function Stories(){
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left p-4 space-y-6">
               <h3 className="text-4xl">{slide.title}</h3>
               <p>{slide.text}</p>
-              <a href={slide.route} className="btn-light">Read More &rarr;</a>
+              <a href={slide.route} className="btn">Read More</a>
             </div>
           </article>
         ))}

@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { SignedOut, SignedIn, SignOutButton } from '@clerk/clerk-react';
 
 function Hero() {
-  const slides = [
-    {
-      image: 'url_to_your_first_image.jpg',
-      text: 'Discover the roots of family traditions through cherished recipes.'
-    },
-    {
-      image: 'url_to_your_second_image.jpg',
-      text: 'Preserving the flavors that connect generations.'
-    },
-    {
-      image: 'url_to_your_third_image.jpg',
-      text: 'A journey through the culinary heritage of your ancestors.'
-    },
-  ];
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 3000);
-
-    return () => clearInterval(slideInterval);
-  }, [slides.length]);
+  // Define scrollToTop function if needed
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <section 
-      className="hero" 
-      style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
-    >
-      <div className="overlay">
-        <h1 className="hero-title">Recipe Roots</h1>
-        <p className="hero-text">{slides[currentSlide].text}</p>
-      </div>
+    <section className="flex flex-col items-center">
+      <nav>
+        <div className="flex space-x-4">
+          <Link to="/" onClick={scrollToTop} className="btn">Home</Link>
+          <Link to="/profile" onClick={scrollToTop} className="btn">Profile</Link>
+          <Link to="/mission" onClick={scrollToTop} className="btn">Mission</Link>
+          <SignedIn>
+            <SignOutButton className="btn" />
+          </SignedIn>
+        </div>
+      </nav>
+
+      <h1 className="text-6xl sm:text-9xl my-20 sm:my-40">Recipe <span>Roots</span></h1>
+  
     </section>
   );
 }

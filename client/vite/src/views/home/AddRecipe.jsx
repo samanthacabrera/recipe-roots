@@ -58,15 +58,15 @@ function AddRecipe() {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       {isSubmitted ? (
-        <div className="bg-black bg-opacity-5 rounded-lg shadow-md space-y-6">
+        <div className="bg-black bg-opacity-5 p-24 rounded-lg shadow-md space-y-6">
             <h3 className="mb-8">Recipe successfully added.</h3>
 
-            <div className="btn-light">
-              <a href={recipeLink} target="_blank" rel="noopener noreferrer">View your recipe &rarr; </a>
+            <div className="btn">
+              <a href={recipeLink} target="_blank" rel="noopener noreferrer">View your recipe</a>
             </div>
                         
-            <div className="btn-light">
-              <a href="/" >&larr; Explore more recipes</a>
+            <div className="btn">
+              <a href="/" >Explore more recipes</a>
             </div>
         </div>
       ) : (
@@ -74,7 +74,7 @@ function AddRecipe() {
           {!showForm ? (
             <div className="w-1/2 space-y-4">
               <p>Feeling inspired? Share your own family recipe.</p>
-              <button onClick={navToUploadForm} className="btn-light">Upload a recipe</button>
+              <button onClick={navToUploadForm} className="btn">Upload a recipe</button>
             </div>
           ) : (
             <RecipeForm initialData={initialData} onSubmit={handleSubmit} />

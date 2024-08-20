@@ -6,6 +6,8 @@ function Favorite({ recipeId, userId }) {
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
       try {
+        if (!userId) return; // Skip fetching if user is not signed in
+
         const response = await fetch(`/api/favorites/status?clerk_id=${userId}&recipe_id=${recipeId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -23,6 +25,8 @@ function Favorite({ recipeId, userId }) {
 
   const handleToggleFavorite = async (event) => {
     event.stopPropagation(); 
+    if (!userId) return; // Do nothing if user is not signed in
+
     try {
       console.log('Toggling favorite status...');
       const response = await fetch('/api/favorites/toggle', {
@@ -48,10 +52,10 @@ function Favorite({ recipeId, userId }) {
   return (
     <button
       onClick={handleToggleFavorite}
-      className="btn-light"
+      className={`btn ${!userId ? 'cursor-not-allowed opacity-50' : ''}`}
+      disabled={!userId}
     >
       {isFavorited ? "Unfavorite" : "Favorite"}
-      
     </button>
   );
 }

@@ -13,8 +13,8 @@ html {
   height: 100%;
   overflow-x: hidden;
   font-family: "Times New Roman", Times, serif;
-  background-color: rgb(50, 65, 49);
-  color: rgba(235, 231, 220, 0.823);
+  background-color: #324131;
+  color: #ebe7dcd2;
 }
 
 h1 {
@@ -61,15 +61,8 @@ input::placeholder {
 #recipeForm {
   font-family: Helvetica, sans-serif;
 }
-/* custom tailwind styles */
-.btn-dark {
-  @apply text-gray-900 bg-transparent border border-gray-900;
-  @apply hover:scale-110 focus:outline-none transition duration-200;
-  @apply font-medium rounded-full text-sm px-5 py-2.5 text-center;
-}
 
-.btn-light {
-  @apply text-gray-100 bg-transparent border border-gray-100;
-  @apply hover:scale-110 focus:outline-none transition duration-200;
-  @apply font-medium rounded-full text-sm px-5 py-2.5 text-center;
+/* custom tailwind styles */
+.btn {
+  @apply px-4 py-2 rounded-full cursor-pointer border-0 text-sm tracking-wider transition-all duration-300 ease-in-out hover:tracking-widest hover:bg-green-200 hover:bg-opacity-20 hover:text-gray-900 hover:shadow-lg;
 }

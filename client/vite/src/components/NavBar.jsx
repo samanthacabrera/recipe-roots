@@ -60,9 +60,7 @@ function NavBar() {
                     onClick={toggleMenu}
                 >
                     {isMenuOpen ? (
-                        <svg className="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
+                        <></>
                     ) : (
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -90,17 +88,17 @@ function NavBar() {
 
                     <SignedOut>
                         <div className="flex flex-col space-y-2 mx-4 text-lg"> 
-                            <Link to="/" onClick={scrollToTop} className="">Recipe <span className="text-olive-600">Roots</span></Link>
+                            <Link to="/" onClick={scrollToTop} className="">Home</Link>
                             <Link to="/profile" onClick={scrollToTop} className="">Profile</Link>
                             <Link to="/mission" onClick={scrollToTop} className="">Mission</Link>
                         </div>
                     </SignedOut>
                     <SignedIn>
                         <div className="flex flex-col space-y-2 mx-4 text-lg">
-                        <Link to="/" onClick={scrollToTop} className="">Recipe <span className="text-olive-600">Roots</span></Link>
-                        <Link to="/profile" onClick={scrollToTop} className="">Profile</Link>
-                        <Link to="/mission" onClick={scrollToTop} className="">Mission</Link>
-                        <SignOutButton className="text-left" />
+                        <Link to="/" onClick={scrollToTop} className="hover:border-b">Home</Link>
+                        <Link to="/profile" onClick={scrollToTop} className="hover:border-b">Profile</Link>
+                        <Link to="/mission" onClick={scrollToTop} className="hover:border-b">Mission</Link>
+                        <SignOutButton className="text-left hover:border-b" />
                         </div>
                     </SignedIn>
 
@@ -114,12 +112,12 @@ function NavBar() {
                     />
 
                     {/* Filtered Recipes */}
-                    <div className="m-4 space-y-2">
+                    <div className="space-y-2">
                         {filteredRecipes.map((recipe) => (
                             <Link
                                 key={recipe.id}
                                 to={`/recipes/${recipe.id}`} 
-                                className="btn-light block"
+                                className="btn block"
                             >
                                 {recipe.title}
                             </Link>

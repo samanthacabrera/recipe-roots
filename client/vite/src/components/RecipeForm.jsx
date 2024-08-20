@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { countries, imperialUnits, metricUnits } from '../utils/constants.js';
+import { countries } from '../utils/constants.js';
 
 const RecipeForm = ({ initialData, onSubmit }) => {
     const [photo, setPhoto] = useState(null);
@@ -31,18 +31,33 @@ const RecipeForm = ({ initialData, onSubmit }) => {
         }
     };
 
-    const handleAddInput = (type) => {
+    const handleAddIngredient = () => {
         setFormData(prevState => ({
             ...prevState,
-            [type]: [...formData[type], type === "ingredients" ? { name: "", quantity: "", unit: "" } : { step: "" }]
+            ingredients: [...formData.ingredients, { name: "", quantity: "", unit: "" }]
         }));
     };
 
-    const handleRemoveInput = (index, type) => {
-        const updatedData = formData[type].filter((_, i) => i !== index);
+    const handleRemoveIngredient = (index) => {
+        const updatedData = formData.ingredients.filter((_, i) => i !== index);
         setFormData(prevState => ({
             ...prevState,
-            [type]: updatedData
+            ingredients: updatedData
+        }));
+    };
+
+    const handleAddDirection = () => {
+        setFormData(prevState => ({
+            ...prevState,
+            directions: [...formData.directions, { step: "" }]
+        }));
+    };
+
+    const handleRemoveDirection = (index) => {
+        const updatedData = formData.directions.filter((_, i) => i !== index);
+        setFormData(prevState => ({
+            ...prevState,
+            directions: updatedData
         }));
     };
 
@@ -92,12 +107,12 @@ const RecipeForm = ({ initialData, onSubmit }) => {
     };
 
     return (
-         <form id="recipeForm" onSubmit={handleSubmit} className="w-screen h-screen flex flex-col justify-center items-center">
+        <form id="recipeForm" onSubmit={handleSubmit} className="w-screen h-screen flex flex-col justify-center items-center">
             {step === 1 && (
                 <div className="space-y-4 w-full max-w-lg px-8">
                     <p>We're excited to help you preserve and share your family recipes. Please click "Start" to begin.</p>
                     <div className="flex justify-end">
-                        <button type="button" onClick={nextStep} className="btn-light">Start</button>
+                        <button type="button" onClick={nextStep} className="btn">Start</button>
                     </div> 
                 </div>
             )}
@@ -106,7 +121,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                     <div className="flex flex-col space-y-2">
                         <h3 className="text-4xl">Let's get started!</h3>
                         <h6 className="pb-4">First, tell us about a little about who created this recipe.</h6>
-                        <label htmlFor="creator_name" className="">Recipe Creator's Name:</label>
+                        <label htmlFor="creator_name">Recipe Creator's Name:</label>
                         <input
                             type="text"
                             name="creator_name"
@@ -115,11 +130,11 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.creator_name || ""}
                             onChange={(e) => handleInputChange(null, "creator_name", e.target.name, e.target.value)}
                             required
-                            className="p-2 bg-white rounded-md focus:outline-white"
+                            className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="creator_photo" className="">Recipe Creator's Photo: </label>
+                        <label htmlFor="creator_photo">Recipe Creator's Photo: </label>
                         <input
                             type="file"
                             name="creator_photo"
@@ -130,19 +145,19 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="memory" className="">Recipe Memory: <span className="text-xs block">(Share the story of how this recipe was first made or your favorite memory eating this recipe.)</span></label>
+                        <label htmlFor="memory">Recipe Memory: <span className="text-xs block">(Share the story of how this recipe was first made or your favorite memory eating this recipe.)</span></label>
                         <textarea
                             name="memory"
                             id="memory"
                             placeholder="i.e. My family and I would make this every Christmas Eve."
                             value={formData.memory || ""}
                             onChange={(e) => handleInputChange(null, "memory", e.target.name, e.target.value)}
-                            className="p-2 bg-white rounded-md focus:outline-white"
+                            className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                         />
                     </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
+                        <button type="button" onClick={prevStep} className="btn">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn">Next</button>
                     </div>
                 </div>
             )}
@@ -151,7 +166,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                 <div className="space-y-4 w-full max-w-lg px-8 text-left">
                     <div className="flex flex-col space-y-2">
                         <p className="text-4xl pb-4">Now, let's add the basics of your recipe.</p>
-                        <label htmlFor="title" className="">Recipe Title:</label>
+                        <label htmlFor="title">Recipe Title:</label>
                         <input
                             type="text"
                             name="title"
@@ -160,18 +175,18 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.title || ""}
                             onChange={(e) => handleInputChange(null, "title", e.target.name, e.target.value)}
                             required
-                            className="p-2 bg-white rounded-md focus:outline-white"
+                            className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="country" className="">Country of Origin:</label>
+                        <label htmlFor="country">Country of Origin:</label>
                         <select
                             name="country"
                             id="country"
                             value={formData.country || ""}
                             onChange={(e) => handleInputChange(null, "country", e.target.name, e.target.value)}
                             required
-                            className="p-2 bg-white rounded-md focus:outline-white"
+                            className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                         >
                             <option value="">Select a country</option>
                             {countries.map((country, index) => (
@@ -180,7 +195,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                         </select>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="desc" className="">Recipe Description:</label>
+                        <label htmlFor="desc">Recipe Description:</label>
                         <textarea
                             name="desc"
                             id="desc"
@@ -188,72 +203,65 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                             value={formData.desc || ""}
                             onChange={(e) => handleInputChange(null, "desc", e.target.name, e.target.value)}
                             required
-                            className="p-2 bg-white rounded-md focus:outline-white"
+                            className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                         />
                     </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
+                        <button type="button" onClick={prevStep} className="btn">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn">Next</button>
                     </div>
                 </div>
             )}
 
             {step === 4 && (
                 <div className="space-y-4 w-full max-w-lg px-8 text-left">
-                    <h6 className="text-4xl pb-4">Next, let's add the ingredients</h6>
+                    <h6 className="text-4xl pb-4">Now, let's add the ingredients</h6>
                     {formData.ingredients.map((ingredient, index) => (
-                        <div key={index} >
+                        <div key={index} className="border p-4 rounded-md mb-4">
                             <div className="flex flex-col space-y-2">
-                                <label htmlFor={`ingredient-name-${index}`} className="">Ingredient Name:</label>
+                                <label htmlFor={`ingredient-name-${index}`}>Ingredient Name:</label>
                                 <input
                                     type="text"
                                     name="name"
+                                    id={`ingredient-name-${index}`}
                                     placeholder="i.e. Sugar"
                                     value={ingredient.name || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-2 bg-white rounded-md focus:outline-white"
+                                    className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                                 />
-                                <label htmlFor={`ingredient-quantity-${index}`} className="">Quantity:</label>
+                                <label htmlFor={`ingredient-quantity-${index}`}>Quantity:</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="quantity"
-                                    placeholder="i.e. 1"
+                                    id={`ingredient-quantity-${index}`}
+                                    placeholder="i.e. 1 cup"
                                     value={ingredient.quantity || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-2 bg-white rounded-md focus:outline-white"
+                                    className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
                                 />
-                                <label htmlFor={`ingredient-unit-${index}`} className="">Unit:</label>
-                                <select
+                                <label htmlFor={`ingredient-unit-${index}`}>Unit:</label>
+                                <input
+                                    type="text"
                                     name="unit"
+                                    id={`ingredient-unit-${index}`}
+                                    placeholder="i.e. cups"
                                     value={ingredient.unit || ""}
                                     onChange={(e) => handleInputChange(index, "ingredients", e.target.name, e.target.value)}
                                     required
-                                    className="p-2 bg-white rounded-md focus:outline-white"
-                                >
-                                    <option value="">Select Unit</option>
-                                    {imperialUnits.map((unit, index) => (
-                                        <option key={index} value={unit}>{unit}</option>
-                                    ))}
-                                    {metricUnits.map((unit, index) => (
-                                        <option key={index} value={unit}>{unit}</option>
-                                    ))}
-                                </select>
+                                    className="p-2 bg-white rounded-md text-gray-500 focus:outline-white"
+                                />
                             </div>
-                            <div className="flex justify-between">
-                                {index === formData.ingredients.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("ingredients")} className="">Add Ingredient</button>
-                                )}
-                                {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "ingredients")} className="">Remove Ingredient</button>
-                                )}
-                            </div>
+                            <button type="button" onClick={() => handleRemoveIngredient(index)} className="text-red-500 mt-2">Remove</button>
                         </div>
                     ))}
+                    <div className="flex flex-col space-y-2">
+                        <button type="button" onClick={handleAddIngredient} className="btn-light">Add Ingredient</button>
+                    </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
-                        <button type="button" onClick={nextStep} className="btn-light">Next</button>
+                        <button type="button" onClick={prevStep} className="btn">Previous</button>
+                        <button type="button" onClick={nextStep} className="btn">Next</button>
                     </div>
                 </div>
             )}
@@ -262,7 +270,7 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                 <div className="space-y-4 w-full max-w-lg px-8 text-left">
                     <h6 className="text-4xl pb-4">Now, add step-by-step directions for making the recipe.</h6>
                     {formData.directions.map((direction, index) => (
-                        <div key={index} className="space-y-2">
+                        <div key={index} className="border p-4 rounded-md mb-4">
                             <label htmlFor={`direction-step-${index}`} className="">Step {index + 1}</label>
                             <textarea
                                 name="step"
@@ -270,21 +278,17 @@ const RecipeForm = ({ initialData, onSubmit }) => {
                                 value={direction.step || ""}
                                 onChange={(e) => handleInputChange(index, "directions", e.target.name, e.target.value)}
                                 required
-                                className="w-full p-3 bg-white rounded-md"
+                                className="w-full p-3 bg-white rounded-md text-gray-500 focus:outline-white"
                             ></textarea>
-                            <div className="flex justify-between">
-                                {index === formData.directions.length - 1 && (
-                                    <button type="button" onClick={() => handleAddInput("directions")} className="">Add Direction</button>
-                                )}
-                                {index !== 0 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, "directions")} className="">Remove Direction</button>
-                                )}
-                            </div>
+                            <button type="button" onClick={() => handleRemoveDirection(index)} className="text-red-500">Remove</button>
                         </div>
                     ))}
+                    <div className="flex flex-col space-y-2">
+                        <button type="button" onClick={handleAddDirection} className="btn-light">Add Direction</button>
+                    </div>
                     <div className="flex justify-between">
-                        <button type="button" onClick={prevStep} className="btn-light">Previous</button>
-                        <button type="submit" className="btn-light">Share Family Recipe!</button>
+                        <button type="button" onClick={prevStep} className="btn">Previous</button>
+                        <button type="submit" className="btn">Share Family Recipe!</button>
                     </div>
                 </div>
             )}
