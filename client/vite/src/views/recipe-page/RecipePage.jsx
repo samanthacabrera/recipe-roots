@@ -70,7 +70,7 @@ function RecipePage({ user }) {
 
              <div className="flex flex-col items-center justify-between">
                     <Favorite recipeId={recipe.id} userId={user?.clerk_id} />
-                               <div id="editRecipe" className="flex justify-end">
+                <div id="editRecipe" className="flex justify-end">
                 {user && user.clerk_id === recipe.user_clerk_id && (
                     <button
                         onClick={handleDeleteRecipe}

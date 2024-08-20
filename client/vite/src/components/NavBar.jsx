@@ -53,10 +53,10 @@ function NavBar() {
 
     return (
         <nav className="sticky top-0 z-50">
-            <div className="flex justify-between items-center p-4">
+            <div className="flex justify-center items-center p-4">
              
                 <button 
-                    className="focus:outline-none"
+                    className="absolute top-4 left-4 focus:outline-none"
                     onClick={toggleMenu}
                 >
                     {isMenuOpen ? (
@@ -67,6 +67,15 @@ function NavBar() {
                         </svg>
                     )}
                 </button>
+                   
+                <div className="flex space-x-4">
+                    <Link to="/" onClick={scrollToTop} className="btn">Home</Link>
+                    <Link to="/profile" onClick={scrollToTop} className="btn">Profile</Link>
+                    <Link to="/mission" onClick={scrollToTop} className="btn">Mission</Link>
+                    <SignedIn>
+                    <SignOutButton className="btn" />
+                    </SignedIn>
+                </div>
             </div>
 
             {/* Sidebar Menu */}
@@ -88,9 +97,9 @@ function NavBar() {
 
                     <SignedOut>
                         <div className="flex flex-col space-y-2 mx-4 text-lg"> 
-                            <Link to="/" onClick={scrollToTop} className="">Home</Link>
-                            <Link to="/profile" onClick={scrollToTop} className="">Profile</Link>
-                            <Link to="/mission" onClick={scrollToTop} className="">Mission</Link>
+                            <Link to="/" onClick={scrollToTop} className="hover:border-b">Home</Link>
+                            <Link to="/profile" onClick={scrollToTop} className="hover:border-b">Profile</Link>
+                            <Link to="/mission" onClick={scrollToTop} className="hover:border-b">Mission</Link>
                         </div>
                     </SignedOut>
                     <SignedIn>

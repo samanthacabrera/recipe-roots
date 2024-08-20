@@ -75,21 +75,21 @@ function Profile({ user }) {
             </select>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left m-4">
-            {activeTab === 'uploaded' ? (
-              addedRecipes.length === 0 ? (
-                <p className="">No uploaded recipes found</p>
+            {activeTab === 'favorited' ? (
+              favoritedRecipes.length === 0 ? (
+                <p className="">No favorited recipes found</p>
               ) : (
-                addedRecipes.map(recipe => (
+                favoritedRecipes.map(recipe => (
                   <Link key={recipe.id} to={`/recipes/${recipe.id}`} >
                     <h4>{recipe.title}</h4>
                   </Link>
                 ))
               )
             ) : (
-              favoritedRecipes.length === 0 ? (
-                <p className="">No favorited recipes found</p>
+              addedRecipes.length === 0 ? (
+                <p className="">No uploaded recipes found</p>
               ) : (
-                favoritedRecipes.map(recipe => (
+                addedRecipes.map(recipe => (
                   <Link key={recipe.id} to={`/recipes/${recipe.id}`} >
                     <h4>{recipe.title}</h4>
                   </Link>

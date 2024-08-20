@@ -9,19 +9,9 @@ function Hero() {
   };
 
   return (
-    <section className="flex flex-col items-center">
-      <nav>
-        <div className="flex space-x-4">
-          <Link to="/" onClick={scrollToTop} className="btn">Home</Link>
-          <Link to="/profile" onClick={scrollToTop} className="btn">Profile</Link>
-          <Link to="/mission" onClick={scrollToTop} className="btn">Mission</Link>
-          <SignedIn>
-            <SignOutButton className="btn" />
-          </SignedIn>
-        </div>
-      </nav>
+    <section className="flex flex-col items-center justify-center py-24">
 
-      <h1 className="text-6xl sm:text-9xl my-20 sm:my-40">Recipe <span>Roots</span></h1>
+      <h1 className="text-6xl sm:text-9xl hover:scale-105 transition duration-500 translate-y-3/4 uppercase">Recipe <span className="text-green-100 opacity-50">Roots</span></h1>
   
     </section>
   );
