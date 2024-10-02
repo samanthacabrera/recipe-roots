@@ -1,63 +1,49 @@
-# Recipe Roots - Getting Started
+### Recipe Roots - [watch demo](https://www.youtube.com/watch?v=Qso3oxAXWDc&t=29s)
 
 To install Recipe Roots onto your local machine, follow these steps:
 
-### Backend Setup
+## Backend Setup
 
-1. **Clone the Repository**
+**Clone the Repository**
 
-   ```bash
-   git clone https://github.com/yourusername/reciperoots.git
-   cd reciperoots
-   ```
+```bash
+git clone https://github.com/yourusername/reciperoots.git
+cd reciperoots
+```
 
-2. **Create Virtual Environment**
+**Create Virtual Environment & Install Dependencies**
 
-   ```bash
-   pipenv install
-   ```
+```bash
+pipenv install
+pipenv shell
+```
 
-3. **Install backend dependencies**
+**Set Up Database & Run Server**
 
-   ```bash
-   pipenv shell
-   ```
+```bash
+flask db init
+flask db migrate
+flask db upgrade
+flask run
+```
 
-4. **Set up the database**
+## Frontend Setup
 
-   ```bash
-   flask db init
-   flask db migrate
-   flask db upgrade
-   ```
+**Navigate to the Frontend Directory**
 
-5. **Run the backend server**
-   ```bash
-   flask run
-   ```
-   By default, the backend server will run on http://localhost:5000.
+```bash
+cd ..
+cd frontend
+```
 
-### Frontend Setup
+**Install Dependencies & Run Server**
 
-6. **Navigate to the frontend directory**
+```bash
+npm install
+cd vite
+npm run dev
+```
 
-   ```bash
-   cd frontend
-   ```
+### Accessing the Application
 
-7. **Install frontend dependencies**
-
-   ```bash
-   npm install
-   ```
-
-8. **Run the frontend development server**
-   ```bash
-   cd vite && npm run dev
-   ```
-   The frontend application will be available at http://localhost:3000.
-   <br>
-
-## Accessing the Application
-
-Before accessing the application, make sure that both the backend and frontend servers are running. Once both servers are running, open your web browser and navigate to [http://localhost:3000](http://localhost:3000). This URL will load the Recipe Roots platform where you can interact with the application.
+Before accessing the application, make sure that both the backend and frontend servers are running. Once both servers are running, open your web browser and navigate to http://localhost:3000. This URL will load the Recipe Roots platform where you can interact with the application. By default the backend server runs at http://localhost:5000.
