@@ -1,8 +1,8 @@
-### Recipe Roots 
+### Recipe Roots
 
 Recipe Roots is an online platform designed for sharing family recipes, aiming to share authentic, culturally accurate dishes to a global audience.
 
-### Installation 
+### Installation
 
 To install Recipe Roots onto your local machine, follow these steps:
 
@@ -24,7 +24,7 @@ flask db upgrade
 flask run
 ```
 
-#### frontend setup 
+#### frontend setup
 
 ```bash
 cd ..
@@ -37,3 +37,5 @@ npm run dev
 Before accessing the application, make sure that both the backend and frontend servers are running. Once both servers are running, open your web browser and navigate to http://localhost:3000. The backend server runs at http://localhost:5000.
 
 ### Walkthrough
+
+<img src="./client/vite/public/reciperootsdemo.gif">
